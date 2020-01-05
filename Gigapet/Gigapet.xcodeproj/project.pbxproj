@@ -14,6 +14,9 @@
 		99DB9AED23C271B70074634C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99DB9AEB23C271B70074634C /* LaunchScreen.storyboard */; };
 		99DB9AF823C271B70074634C /* GigapetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9AF723C271B70074634C /* GigapetTests.swift */; };
 		99DB9B0323C271B70074634C /* GigapetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B0223C271B70074634C /* GigapetUITests.swift */; };
+		9D5CF39DA6F2A16DE2BA91E6 /* Pods_Gigapet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D956DCBDFA14B91403A28D8A /* Pods_Gigapet.framework */; };
+		D05C7A23C7AE1B02866E990D /* Pods_Gigapet_GigapetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FF02C2B5C4EECF9D32D6648 /* Pods_Gigapet_GigapetUITests.framework */; };
+		DF6A89C542F7AD6A309D08DD /* Pods_GigapetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D04FFE09A19C3227EF4D1E34 /* Pods_GigapetTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0CC470D860589D32538F0BED /* Pods-Gigapet-GigapetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gigapet-GigapetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Gigapet-GigapetUITests/Pods-Gigapet-GigapetUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		3E535FFCB4D01501E6B09A5A /* Pods-Gigapet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gigapet.release.xcconfig"; path = "Target Support Files/Pods-Gigapet/Pods-Gigapet.release.xcconfig"; sourceTree = "<group>"; };
+		6FF02C2B5C4EECF9D32D6648 /* Pods_Gigapet_GigapetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gigapet_GigapetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99A6C86226D52198F518E7D0 /* Pods-GigapetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GigapetTests.debug.xcconfig"; path = "Target Support Files/Pods-GigapetTests/Pods-GigapetTests.debug.xcconfig"; sourceTree = "<group>"; };
 		99DB9ADD23C271B40074634C /* Gigapet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gigapet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99DB9AE023C271B40074634C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99DB9AE223C271B40074634C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +54,11 @@
 		99DB9AFE23C271B70074634C /* GigapetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GigapetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99DB9B0223C271B70074634C /* GigapetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GigapetUITests.swift; sourceTree = "<group>"; };
 		99DB9B0423C271B70074634C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A50DE60A83667D51DD4F6216 /* Pods-Gigapet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gigapet.debug.xcconfig"; path = "Target Support Files/Pods-Gigapet/Pods-Gigapet.debug.xcconfig"; sourceTree = "<group>"; };
+		B885F7701F7053E0215276B7 /* Pods-GigapetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GigapetTests.release.xcconfig"; path = "Target Support Files/Pods-GigapetTests/Pods-GigapetTests.release.xcconfig"; sourceTree = "<group>"; };
+		D04FFE09A19C3227EF4D1E34 /* Pods_GigapetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GigapetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D41ED3DE26015FBF36D9755F /* Pods-Gigapet-GigapetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gigapet-GigapetUITests.release.xcconfig"; path = "Target Support Files/Pods-Gigapet-GigapetUITests/Pods-Gigapet-GigapetUITests.release.xcconfig"; sourceTree = "<group>"; };
+		D956DCBDFA14B91403A28D8A /* Pods_Gigapet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gigapet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D5CF39DA6F2A16DE2BA91E6 /* Pods_Gigapet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF6A89C542F7AD6A309D08DD /* Pods_GigapetTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,12 +82,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D05C7A23C7AE1B02866E990D /* Pods_Gigapet_GigapetUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		36FE788E13365AD3B7C5394B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A50DE60A83667D51DD4F6216 /* Pods-Gigapet.debug.xcconfig */,
+				3E535FFCB4D01501E6B09A5A /* Pods-Gigapet.release.xcconfig */,
+				0CC470D860589D32538F0BED /* Pods-Gigapet-GigapetUITests.debug.xcconfig */,
+				D41ED3DE26015FBF36D9755F /* Pods-Gigapet-GigapetUITests.release.xcconfig */,
+				99A6C86226D52198F518E7D0 /* Pods-GigapetTests.debug.xcconfig */,
+				B885F7701F7053E0215276B7 /* Pods-GigapetTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		99DB9AD423C271B40074634C = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +110,8 @@
 				99DB9AF623C271B70074634C /* GigapetTests */,
 				99DB9B0123C271B70074634C /* GigapetUITests */,
 				99DB9ADE23C271B40074634C /* Products */,
+				36FE788E13365AD3B7C5394B /* Pods */,
+				A7D504ADAD6568315F896DFF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,6 +172,16 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		A7D504ADAD6568315F896DFF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D956DCBDFA14B91403A28D8A /* Pods_Gigapet.framework */,
+				6FF02C2B5C4EECF9D32D6648 /* Pods_Gigapet_GigapetUITests.framework */,
+				D04FFE09A19C3227EF4D1E34 /* Pods_GigapetTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -148,9 +189,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99DB9B0723C271B70074634C /* Build configuration list for PBXNativeTarget "Gigapet" */;
 			buildPhases = (
+				616E0AF12BC0FA678B08A993 /* [CP] Check Pods Manifest.lock */,
 				99DB9AD923C271B40074634C /* Sources */,
 				99DB9ADA23C271B40074634C /* Frameworks */,
 				99DB9ADB23C271B40074634C /* Resources */,
+				16133B013A62F9442E8439A5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -165,6 +208,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99DB9B0A23C271B70074634C /* Build configuration list for PBXNativeTarget "GigapetTests" */;
 			buildPhases = (
+				7405B9B1D5735533F9957DFC /* [CP] Check Pods Manifest.lock */,
 				99DB9AEF23C271B70074634C /* Sources */,
 				99DB9AF023C271B70074634C /* Frameworks */,
 				99DB9AF123C271B70074634C /* Resources */,
@@ -183,9 +227,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99DB9B0D23C271B70074634C /* Build configuration list for PBXNativeTarget "GigapetUITests" */;
 			buildPhases = (
+				149F357CB57D70D80919A898 /* [CP] Check Pods Manifest.lock */,
 				99DB9AFA23C271B70074634C /* Sources */,
 				99DB9AFB23C271B70074634C /* Frameworks */,
 				99DB9AFC23C271B70074634C /* Resources */,
+				B51E310592F1D5247A0805D2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -266,6 +312,109 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		149F357CB57D70D80919A898 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Gigapet-GigapetUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		16133B013A62F9442E8439A5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Gigapet/Pods-Gigapet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Gigapet/Pods-Gigapet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Gigapet/Pods-Gigapet-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		616E0AF12BC0FA678B08A993 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Gigapet-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7405B9B1D5735533F9957DFC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GigapetTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B51E310592F1D5247A0805D2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Gigapet-GigapetUITests/Pods-Gigapet-GigapetUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Gigapet-GigapetUITests/Pods-Gigapet-GigapetUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Gigapet-GigapetUITests/Pods-Gigapet-GigapetUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		99DB9AD923C271B40074634C /* Sources */ = {
@@ -444,6 +593,7 @@
 		};
 		99DB9B0823C271B70074634C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A50DE60A83667D51DD4F6216 /* Pods-Gigapet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -462,6 +612,7 @@
 		};
 		99DB9B0923C271B70074634C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E535FFCB4D01501E6B09A5A /* Pods-Gigapet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -480,6 +631,7 @@
 		};
 		99DB9B0B23C271B70074634C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99A6C86226D52198F518E7D0 /* Pods-GigapetTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -502,6 +654,7 @@
 		};
 		99DB9B0C23C271B70074634C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B885F7701F7053E0215276B7 /* Pods-GigapetTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -524,6 +677,7 @@
 		};
 		99DB9B0E23C271B70074634C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0CC470D860589D32538F0BED /* Pods-Gigapet-GigapetUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -544,6 +698,7 @@
 		};
 		99DB9B0F23C271B70074634C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D41ED3DE26015FBF36D9755F /* Pods-Gigapet-GigapetUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

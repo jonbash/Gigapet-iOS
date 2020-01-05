@@ -1,0 +1,20 @@
+PODS:
+  - NetworkHandler (0.9.3)
+  - SwiftLint (0.37.0)
+
+DEPENDENCIES:
+  - NetworkHandler
+  - SwiftLint
+
+SPEC REPOS:
+  trunk:
+    - NetworkHandler
+    - SwiftLint
+
+SPEC CHECKSUMS:
+  NetworkHandler: 6e823369befb1975571c9e42b498f22732d1e225
+  SwiftLint: c078a14d7d7ade75e5507795d185e3da41d844d2
+
+PODFILE CHECKSUM: 27331e9c62538064796667b88c57466d99194bfa
+
+COCOAPODS: 1.8.4
