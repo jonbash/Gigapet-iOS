@@ -3,8 +3,9 @@
     <entity name="FoodEntry" representedClassName="FoodEntry" syncable="YES" codeGenerationType="class">
         <attribute name="foodCategory" optional="YES" attributeType="String"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="FoodEntry" positionX="-36" positionY="9" width="128" height="73"/>
+        <element name="FoodEntry" positionX="-36" positionY="9" width="128" height="88"/>
     </elements>
 </model>
