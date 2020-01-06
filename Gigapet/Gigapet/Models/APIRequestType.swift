@@ -16,9 +16,3 @@ enum APIRequestType: String {
     case update
     case delete
 }
-
-extension URL {
-    func url(for requestType: APIRequestType) -> URL {
-        return self.appendingPathComponent(requestType.rawValue)
-    }
-}
