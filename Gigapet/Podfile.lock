@@ -1,20 +1,24 @@
 PODS:
+  - KeychainAccess (4.1.0)
   - NetworkHandler (0.9.3)
   - SwiftLint (0.37.0)
 
 DEPENDENCIES:
+  - KeychainAccess
   - NetworkHandler
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - KeychainAccess
     - NetworkHandler
     - SwiftLint
 
 SPEC CHECKSUMS:
+  KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   NetworkHandler: 6e823369befb1975571c9e42b498f22732d1e225
   SwiftLint: c078a14d7d7ade75e5507795d185e3da41d844d2
 
-PODFILE CHECKSUM: 27331e9c62538064796667b88c57466d99194bfa
+PODFILE CHECKSUM: e48228eb4a8f76151e6e6274bfedf01e030f945b
 
 COCOAPODS: 1.8.4
