@@ -15,4 +15,22 @@ enum APIRequestType: String {
     case fetchAll
     case update
     case delete
+
+    func endpoint(userID: Int? = nil, feedingID: Int? = nil) -> String? {
+        switch self {
+        case .register, .login:
+            return self.rawValue
+        case .create, .fetchAll:
+            guard let userID = userID else { return nil }
+            return "\(userID)/pet"
+        case .update, .delete:
+            guard
+                let userID = userID,
+                let feedingID = feedingID
+                else { return nil }
+            return "\(userID)/pet/\(feedingID)"
+        @unknown default:
+            fatalError("Unaccounted-for API Request Type")
+        }
+    }
 }

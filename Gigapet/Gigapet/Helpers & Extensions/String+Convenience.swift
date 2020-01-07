@@ -21,7 +21,8 @@ extension String {
 
     // MARK: - Segues
 
-    static let showAuthScreenSegue = "ShowAuthScreen"
+    static let showAuthScreenSegue = "ShowAuthScreenSegue"
+    static let pastEntriesSegue = "PastEntriesSegue"
 
     // MARK: - TableView Cells
 }

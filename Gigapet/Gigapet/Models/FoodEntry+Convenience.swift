@@ -11,13 +11,21 @@ import CoreData
 extension FoodEntry {
     convenience init(
         category: FoodCategory,
-        timestamp: Date = Date(),
-        uuid: UUID = UUID(),
+        foodName: String,
+        foodAmount: Int,
+        dateFed: Date = Date(),
+        identifier: Int? = nil,
         context: NSManagedObjectContext = CoreDataStack.shared.mainContext
     ) {
         self.init(context: context)
         self.foodCategory = category.rawValue
-        self.timestamp = timestamp
-        self.uuid = uuid
+        self.foodName = foodName
+        self.foodAmount = Int64(foodAmount)
+        self.dateFed = dateFed
+        if let identifier = identifier {
+            self.identifier = Int64(identifier)
+        } else {
+            self.identifier = -1
+        }
     }
 }

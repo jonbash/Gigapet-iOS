@@ -28,16 +28,20 @@ class FoodEntryController {
 
     func addEntry(
         category: FoodCategory,
+        foodName: String,
+        foodAmount: Int,
         timestamp: Date = Date(),
-        uuid: UUID = UUID(),
         completion: @escaping ((NetworkError?) -> Void)
     ) {
         let context = CoreDataStack.shared.container.newBackgroundContext()
         var entry: FoodEntry?
         context.performAndWait {
-            entry = FoodEntry(category: category,
-                timestamp: timestamp,
-                uuid: uuid,
+            entry = FoodEntry(
+                category: category,
+                foodName: foodName,
+                foodAmount: foodAmount,
+                dateFed: timestamp,
+                identifier: nil,
                 context: context)
         }
 
@@ -88,6 +92,8 @@ class FoodEntryController {
     func updateFoodEntry(
         _ entry: FoodEntry,
         withCategory category: FoodCategory?,
+        foodName: String?,
+        foodAmount: Int?,
         timestamp: Date?,
         completion: @escaping (NetworkError?) -> Void
     ) {
@@ -95,7 +101,9 @@ class FoodEntryController {
 
         context.performAndWait {
             if let category = category { entry.foodCategory = category.rawValue }
-            if let timestamp = timestamp { entry.timestamp = timestamp }
+            if let foodName = foodName { entry.foodName = foodName }
+            if let foodAmount = foodAmount { entry.foodAmount = Int64(foodAmount) }
+            if let timestamp = timestamp { entry.dateFed = timestamp }
         }
 
         var entryData: Data?

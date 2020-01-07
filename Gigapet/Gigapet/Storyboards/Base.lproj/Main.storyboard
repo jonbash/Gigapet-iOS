@@ -16,19 +16,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="29" translatesAutoresizingMaskIntoConstraints="NO" id="LbM-ec-OmW">
-                                <rect key="frame" x="120" y="670" width="174" height="184"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="LbM-ec-OmW">
+                                <rect key="frame" x="120" y="742" width="174" height="100"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UTH-bP-rxS">
-                                        <rect key="frame" x="0.0" y="0.0" width="174" height="42"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <state key="normal" title="Pick My Pet"/>
-                                        <connections>
-                                            <segue destination="dge-SS-rya" kind="presentation" modalPresentationStyle="fullScreen" id="LZq-OY-U2F"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jy0-uD-Ib3">
-                                        <rect key="frame" x="0.0" y="71" width="174" height="42"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="174" height="42"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="Feed My Pet"/>
                                         <connections>
@@ -36,20 +28,21 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gz1-wy-dUk">
-                                        <rect key="frame" x="0.0" y="142" width="174" height="42"/>
+                                        <rect key="frame" x="0.0" y="58" width="174" height="42"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="See Past Entries"/>
                                         <connections>
-                                            <segue destination="08X-En-Q5y" kind="show" id="kSe-zR-smV"/>
+                                            <segue destination="08X-En-Q5y" kind="show" identifier="PastEntriesSegue" id="kSe-zR-smV"/>
                                         </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" verticalHuggingPriority="249" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="lYD-JD-Fma" customClass="SVGImageView">
-                                <rect key="frame" x="39" y="118" width="336" height="522"/>
+                                <rect key="frame" x="106.5" y="118" width="201" height="312.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="lYD-JD-Fma" secondAttribute="height" multiplier="67:104" id="KxY-km-odJ"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="RzI-zZ-DPb"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="svgName" value="BrownOtter"/>
@@ -59,9 +52,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="lYD-JD-Fma" firstAttribute="top" secondItem="5gk-Kw-njk" secondAttribute="top" constant="30" id="57e-Pi-cC6"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="LbM-ec-OmW" secondAttribute="bottom" constant="8" id="KZW-Ve-3nJ"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="LbM-ec-OmW" secondAttribute="bottom" constant="20" id="KZW-Ve-3nJ"/>
+                            <constraint firstItem="5gk-Kw-njk" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lYD-JD-Fma" secondAttribute="trailing" constant="40" id="NuL-FA-j8t"/>
+                            <constraint firstItem="lYD-JD-Fma" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5gk-Kw-njk" secondAttribute="leading" constant="40" id="R9D-Oi-bbB"/>
                             <constraint firstItem="LbM-ec-OmW" firstAttribute="centerX" secondItem="q48-3h-F9P" secondAttribute="centerX" id="T8J-Vy-dcC"/>
-                            <constraint firstItem="LbM-ec-OmW" firstAttribute="top" secondItem="lYD-JD-Fma" secondAttribute="bottom" constant="30" id="UKn-TN-gmL"/>
+                            <constraint firstItem="LbM-ec-OmW" firstAttribute="top" relation="greaterThanOrEqual" secondItem="lYD-JD-Fma" secondAttribute="bottom" constant="30" id="UKn-TN-gmL"/>
                             <constraint firstItem="lYD-JD-Fma" firstAttribute="centerX" secondItem="q48-3h-F9P" secondAttribute="centerX" id="nlc-3v-wiw"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5gk-Kw-njk"/>
@@ -70,7 +65,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Log Out" id="mRH-ak-gCr">
                             <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="BY0-NT-Dra" kind="presentation" identifier="ShowAuthScreen" modalPresentationStyle="fullScreen" id="5Vf-uu-azt"/>
+                                <segue destination="BY0-NT-Dra" kind="presentation" identifier="ShowAuthScreenSegue" modalPresentationStyle="fullScreen" id="5Vf-uu-azt"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -118,7 +113,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ES4-tW-xpY">
-                                <rect key="frame" x="154" y="601" width="106.5" height="34"/>
+                                <rect key="frame" x="135.5" y="601" width="143" height="34"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="okF-TT-rxa">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="34"/>
@@ -126,12 +121,15 @@
                                         <state key="normal" title="–"/>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1V8-7Z-ulb">
-                                        <rect key="frame" x="34" y="0.0" width="38.5" height="34"/>
+                                        <rect key="frame" x="34" y="0.0" width="75" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="lno-pG-y6X"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KNg-qT-SXj">
-                                        <rect key="frame" x="76.5" y="0.0" width="30" height="34"/>
+                                        <rect key="frame" x="113" y="0.0" width="30" height="34"/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
                                         <state key="normal" title="+"/>
                                     </button>
@@ -274,21 +272,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7qc-zV-OUV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3521.739130434783" y="787.5"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="jmg-E3-u5s">
-            <objects>
-                <viewController id="dge-SS-rya" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="bYN-La-4He">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="Pai-Qg-D0x"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eXa-69-DyP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2659" y="-593"/>
         </scene>
         <!--Auth View Controller-->
         <scene sceneID="EJ2-ne-Ndx">
@@ -533,7 +516,9 @@
                         <viewLayoutGuide key="safeArea" id="82X-Os-h3g"/>
                     </view>
                     <navigationItem key="navigationItem" id="cri-Pl-49L">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="e3K-nH-IcO"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="e3K-nH-IcO">
+                            <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xp8-M8-bcw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

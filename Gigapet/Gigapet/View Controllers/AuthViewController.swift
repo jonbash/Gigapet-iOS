@@ -33,8 +33,8 @@ class AuthViewController: UIViewController {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var petNameStack: UIStackView!
-    @IBOutlet weak var emailStack: UIStackView!
+    @IBOutlet private weak var petNameStack: UIStackView!
+    @IBOutlet private weak var emailStack: UIStackView!
 
     @IBOutlet private weak var usernameField: UITextField!
     @IBOutlet private weak var petNameField: UITextField!
