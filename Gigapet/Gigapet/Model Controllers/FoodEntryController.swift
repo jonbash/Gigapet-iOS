@@ -48,7 +48,7 @@ class FoodEntryController {
             completion(.dataCodingError(specifically: error))
         }
 
-        var request = URL.baseURL.requestUrl(for: .create).request
+        var request = URL.base.requestUrl(for: .create).request
         request.httpBody = entryData
         // TODO: complete request for adding entry
 
@@ -58,12 +58,31 @@ class FoodEntryController {
     }
 
     func fetchAll(
-        completion: @escaping (Result<[FoodEntry.Representation], NetworkError>) -> Void
+        completion: @escaping (Result<[FoodEntry], NetworkError>) -> Void
     ) {
-        var request = URL.baseURL.requestUrl(for: .fetchAll).request
+        let context = CoreDataStack.shared.container.newBackgroundContext()
+        var request = URL.base.requestUrl(for: .fetchAll).request
         // TODO: complete rest of request
 
-        networkHandler.transferMahCodableDatas(with: request, completion: completion)
+        networkHandler.transferMahCodableDatas(with: request)
+        { (result: Result<[FoodEntry.Representation], NetworkError>) in
+            var entries = [FoodEntry]()
+            var entryReps = [FoodEntry.Representation]()
+
+            do {
+                entryReps = try result.get()
+            } catch {
+                completion(.failure(.dataCodingError(specifically: error)))
+                return
+            }
+
+            for entryRep in entryReps {
+                entries.append(FoodEntry(from: entryRep, context: context))
+            }
+
+            self.foodEntries = entries
+            completion(.success(entries))
+        }
     }
 
     func updateFoodEntry(
@@ -86,7 +105,7 @@ class FoodEntryController {
             completion(.dataCodingError(specifically: error))
         }
 
-        var request = URL.baseURL.requestUrl(for: .update).request
+        var request = URL.base.requestUrl(for: .update).request
         request.httpBody = entryData
         // TODO: complete rest of request
 
@@ -105,7 +124,7 @@ class FoodEntryController {
             context.delete(entry)
         }
 
-        var request = URL.baseURL.requestUrl(for: .delete).request
+        var request = URL.base.requestUrl(for: .delete).request
         // TODO: complete rest of request
 
         networkHandler.transferMahOptionalDatas(with: request) { result in

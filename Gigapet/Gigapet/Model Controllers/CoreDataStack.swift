@@ -35,6 +35,7 @@ class CoreDataStack {
     func save(
         in context: NSManagedObjectContext = CoreDataStack.shared.mainContext
     ) throws {
+        guard context.hasChanges else { return }
         try context.save()
     }
 }

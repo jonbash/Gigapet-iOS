@@ -11,49 +11,51 @@ import NetworkHandler
 
 class AuthController {
     private let networkHandler = NetworkHandler()
-    private(set) var user: UserInfo?
 
     // TODO: Make result success type whatever actual received data is
     func register(
         withUsername username: String,
         password: String,
-        completion: @escaping ((Error?) -> Void)
+        completion: @escaping (Result<UserInfo, NetworkError>) -> Void
     ) {
-        let request = URL.baseURL.requestUrl(for: .register).request
-        // TODO: add data for username/login/headers/etc
+        var request = URL.base.request(for: .register)
 
-        networkHandler.transferMahCodableDatas(with: request)
-        { (result: Result<UserInfo, NetworkError>) in
-            do {
-                self.user = try result.get()
-                completion(nil)
-            } catch let error as NetworkError {
-                completion(error)
-            } catch {
-                completion(NetworkError.otherError(error: error))
-            }
+        do {
+            request.httpBody = try JSONEncoder().encode(UserAuth(
+                username: username,
+                password: password))
+        } catch {
+            completion(.failure(.otherError(error: error)))
+            return
         }
+
+        networkHandler.transferMahCodableDatas(with: request, completion: completion)
     }
 
     // TODO: Make result success type whatever actual received data is
     func logIn(
         withUsername username: String,
         password: String,
-        completion: @escaping ((NetworkError?) -> Void)
+        completion: @escaping (Result<UserInfo, NetworkError>) -> Void
     ) {
-        let request = URL.baseURL.requestUrl(for: .login).request
-        // TODO: add data for username/login/headers/etc
+        var request = URL.base.request(for: .login)
 
-        networkHandler.transferMahCodableDatas(with: request)
-        { (result: Result<UserInfo, NetworkError>) in
-            do {
-                self.user = try result.get()
-                completion(nil)
-            } catch let error as NetworkError {
-                completion(error)
-            } catch {
-                completion(.otherError(error: error))
-            }
+        do {
+            request.httpBody = try JSONEncoder().encode(UserAuth(
+                username: username,
+                password: password))
+        } catch {
+            completion(.failure(.otherError(error: error)))
+            return
         }
+
+        networkHandler.transferMahCodableDatas(with: request, completion: completion)
+    }
+
+    // MARK: - UserAuth
+    
+    private struct UserAuth: Codable {
+        let username: String
+        let password: String
     }
 }
