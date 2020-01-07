@@ -8,11 +8,19 @@
 
 import Foundation
 
-struct UserInfo: Decodable {
+struct UserInfo {
     var id: Int
-    let username: String
-    let password: String
     var token: String
+
+    init(id: Int, token: String) {
+        self.id = id
+        self.token = token
+    }
+}
+
+extension UserInfo: Decodable {
+
+    // MARK: Decodable
 
     enum TopLevelKey: CodingKey {
         case token
@@ -21,8 +29,6 @@ struct UserInfo: Decodable {
 
     enum UserKey: CodingKey {
         case id
-        case username
-        case password
     }
 
     init(from decoder: Decoder) throws {
@@ -33,7 +39,5 @@ struct UserInfo: Decodable {
 
         self.token = try topContainer.decode(String.self, forKey: .token)
         self.id = try userContainer.decode(Int.self, forKey: .id)
-        self.username = try userContainer.decode(String.self, forKey: .username)
-        self.password = try userContainer.decode(String.self, forKey: .password)
     }
 }
