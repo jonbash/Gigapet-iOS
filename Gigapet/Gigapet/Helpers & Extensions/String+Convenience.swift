@@ -25,4 +25,11 @@ extension String {
     static let pastEntriesSegue = "PastEntriesSegue"
 
     // MARK: - TableView Cells
+
+    static let entryCell = "EntryCell"
+    static let timePeriodCell = "TimePeriodCell"
+
+    // MARK: - Assets
+
+    static let mainPurple = "MainPurple"
 }

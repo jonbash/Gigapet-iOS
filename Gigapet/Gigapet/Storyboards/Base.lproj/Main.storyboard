@@ -19,15 +19,15 @@
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="LbM-ec-OmW">
                                 <rect key="frame" x="120" y="742" width="174" height="100"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jy0-uD-Ib3">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jy0-uD-Ib3" customClass="GigaPetButton" customModule="Gigapet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="174" height="42"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="Feed My Pet"/>
                                         <connections>
-                                            <segue destination="DgB-6d-C4b" kind="show" id="inp-KV-oJN"/>
+                                            <segue destination="DgB-6d-C4b" kind="show" identifier="FeedPetSegue" id="inp-KV-oJN"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gz1-wy-dUk">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gz1-wy-dUk" customClass="GigaPetButton" customModule="Gigapet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="58" width="174" height="42"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="See Past Entries"/>
@@ -74,10 +74,10 @@
             </objects>
             <point key="canvasLocation" x="1698.5507246376812" y="92.410714285714278"/>
         </scene>
-        <!--View Controller-->
+        <!--Feed View Controller-->
         <scene sceneID="gOX-9F-Oe4">
             <objects>
-                <viewController id="DgB-6d-C4b" sceneMemberID="viewController">
+                <viewController id="DgB-6d-C4b" customClass="FeedViewController" customModule="Gigapet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qpM-FJ-qbA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -135,7 +135,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFb-ct-TDZ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFb-ct-TDZ" customClass="GigaPetButton" customModule="Gigapet" customModuleProvider="target">
                                 <rect key="frame" x="145" y="651" width="124" height="39"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="Feed My Pet!"/>
@@ -165,27 +165,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dte-Oq-k9R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2657.971014492754" y="91.741071428571431"/>
+            <point key="canvasLocation" x="2745" y="63"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="ApO-Yx-K0W">
-            <objects>
-                <viewController id="NA1-Qa-pi3" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Co2-jR-BoN">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="B6a-6i-fGI"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zm7-cK-lVy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3522" y="92"/>
-        </scene>
-        <!--View Controller-->
+        <!--Chart View Controller-->
         <scene sceneID="oZF-Hk-DMA">
             <objects>
-                <viewController id="vSZ-6N-8PO" sceneMemberID="viewController">
+                <viewController id="vSZ-6N-8PO" customClass="ChartViewController" customModule="Gigapet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H3M-bM-6mz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -297,7 +282,7 @@
                                     <action selector="authTypeChanged:" destination="dBd-jc-5Wc" eventType="valueChanged" id="vDg-hB-pDH"/>
                                 </connections>
                             </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QEt-JQ-6il">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QEt-JQ-6il" customClass="GigaPetButton" customModule="Gigapet" customModuleProvider="target">
                                 <rect key="frame" x="20" y="419" width="374" height="42"/>
                                 <color key="backgroundColor" name="MainPurple"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
@@ -435,24 +420,23 @@
             </objects>
             <point key="canvasLocation" x="788.40579710144937" y="92.410714285714278"/>
         </scene>
-        <!--View Controller-->
+        <!--Entries View Controller-->
         <scene sceneID="2ta-Cw-3Lg">
             <objects>
-                <viewController id="08X-En-Q5y" sceneMemberID="viewController">
+                <viewController id="08X-En-Q5y" customClass="EntriesViewController" customModule="Gigapet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gYT-Nx-7jb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gds-MI-nDZ">
-                                <rect key="frame" x="0.0" y="162" width="414" height="700"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gds-MI-nDZ">
+                                <rect key="frame" x="0.0" y="159" width="414" height="703"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EntryPeriodCell" textLabel="hGm-22-Zxs" detailTextLabel="Bsz-qj-KKe" style="IBUITableViewCellStyleValue1" id="Sfr-1a-6TD">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TimePeriodCell" textLabel="hGm-22-Zxs" detailTextLabel="Bsz-qj-KKe" style="IBUITableViewCellStyleValue1" id="Sfr-1a-6TD" customClass="TimePeriodTableViewCell" customModule="Gigapet" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Sfr-1a-6TD" id="lDr-N5-Jc1">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hGm-22-Zxs">
@@ -475,15 +459,15 @@
                                             <segue destination="vSZ-6N-8PO" kind="show" id="97H-zf-tY6"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EntryCell" textLabel="DKT-k7-iAJ" detailTextLabel="Kv8-Bf-HBi" style="IBUITableViewCellStyleSubtitle" id="w5E-qe-tY5">
-                                        <rect key="frame" x="0.0" y="72" width="414" height="56"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EntryCell" textLabel="DKT-k7-iAJ" detailTextLabel="Kv8-Bf-HBi" style="IBUITableViewCellStyleSubtitle" id="w5E-qe-tY5" customClass="EntryTableViewCell" customModule="Gigapet" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="71.5" width="414" height="55.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="w5E-qe-tY5" id="qC5-li-s6G">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DKT-k7-iAJ">
-                                                    <rect key="frame" x="20" y="9" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -501,25 +485,42 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="9AP-dB-har">
-                                <rect key="frame" x="100" y="110" width="214" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="j8y-dI-7q0">
+                                <rect key="frame" x="20" y="108" width="374" height="32"/>
                                 <segments>
-                                    <segment title="All"/>
+                                    <segment title="All Entries"/>
                                     <segment title="Day"/>
                                     <segment title="Week"/>
                                     <segment title="Month"/>
                                 </segments>
+                                <connections>
+                                    <action selector="periodControlChanged:" destination="08X-En-Q5y" eventType="valueChanged" id="pks-Rc-2vz"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="gds-MI-nDZ" firstAttribute="leading" secondItem="82X-Os-h3g" secondAttribute="leading" id="8hT-Pr-Oqj"/>
+                            <constraint firstItem="j8y-dI-7q0" firstAttribute="leading" secondItem="82X-Os-h3g" secondAttribute="leading" constant="20" id="U5E-cl-rkZ"/>
+                            <constraint firstItem="gds-MI-nDZ" firstAttribute="bottom" secondItem="82X-Os-h3g" secondAttribute="bottom" id="XY5-13-Cgd"/>
+                            <constraint firstItem="82X-Os-h3g" firstAttribute="trailing" secondItem="j8y-dI-7q0" secondAttribute="trailing" constant="20" id="YXO-Ro-ZxY"/>
+                            <constraint firstItem="j8y-dI-7q0" firstAttribute="top" secondItem="82X-Os-h3g" secondAttribute="top" constant="20" id="Yt9-vp-IbR"/>
+                            <constraint firstItem="gds-MI-nDZ" firstAttribute="top" secondItem="j8y-dI-7q0" secondAttribute="bottom" constant="20" id="rbP-8s-v1q"/>
+                            <constraint firstItem="gds-MI-nDZ" firstAttribute="trailing" secondItem="82X-Os-h3g" secondAttribute="trailing" id="xu3-Lk-QVo"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="82X-Os-h3g"/>
                     </view>
                     <navigationItem key="navigationItem" id="cri-Pl-49L">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="e3K-nH-IcO">
                             <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <segue destination="DgB-6d-C4b" kind="show" identifier="FeedPetSegue" id="Jq4-x7-EcF"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="entriesTableView" destination="gds-MI-nDZ" id="n3v-1O-NY8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xp8-M8-bcw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -531,4 +532,7 @@
             <color red="0.42399999499320984" green="0.27500000596046448" blue="0.63499999046325684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Jq4-x7-EcF"/>
+    </inferredMetricsTieBreakers>
 </document>
