@@ -8,26 +8,23 @@
 
 import Foundation
 
-enum APIRequestType: String {
-    case register = "auth/register"
-    case login = "auth/login"
-    case create
-    case fetchAll
-    case update
-    case delete
+enum APIRequestType {
+    case register
+    case login
+    case create(userID: Int)
+    case fetchAll(userID: Int)
+    case update(userID: Int, feedingID: Int)
+    case delete(userID: Int, feedingID: Int)
 
-    func endpoint(userID: Int? = nil, feedingID: Int? = nil) -> String? {
+    func endpoint() -> String {
         switch self {
-        case .register, .login:
-            return self.rawValue
-        case .create, .fetchAll:
-            guard let userID = userID else { return nil }
+        case .register:
+            return "auth/register"
+        case .login:
+            return "auth/login"
+        case .create(let userID), .fetchAll(let userID):
             return "\(userID)/pet"
-        case .update, .delete:
-            guard
-                let userID = userID,
-                let feedingID = feedingID
-                else { return nil }
+        case .update(let userID, let feedingID), .delete(let userID, let feedingID):
             return "\(userID)/pet/\(feedingID)"
         @unknown default:
             fatalError("Unaccounted-for API Request Type")

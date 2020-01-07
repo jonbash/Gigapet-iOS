@@ -52,12 +52,13 @@ class FoodEntryController {
             completion(.dataCodingError(specifically: error))
         }
 
-        var request = URL.base.requestUrl(for: .create).request
+        var request = URL.base.request(for: .create(userID: user.id))
         request.httpBody = entryData
         // TODO: complete request for adding entry
 
         networkHandler.transferMahOptionalDatas(with: request) { result in
             self.handlePost(context: context, result: result, completion: completion)
+            // TODO: set entry identifier
         }
     }
 
@@ -65,11 +66,11 @@ class FoodEntryController {
         completion: @escaping (Result<[FoodEntry], NetworkError>) -> Void
     ) {
         let context = CoreDataStack.shared.container.newBackgroundContext()
-        var request = URL.base.requestUrl(for: .fetchAll).request
+        var request = URL.base.request(for: .fetchAll(userID: user.id))
         // TODO: complete rest of request
 
-        networkHandler.transferMahCodableDatas(with: request)
-        { (result: Result<[FoodEntry.Representation], NetworkError>) in
+        networkHandler.transferMahCodableDatas(with: request
+        ) { (result: Result<[FoodEntry.Representation], NetworkError>) in
             var entries = [FoodEntry]()
             var entryReps = [FoodEntry.Representation]()
 
@@ -97,6 +98,9 @@ class FoodEntryController {
         timestamp: Date?,
         completion: @escaping (NetworkError?) -> Void
     ) {
+        if entry.identifier == -1 {
+
+        }
         let context = CoreDataStack.shared.container.newBackgroundContext()
 
         context.performAndWait {
@@ -113,7 +117,8 @@ class FoodEntryController {
             completion(.dataCodingError(specifically: error))
         }
 
-        var request = URL.base.requestUrl(for: .update).request
+        var request = URL.base.request(for:
+            .update(userID: user.id, feedingID: Int(entry.identifier)))
         request.httpBody = entryData
         // TODO: complete rest of request
 
@@ -132,7 +137,8 @@ class FoodEntryController {
             context.delete(entry)
         }
 
-        var request = URL.base.requestUrl(for: .delete).request
+        var request = URL.base.request(for:
+            .delete(userID: user.id, feedingID: Int(entry.identifier)))
         // TODO: complete rest of request
 
         networkHandler.transferMahOptionalDatas(with: request) { result in

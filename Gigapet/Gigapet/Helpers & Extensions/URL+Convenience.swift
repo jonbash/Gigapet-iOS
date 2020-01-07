@@ -12,12 +12,8 @@ import NetworkHandler
 extension URL {
     static var base: URL = URL(string: "https://gigapetbw4.herokuapp.com/")!
 
-    func requestUrl(for requestType: APIRequestType) -> URL {
-        return self.appendingPathComponent(requestType.rawValue)
-    }
-
     func request(for requestType: APIRequestType) -> URLRequest {
-        var request = self.appendingPathComponent(requestType.rawValue).request
+        var request = self.appendingPathComponent(requestType.endpoint()).request
 
         switch requestType {
         case .register, .login, .create, .update:
