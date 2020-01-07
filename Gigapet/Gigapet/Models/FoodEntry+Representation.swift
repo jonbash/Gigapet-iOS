@@ -11,7 +11,32 @@ import NetworkHandler
 
 extension FoodEntry {
 
-    // MARK: - Representation
+    // MARK: - Init
+
+    convenience init(
+        from representation: Representation,
+        context: NSManagedObjectContext = CoreDataStack.shared.mainContext
+    ) {
+        self.init(context: context)
+        self.foodCategory = representation.foodCategory.rawValue
+        self.timestamp = representation.timestamp
+        self.uuid = representation.uuid
+    }
+
+    var representation: Representation? {
+        guard let categoryString = self.foodCategory,
+            let category = FoodCategory(rawValue: categoryString),
+            let timestamp = self.timestamp,
+            let uuid = self.uuid
+            else { return nil }
+
+        return Representation(
+            foodCategory: category,
+            timestamp: timestamp,
+            uuid: uuid)
+    }
+
+    // MARK: - Representation Struct
 
     struct Representation: Codable {
         var foodCategory: FoodCategory
@@ -56,17 +81,5 @@ extension FoodEntry {
             try container.encode(timestamp, forKey: .timestamp)
             try container.encode(uuid, forKey: .uuid)
         }
-    }
-
-    // MARK: - Init
-
-    convenience init(
-        from representation: Representation,
-        context: NSManagedObjectContext = CoreDataStack.shared.mainContext
-    ) {
-        self.init(context: context)
-        self.foodCategory = representation.foodCategory.rawValue
-        self.timestamp = representation.timestamp
-        self.uuid = representation.uuid
     }
 }
