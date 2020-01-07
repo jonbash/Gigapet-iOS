@@ -17,12 +17,14 @@
 		99DB9B1623C2B5230074634C /* Gigapet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B1423C2B5230074634C /* Gigapet.xcdatamodeld */; };
 		99DB9B1823C2B5300074634C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B1723C2B5300074634C /* CoreDataStack.swift */; };
 		99DB9B1C23C39D020074634C /* FoodCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B1B23C39D020074634C /* FoodCategory.swift */; };
-		99DB9B1E23C39E5B0074634C /* FoodController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B1D23C39E5B0074634C /* FoodController.swift */; };
+		99DB9B1E23C39E5B0074634C /* FoodEntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B1D23C39E5B0074634C /* FoodEntryController.swift */; };
 		99DB9B2023C3A4BE0074634C /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B1F23C3A4BD0074634C /* UserInfo.swift */; };
-		99DB9B2523C3AB880074634C /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B2423C3AB880074634C /* LandingPageViewController.swift */; };
+		99DB9B2523C3AB880074634C /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B2423C3AB880074634C /* AuthViewController.swift */; };
 		99DB9B2A23C3B59B0074634C /* APIRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B2923C3B59B0074634C /* APIRequestType.swift */; };
 		99DB9B2C23C3B81A0074634C /* FoodEntry+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B2B23C3B81A0074634C /* FoodEntry+Convenience.swift */; };
 		99DB9B2E23C3CB230074634C /* FoodEntry+Representation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B2D23C3CB230074634C /* FoodEntry+Representation.swift */; };
+		99DB9B3023C3D3560074634C /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B2F23C3D3560074634C /* AuthController.swift */; };
+		99DB9B3423C3D4280074634C /* URL+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B3323C3D4280074634C /* URL+Convenience.swift */; };
 		9D5CF39DA6F2A16DE2BA91E6 /* Pods_Gigapet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D956DCBDFA14B91403A28D8A /* Pods_Gigapet.framework */; };
 		D05C7A23C7AE1B02866E990D /* Pods_Gigapet_GigapetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FF02C2B5C4EECF9D32D6648 /* Pods_Gigapet_GigapetUITests.framework */; };
 		DF6A89C542F7AD6A309D08DD /* Pods_GigapetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D04FFE09A19C3227EF4D1E34 /* Pods_GigapetTests.framework */; };
@@ -66,12 +68,14 @@
 		99DB9B1523C2B5230074634C /* Gigapet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gigapet.xcdatamodel; sourceTree = "<group>"; };
 		99DB9B1723C2B5300074634C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		99DB9B1B23C39D020074634C /* FoodCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCategory.swift; sourceTree = "<group>"; };
-		99DB9B1D23C39E5B0074634C /* FoodController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodController.swift; sourceTree = "<group>"; };
+		99DB9B1D23C39E5B0074634C /* FoodEntryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEntryController.swift; sourceTree = "<group>"; };
 		99DB9B1F23C3A4BD0074634C /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
-		99DB9B2423C3AB880074634C /* LandingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageViewController.swift; sourceTree = "<group>"; };
+		99DB9B2423C3AB880074634C /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		99DB9B2923C3B59B0074634C /* APIRequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestType.swift; sourceTree = "<group>"; };
 		99DB9B2B23C3B81A0074634C /* FoodEntry+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodEntry+Convenience.swift"; sourceTree = "<group>"; };
 		99DB9B2D23C3CB230074634C /* FoodEntry+Representation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodEntry+Representation.swift"; sourceTree = "<group>"; };
+		99DB9B2F23C3D3560074634C /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
+		99DB9B3323C3D4280074634C /* URL+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Convenience.swift"; sourceTree = "<group>"; };
 		A50DE60A83667D51DD4F6216 /* Pods-Gigapet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gigapet.debug.xcconfig"; path = "Target Support Files/Pods-Gigapet/Pods-Gigapet.debug.xcconfig"; sourceTree = "<group>"; };
 		B885F7701F7053E0215276B7 /* Pods-GigapetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GigapetTests.release.xcconfig"; path = "Target Support Files/Pods-GigapetTests/Pods-GigapetTests.release.xcconfig"; sourceTree = "<group>"; };
 		D04FFE09A19C3227EF4D1E34 /* Pods_GigapetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GigapetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +149,7 @@
 		99DB9ADF23C271B40074634C /* Gigapet */ = {
 			isa = PBXGroup;
 			children = (
+				99DB9B3523C3EA480074634C /* Views */,
 				99DB9B2323C3AAD20074634C /* View Controllers */,
 				99DB9B1123C271E20074634C /* Storyboards */,
 				99DB9B1A23C39CB10074634C /* Models */,
@@ -195,7 +200,8 @@
 		99DB9B1323C2AF020074634C /* Model Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				99DB9B1D23C39E5B0074634C /* FoodController.swift */,
+				99DB9B2F23C3D3560074634C /* AuthController.swift */,
+				99DB9B1D23C39E5B0074634C /* FoodEntryController.swift */,
 				99DB9B1723C2B5300074634C /* CoreDataStack.swift */,
 			);
 			path = "Model Controllers";
@@ -210,6 +216,7 @@
 				99DB9B1B23C39D020074634C /* FoodCategory.swift */,
 				99DB9B1F23C3A4BD0074634C /* UserInfo.swift */,
 				99DB9B2923C3B59B0074634C /* APIRequestType.swift */,
+				99DB9B3323C3D4280074634C /* URL+Convenience.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -217,9 +224,16 @@
 		99DB9B2323C3AAD20074634C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				99DB9B2423C3AB880074634C /* LandingPageViewController.swift */,
+				99DB9B2423C3AB880074634C /* AuthViewController.swift */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		99DB9B3523C3EA480074634C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		A7D504ADAD6568315F896DFF /* Frameworks */ = {
@@ -490,12 +504,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				99DB9AE123C271B40074634C /* AppDelegate.swift in Sources */,
+				99DB9B3023C3D3560074634C /* AuthController.swift in Sources */,
 				99DB9AE323C271B40074634C /* SceneDelegate.swift in Sources */,
 				99DB9B2C23C3B81A0074634C /* FoodEntry+Convenience.swift in Sources */,
 				99DB9B1623C2B5230074634C /* Gigapet.xcdatamodeld in Sources */,
+				99DB9B3423C3D4280074634C /* URL+Convenience.swift in Sources */,
 				99DB9B2E23C3CB230074634C /* FoodEntry+Representation.swift in Sources */,
-				99DB9B2523C3AB880074634C /* LandingPageViewController.swift in Sources */,
-				99DB9B1E23C39E5B0074634C /* FoodController.swift in Sources */,
+				99DB9B2523C3AB880074634C /* AuthViewController.swift in Sources */,
+				99DB9B1E23C39E5B0074634C /* FoodEntryController.swift in Sources */,
 				99DB9B1C23C39D020074634C /* FoodCategory.swift in Sources */,
 				99DB9B2023C3A4BE0074634C /* UserInfo.swift in Sources */,
 				99DB9B2A23C3B59B0074634C /* APIRequestType.swift in Sources */,
