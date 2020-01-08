@@ -9,13 +9,19 @@
 import UIKit
 import CoreData
 
+protocol EntriesTableViewDelegate: AnyObject {
+    func entryDeletionDidFail(withError error: Error)
+}
+
 class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
 
     // MARK: - Properties
 
     var currentDisplayType: EntryDisplayType = .all
+
     weak var tableView: UITableView?
     weak var entryController: FoodEntryController?
+    weak var delegate: EntriesTableViewDelegate?
 
     private lazy var fetchedResultsController: NSFetchedResultsController<FoodEntry> = {
         let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
@@ -83,11 +89,15 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
     ) {
         if currentDisplayType == .all && editingStyle == .delete {
             let entry = fetchedResultsController.object(at: indexPath)
-            CoreDataStack.shared.mainContext.delete(entry)
-            do {
-                try CoreDataStack.shared.save()
-            } catch {
-                NSLog("Error saving changes after deleting object: \(error)")
+
+            entryController?.deleteFoodEntry(entry) { [weak self] (result) in
+                DispatchQueue.main.async {
+                    if case .failure(let error) = result {
+                        self?.delegate?.entryDeletionDidFail(withError: error)
+                    } else {
+                        tableView.reloadData()
+                    }
+                }
             }
         }
     }
