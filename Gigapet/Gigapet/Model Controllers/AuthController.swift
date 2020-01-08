@@ -85,10 +85,14 @@ class AuthController {
         _ request: URLRequest,
         completion: @escaping CompletionHandler
     ) {
-        networkHandler.transferMahCodableDatas(with: request
-        ) { (result: Result<UserInfo, NetworkError>) in
+        networkHandler.transferMahDatas(with: request
+        ) { (result: Result<Data, NetworkError>) in
             do {
-                let userInfo = try result.get()
+                let userData = try result.get()
+                print("got data: \(userData)")
+                let userInfo = try JSONDecoder().decode(UserInfo.self, from: userData)
+                print("got user info: \(userInfo)")
+                try self.putUserInfoInKeychain(userInfo)
                 completion(.success(userInfo))
             } catch {
                 completion(.failure(error))

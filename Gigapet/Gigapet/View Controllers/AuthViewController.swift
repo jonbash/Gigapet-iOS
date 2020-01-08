@@ -104,7 +104,9 @@ class AuthViewController: UIViewController {
             delegate?.authenticationDidComplete(withUserInfo: userInfo)
         } catch {
             NSLog("Authentication failed: \(error)")
-            showFailureAlert(for: error)
+            DispatchQueue.main.async {
+                self.showFailureAlert(for: error)
+            }
         }
     }
 

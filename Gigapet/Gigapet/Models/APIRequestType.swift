@@ -19,13 +19,13 @@ enum APIRequestType {
     func endpoint() -> String {
         switch self {
         case .register:
-            return "auth/register"
+            return "register"
         case .login:
-            return "auth/login"
+            return "login"
         case .create(let userID), .fetchAll(let userID):
-            return "\(userID)/pet"
+            return "auth/\(userID)/pet"
         case .update(let userID, let feedingID), .delete(let userID, let feedingID):
-            return "\(userID)/pet/\(feedingID)"
+            return "auth/\(userID)/pet/\(feedingID)"
         @unknown default:
             fatalError("Unaccounted-for API Request Type")
         }

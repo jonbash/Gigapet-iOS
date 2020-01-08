@@ -67,6 +67,9 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: AuthenticationDelegate {
     func authenticationDidComplete(withUserInfo userInfo: UserInfo) {
-        refreshViews(forUser: userInfo)
+        DispatchQueue.main.async {
+            self.refreshViews(forUser: userInfo)
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }
