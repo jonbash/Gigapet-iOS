@@ -36,6 +36,14 @@ class CoreDataStack {
         in context: NSManagedObjectContext = CoreDataStack.shared.mainContext
     ) throws {
         guard context.hasChanges else { return }
-        try context.save()
+        var possibleError: Error?
+        context.performAndWait {
+            do {
+                try context.save()
+            } catch {
+                possibleError = error
+            }
+        }
+        if let error = possibleError { throw error }
     }
 }

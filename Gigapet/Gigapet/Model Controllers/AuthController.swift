@@ -45,7 +45,7 @@ class AuthController {
         password: String,
         completion: @escaping CompletionHandler
     ) {
-        var request = URL.base.request(for: .register)
+        var request = APIRequestType.register.request
 
         do {
             request.httpBody = try JSONEncoder().encode(UserRegistration(
@@ -65,7 +65,7 @@ class AuthController {
         password: String,
         completion: @escaping CompletionHandler
     ) {
-        var request = URL.base.request(for: .login)
+        var request = APIRequestType.login.request
 
         do {
             request.httpBody = try JSONEncoder().encode(UserLogin(
@@ -98,18 +98,5 @@ class AuthController {
                 completion(.failure(error))
             }
         }
-    }
-
-    // MARK: - UserAuth
-
-    private struct UserRegistration: Encodable {
-        let username: String
-        let petname: String
-        let password: String
-    }
-    
-    private struct UserLogin: Encodable {
-        let username: String
-        let password: String
     }
 }
