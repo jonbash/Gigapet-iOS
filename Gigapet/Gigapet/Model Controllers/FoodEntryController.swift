@@ -161,13 +161,15 @@ class FoodEntryController {
         completion: @escaping (Result<[FoodEntry], NetworkError>) -> Void
     ) {
         networkHandler.transferMahCodableDatas(with: request) {
-            [weak self] (result: Result<[FoodEntryRepresentation], NetworkError>) in
+            (result: Result<[FoodEntryRepresentation], NetworkError>) in
 
-            var entries = [FoodEntry]()
-            var entryReps = [FoodEntryRepresentation]()
+            var serverEntries = [FoodEntry]()
+            var serverEntryReps = [FoodEntryRepresentation]()
+            var localEntries = self.foodEntries
+            var entriesToDelete = [FoodEntry]()
 
             do {
-                entryReps = try result.get()
+                serverEntryReps = try result.get()
             } catch {
                 completion(.failure(.dataCodingError(specifically: error)))
                 return
@@ -175,22 +177,56 @@ class FoodEntryController {
 
             let context = CoreDataStack.shared.container.newBackgroundContext()
 
-            var registeredEntries = self?.foodEntries
+            for entryRep in serverEntryReps {
+                // predicate for matching ID between local and server entries
+                let matchingID: (FoodEntry) -> Bool = {
+                    Int($0.identifier) == entryRep.identifier
+                }
 
+                if let matchingLocalIndex = localEntries.firstIndex(where: matchingID) {
+                    // update (first) entry with matching ID if it exists
+                    let matchingLocalEntry = localEntries[matchingLocalIndex]
 
-            context.performAndWait {
-                for entryRep in entryReps {
-                    if let matchingLocalEntry = self?.foodEntries.first(where: {
-                        Int($0.identifier) == entryRep.identifier
-                    }) {
+                    context.performAndWait {
                         matchingLocalEntry.update(from: entryRep, context: context)
+                    }
+                    localEntries.remove(at: matchingLocalIndex)
 
-                    } else {
-                        let newEntry = FoodEntry(from: entryRep, context: context)
-                        entries.append(newEntry)
+                    // prep for deletion any other duplicate entries with matching ID
+                    let duplicateEntries = localEntries.compactMap { entry -> FoodEntry? in
+                        if matchingID(entry) {
+                            return entry
+                        } else { return nil }
+                    }
+                    entriesToDelete.append(contentsOf: duplicateEntries)
+                    localEntries.removeAll(where: matchingID)
+                } else {
+                    // otherwise make new local entry from server
+                    let newEntry = FoodEntry(from: entryRep, context: context)
+                    serverEntries.append(newEntry)
+                }
+            }
+
+            // handle remaining local entries that didn't have matching server entries
+            for localEntry in localEntries {
+                guard let localRep = localEntry.representation else {
+                    entriesToDelete.append(localEntry)
+                    continue
+                }
+                self.uploadNewEntry(localRep, context: context) { result in
+                    if case .failure(_) = result {
+                        completion(result)
                     }
                 }
             }
+
+            // delete any entries to delete
+            context.performAndWait {
+                for entry in entriesToDelete {
+                    context.delete(entry)
+                }
+            }
+
             do {
                 try CoreDataStack.shared.save(in: context)
             } catch {
@@ -198,8 +234,8 @@ class FoodEntryController {
                 return
             }
 
-            self?.foodEntries = entries
-            completion(.success(entries))
+            self.foodEntries = serverEntries
+            completion(.success(serverEntries))
         }
     }
 }
