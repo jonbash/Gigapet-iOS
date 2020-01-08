@@ -15,10 +15,6 @@ extension String {
     static let keychainKey = "com.jonbash.gigapet"
     static let currentUserIDKey = "currentUserID"
 
-//    static func tokenKey(forUserID userID: String) -> String {
-//        return "user_\(userID)_token"
-//    }
-
     static func userInfoKey(for userID: Int) -> String {
         return "user_\(userID)_info"
     }
@@ -26,6 +22,7 @@ extension String {
     // MARK: - Segues
 
     static let showAuthScreenSegue = "ShowAuthScreenSegue"
+    static let feedPetSegue = "FeedPetSegue"
     static let pastEntriesSegue = "PastEntriesSegue"
     static let editEntrySegue = "EditEntrySegue"
 

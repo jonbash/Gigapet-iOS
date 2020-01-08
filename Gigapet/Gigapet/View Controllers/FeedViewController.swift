@@ -10,6 +10,8 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
+    var foodEntryController: FoodEntryController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -25,7 +25,6 @@ class HomeViewController: UIViewController {
         if let userInfo = try? authController.fetchCurrentUserInfo() {
             refreshViews(forUser: userInfo)
         } else {
-            refreshViews(forUser: nil)
             performSegue(withIdentifier: .showAuthScreenSegue, sender: self)
         }
     }
@@ -36,9 +35,18 @@ class HomeViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == .showAuthScreenSegue,
             let authVC = segue.destination as? AuthViewController {
-            foodEntryController = nil
+
+            refreshViews(forUser: nil)
             authVC.delegate = self
             authVC.authController = authController
+        } else if segue.identifier == .feedPetSegue,
+            let feedVC = segue.destination as? FeedViewController {
+
+            feedVC.foodEntryController = foodEntryController
+        } else if segue.identifier == .pastEntriesSegue,
+            let entriesVC = segue.destination as? EntriesViewController {
+
+            entriesVC.foodEntryController = foodEntryController
         }
     }
 
