@@ -16,7 +16,11 @@ class AuthController {
 
     typealias CompletionHandler = (Result<UserInfo, Error>) -> Void
 
-    private let networkHandler = NetworkHandler()
+    private lazy var networkHandler: NetworkHandler = {
+        let handler = NetworkHandler()
+        handler.strict200CodeResponse = false
+        return handler
+    }()
 
     private let keychain = Keychain(service: .keychainKey)
 
@@ -50,8 +54,8 @@ class AuthController {
         do {
             request.httpBody = try JSONEncoder().encode(UserRegistration(
                 username: username,
-                petname: petName,
-                password: password))
+                password: password,
+                petname: petName))
         } catch {
             completion(.failure(NetworkError.otherError(error: error)))
             return
@@ -85,13 +89,10 @@ class AuthController {
         _ request: URLRequest,
         completion: @escaping CompletionHandler
     ) {
-        networkHandler.transferMahDatas(with: request
-        ) { (result: Result<Data, NetworkError>) in
+        networkHandler.transferMahCodableDatas(with: request
+        ) { (result: Result<UserInfo, NetworkError>) in
             do {
-                let userData = try result.get()
-                print("got data: \(userData)")
-                let userInfo = try JSONDecoder().decode(UserInfo.self, from: userData)
-                print("got user info: \(userInfo)")
+                let userInfo = try result.get()
                 try self.putUserInfoInKeychain(userInfo)
                 completion(.success(userInfo))
             } catch {
