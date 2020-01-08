@@ -74,7 +74,7 @@ extension FoodEntry {
             else { return nil }
 
         let foodAmount = Int(self.foodAmount)
-        let identifier: Int? = self.identifier == -1 ? nil : Int(self.identifier)
+        let identifier = (self.identifier == FoodEntry.nilID) ? nil : Int(self.identifier)
 
         return Representation(
             foodCategory: category,
@@ -96,6 +96,8 @@ extension FoodEntry {
 
         if let identifier = representation.identifier {
             self.identifier = Int64(identifier)
+        } else {
+            self.identifier = FoodEntry.nilID
         }
     }
 }

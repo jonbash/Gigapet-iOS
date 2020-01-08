@@ -31,12 +31,12 @@ class FoodEntryController {
         foodName: String,
         foodAmount: Int,
         timestamp: Date = Date(),
-        completion: @escaping ((NetworkError?) -> Void)
+        completion: @escaping (NetworkError?) -> Void
     ) {
         let context = CoreDataStack.shared.container.newBackgroundContext()
-        var entry: FoodEntry?
+        var newEntry: FoodEntry?
         context.performAndWait {
-            entry = FoodEntry(
+            newEntry = FoodEntry(
                 category: category,
                 foodName: foodName,
                 foodAmount: foodAmount,
@@ -44,30 +44,18 @@ class FoodEntryController {
                 identifier: nil,
                 context: context)
         }
-
-        var entryData: Data?
-        do {
-            entryData = try JSONEncoder().encode(entry?.representation)
-        } catch {
-            completion(.dataCodingError(specifically: error))
+        guard let entry = newEntry else {
+            completion(.none)
+            return
         }
 
-        var request = URL.base.request(for: .create(userID: user.id))
-        request.httpBody = entryData
-        // TODO: complete request for adding entry
-
-        networkHandler.transferMahOptionalDatas(with: request) { result in
-            self.handlePost(context: context, result: result, completion: completion)
-            // TODO: set entry identifier
-        }
+        uploadNewEntry(entry, context: context, completion: completion)
     }
 
     func fetchAll(
         completion: @escaping (Result<[FoodEntry], NetworkError>) -> Void
     ) {
-        let context = CoreDataStack.shared.container.newBackgroundContext()
-        var request = URL.base.request(for: .fetchAll(userID: user.id))
-        // TODO: complete rest of request
+        let request = APIRequestType.fetchAll(userID: user.id).request
 
         networkHandler.transferMahCodableDatas(with: request
         ) { (result: Result<[FoodEntry.Representation], NetworkError>) in
@@ -81,8 +69,17 @@ class FoodEntryController {
                 return
             }
 
-            for entryRep in entryReps {
-                entries.append(FoodEntry(from: entryRep, context: context))
+            let context = CoreDataStack.shared.container.newBackgroundContext()
+            context.performAndWait {
+                for entryRep in entryReps {
+                    entries.append(FoodEntry(from: entryRep, context: context))
+                }
+            }
+            do {
+                try CoreDataStack.shared.save(in: context)
+            } catch {
+                completion(.failure(.otherError(error: error)))
+                return
             }
 
             self.foodEntries = entries
@@ -98,11 +95,9 @@ class FoodEntryController {
         timestamp: Date?,
         completion: @escaping (NetworkError?) -> Void
     ) {
-        if entry.identifier == -1 {
-
-        }
         let context = CoreDataStack.shared.container.newBackgroundContext()
 
+        // update local entry
         context.performAndWait {
             if let category = category { entry.foodCategory = category.rawValue }
             if let foodName = foodName { entry.foodName = foodName }
@@ -110,6 +105,13 @@ class FoodEntryController {
             if let timestamp = timestamp { entry.dateFed = timestamp }
         }
 
+        // if nil ID, then we haven't gotten the ID from the server
+        if entry.identifier == FoodEntry.nilID {
+            uploadNewEntry(entry, context: context, completion: completion)
+            return
+        }
+
+        // encode data
         var entryData: Data?
         do {
             entryData = try JSONEncoder().encode(entry.representation)
@@ -117,13 +119,22 @@ class FoodEntryController {
             completion(.dataCodingError(specifically: error))
         }
 
-        var request = URL.base.request(for:
-            .update(userID: user.id, feedingID: Int(entry.identifier)))
+        // build request
+        var request = APIRequestType
+            .update(userID: user.id, feedingID: Int(entry.identifier))
+            .request
         request.httpBody = entryData
-        // TODO: complete rest of request
 
+        // send request
         networkHandler.transferMahOptionalDatas(with: request) { result in
-            self.handlePost(context: context, result: result, completion: completion)
+            do {
+                _ = try result.get()
+                try CoreDataStack.shared.save(in: context)
+            } catch let error as NetworkError {
+                completion(error)
+            } catch {
+                completion(.otherError(error: error))
+            }
         }
     }
 
@@ -137,43 +148,51 @@ class FoodEntryController {
             context.delete(entry)
         }
 
-        var request = URL.base.request(for:
-            .delete(userID: user.id, feedingID: Int(entry.identifier)))
-        // TODO: complete rest of request
+        let request = APIRequestType
+            .delete(userID: user.id, feedingID: Int(entry.identifier))
+            .request
 
         networkHandler.transferMahOptionalDatas(with: request) { result in
-            self.handlePost(context: context, result: result, completion: completion)
+            do {
+                _ = try result.get()
+                try CoreDataStack.shared.save(in: context)
+            } catch let error as NetworkError {
+                completion(error)
+            } catch {
+                completion(.otherError(error: error))
+            }
         }
     }
 
     // MARK: - Private Methods
 
-    private func handlePost(
+    private func uploadNewEntry(
+        _ entry: FoodEntry,
         context: NSManagedObjectContext,
-        result: Result<Data?, NetworkError>,
-        completion: (NetworkError?) -> Void
+        completion: @escaping ((NetworkError?) -> Void)
     ) {
+        var entryData: Data?
         do {
-            _ = try result.get()
-            var error: Error?
-            context.performAndWait {
-                guard context.hasChanges else { return }
-                do {
-                    try context.save()
-                } catch let thisError {
-                    error = thisError
-                }
-            }
-            if let error = error {
-                completion(.otherError(error: error))
-            } else {
-                completion(nil)
-            }
-        } catch let error as NetworkError {
-            completion(error)
+            entryData = try JSONEncoder().encode(entry.representation)
         } catch {
-            completion(.otherError(error: error))
+            completion(.dataCodingError(specifically: error))
+            return
+        }
+
+        var request = APIRequestType.create(userID: user.id).request
+        request.httpBody = entryData
+
+        networkHandler.transferMahCodableDatas(with: request
+        ) { (result: Result<FoodEntry.Representation, NetworkError>) in
+            do {
+                let entryRep = try result.get()
+                entry.identifier = Int64(entryRep.identifier ?? -1)
+                try CoreDataStack.shared.save(in: context)
+            } catch let error as NetworkError {
+                completion(error)
+            } catch {
+                completion(.otherError(error: error))
+            }
         }
     }
-    
 }

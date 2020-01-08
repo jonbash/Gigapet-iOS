@@ -9,6 +9,8 @@
 import CoreData
 
 extension FoodEntry {
+    static let nilID: Int64 = -1
+
     convenience init(
         category: FoodCategory,
         foodName: String,
@@ -25,7 +27,7 @@ extension FoodEntry {
         if let identifier = identifier {
             self.identifier = Int64(identifier)
         } else {
-            self.identifier = -1
+            self.identifier = FoodEntry.nilID
         }
     }
 }
