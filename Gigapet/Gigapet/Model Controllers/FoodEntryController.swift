@@ -16,12 +16,23 @@ class FoodEntryController {
     private(set) var user: UserInfo
     private(set) var foodEntries: [FoodEntry] = []
 
-    private let networkHandler = NetworkHandler()
+    private var networkHandler: NetworkHandler = {
+        let handler = NetworkHandler()
+        handler.strict200CodeResponse = false
+        return handler
+    }()
 
     // MARK: - Init
 
     init(user: UserInfo) {
         self.user = user
+        self.fetchAll { result in
+            do {
+                self.foodEntries = try result.get()
+            } catch {
+                NSLog("Error fetching food entries in FoodEntryController initialization: \(error)")
+            }
+        }
     }
 
     // MARK: CRUD
@@ -55,12 +66,12 @@ class FoodEntryController {
     func fetchAll(
         completion: @escaping (Result<[FoodEntry], NetworkError>) -> Void
     ) {
-        let request = APIRequestType.fetchAll(userID: user.id).request
+        let request = APIRequestType.fetchAll(user: user).request
 
         networkHandler.transferMahCodableDatas(with: request
-        ) { (result: Result<[FoodEntry.Representation], NetworkError>) in
+        ) { (result: Result<[FoodEntryRepresentation], NetworkError>) in
             var entries = [FoodEntry]()
-            var entryReps = [FoodEntry.Representation]()
+            var entryReps = [FoodEntryRepresentation]()
 
             do {
                 entryReps = try result.get()
@@ -121,7 +132,7 @@ class FoodEntryController {
 
         // build request
         var request = APIRequestType
-            .update(userID: user.id, feedingID: Int(entry.identifier))
+            .update(user: user, feedingID: Int(entry.identifier))
             .request
         request.httpBody = entryData
 
@@ -149,7 +160,7 @@ class FoodEntryController {
         }
 
         let request = APIRequestType
-            .delete(userID: user.id, feedingID: Int(entry.identifier))
+            .delete(user: user, feedingID: Int(entry.identifier))
             .request
 
         networkHandler.transferMahOptionalDatas(with: request) { result in
@@ -179,11 +190,11 @@ class FoodEntryController {
             return
         }
 
-        var request = APIRequestType.create(userID: user.id).request
+        var request = APIRequestType.create(user: user).request
         request.httpBody = entryData
 
         networkHandler.transferMahCodableDatas(with: request
-        ) { (result: Result<FoodEntry.Representation, NetworkError>) in
+        ) { (result: Result<FoodEntryRepresentation, NetworkError>) in
             do {
                 let entryRep = try result.get()
                 entry.identifier = Int64(entryRep.identifier ?? -1)

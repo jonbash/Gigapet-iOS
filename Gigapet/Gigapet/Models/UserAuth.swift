@@ -10,8 +10,8 @@ import Foundation
 
 struct UserRegistration: Encodable {
     let username: String
-    let petname: String
     let password: String
+    let petname: String
 }
 
 struct UserLogin: Encodable {

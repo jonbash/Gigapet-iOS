@@ -9,64 +9,72 @@
 import CoreData
 import NetworkHandler
 
-extension FoodEntry {
+// MARK: - Representation Struct
 
-    // MARK: - Representation Struct
+struct FoodEntryRepresentation: Codable {
+    var foodCategory: FoodCategory
+    var foodName: String
+    var dateFed: Date
+    var foodAmount: Int
+    var identifier: Int?
 
-    struct Representation: Codable {
-        var foodCategory: FoodCategory
-        var foodName: String
-        var dateFed: Date
-        var foodAmount: Int
-        var identifier: Int?
-
-        enum CodingKeys: String, CodingKey {
-            case foodCategory = "food_category"
-            case foodName = "food_name"
-            case dateFed = "date_fed"
-            case foodAmount = "food_amount"
-            case identifier
-        }
-
-        init(
-            foodCategory: FoodCategory,
-            foodName: String,
-            foodAmount: Int,
-            dateFed: Date = Date(),
-            identifier: Int? = nil
-        ) {
-            self.foodCategory = foodCategory
-            self.foodName = foodName
-            self.foodAmount = foodAmount
-            self.dateFed = dateFed
-
-            self.identifier = identifier
-        }
-
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-
-            let categoryString = try container.decode(String.self, forKey: .foodCategory)
-
-            self.foodCategory = FoodCategory(rawValue: categoryString) ?? .other(categoryString)
-            self.foodName = try container.decode(String.self, forKey: .foodName)
-            self.foodAmount = try container.decode(Int.self, forKey: .foodAmount)
-            self.dateFed = try container.decode(Date.self, forKey: .dateFed)
-        }
-
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-
-            try container.encode(foodCategory.rawValue, forKey: .foodCategory)
-            try container.encode(foodName, forKey: .foodName)
-            try container.encode(foodAmount, forKey: .foodAmount)
-            try container.encode(dateFed, forKey: .dateFed)
-        }
+    enum CodingKeys: String, CodingKey {
+        case foodCategory = "food_category"
+        case foodName = "food_name"
+        case dateFed = "date_fed"
+        case foodAmount = "food_amount"
+        case identifier = "id"
     }
 
-    // MARK: - Computed / Init
+    init(
+        foodCategory: FoodCategory,
+        foodName: String,
+        foodAmount: Int,
+        dateFed: Date = Date(),
+        identifier: Int? = nil
+    ) {
+        self.foodCategory = foodCategory
+        self.foodName = foodName
+        self.foodAmount = foodAmount
+        self.dateFed = dateFed
 
-    var representation: Representation? {
+        self.identifier = identifier
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        let categoryString = try container.decode(String.self, forKey: .foodCategory)
+        let dateAsString = try container.decode(String.self, forKey: .dateFed)
+        guard let dateAsDouble = Double(dateAsString) else {
+            throw NetworkError.dataCodingError(specifically: NSError())
+        }
+
+        self.foodCategory = FoodCategory(rawValue: categoryString) ?? .treats
+        self.foodName = try container.decode(String.self, forKey: .foodName)
+        self.foodAmount = try container.decode(Int.self, forKey: .foodAmount)
+        self.dateFed = Date(timeIntervalSince1970: dateAsDouble)
+
+        self.identifier = try? container.decode(Int.self, forKey: .identifier)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        let dateAsDouble = dateFed.timeIntervalSince1970
+
+        try container.encode(foodCategory.rawValue, forKey: .foodCategory)
+        try container.encode(foodName, forKey: .foodName)
+        try container.encode(foodAmount, forKey: .foodAmount)
+        try container.encode(dateAsDouble, forKey: .dateFed)
+    }
+}
+
+// MARK: - Computed / Init
+
+extension FoodEntry {
+
+    var representation: FoodEntryRepresentation? {
         guard let categoryString = self.foodCategory,
             let category = FoodCategory(rawValue: categoryString),
             let foodName = self.foodName,
@@ -76,7 +84,7 @@ extension FoodEntry {
         let foodAmount = Int(self.foodAmount)
         let identifier = (self.identifier == FoodEntry.nilID) ? nil : Int(self.identifier)
 
-        return Representation(
+        return FoodEntryRepresentation(
             foodCategory: category,
             foodName: foodName,
             foodAmount: foodAmount,
@@ -85,7 +93,7 @@ extension FoodEntry {
     }
 
     convenience init(
-        from representation: Representation,
+        from representation: FoodEntryRepresentation,
         context: NSManagedObjectContext = CoreDataStack.shared.mainContext
     ) {
         self.init(context: context)

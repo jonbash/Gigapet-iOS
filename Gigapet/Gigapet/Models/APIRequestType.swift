@@ -12,10 +12,10 @@ import NetworkHandler
 enum APIRequestType {
     case register
     case login
-    case create(userID: Int)
-    case fetchAll(userID: Int)
-    case update(userID: Int, feedingID: Int)
-    case delete(userID: Int, feedingID: Int)
+    case create(user: UserInfo)
+    case fetchAll(user: UserInfo)
+    case update(user: UserInfo, feedingID: Int)
+    case delete(user: UserInfo, feedingID: Int)
 
     var endpoint: String {
         switch self {
@@ -23,25 +23,51 @@ enum APIRequestType {
             return "register"
         case .login:
             return "login"
-        case .create(let userID), .fetchAll(let userID):
-            return "auth/\(userID)/pet"
-        case .update(let userID, let feedingID), .delete(let userID, let feedingID):
-            return "auth/\(userID)/pet/\(feedingID)"
+        case .create(let user), .fetchAll(let user):
+            return "auth/\(user.id)/pet"
+        case .update(let user, let feedingID), .delete(let user, let feedingID):
+            return "auth/\(user.id)/pet/\(feedingID)"
+        }
+    }
+
+    var needsJSON: Bool {
+        switch self {
+        case .register, .login, .create, .update: return true
+        default: return false
+        }
+    }
+
+    var token: String? {
+        switch self {
+        case .create(let user),
+             .update(let user, _),
+             .fetchAll(let user),
+             .delete(let user, _):
+
+            return user.token
+        default:
+            return nil
         }
     }
 
     var request: URLRequest {
         var request = URLRequest(url: URL.base.appendingPathComponent(self.endpoint))
 
+        if self.needsJSON {
+            request.addValue("application/json",
+                             forHTTPHeaderField: "Content-Type")
+        }
+        if let token = self.token {
+            request.addValue(token, forHTTPHeaderField: "authentication")
+        }
+
         switch self {
-        case .register, .login, .create:
+        case .register, .login:
             request.httpMethod = HTTPMethods.post.rawValue
-            request.addValue("application/json",
-                             forHTTPHeaderField: "Content-Type")
-        case .update(_, _):
+        case .create:
+            request.httpMethod = HTTPMethods.post.rawValue
+        case .update:
             request.httpMethod = HTTPMethods.put.rawValue
-            request.addValue("application/json",
-                             forHTTPHeaderField: "Content-Type")
         case .fetchAll:
             request.httpMethod = HTTPMethods.get.rawValue
         case .delete:

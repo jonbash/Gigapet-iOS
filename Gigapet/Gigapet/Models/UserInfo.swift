@@ -26,6 +26,7 @@ extension UserInfo: Decodable {
     enum TopLevelKey: CodingKey {
         case token
         case user
+        case saved
     }
 
     enum UserKey: CodingKey {
@@ -37,9 +38,17 @@ extension UserInfo: Decodable {
 
     init(from decoder: Decoder) throws {
         let topContainer = try decoder.container(keyedBy: TopLevelKey.self)
-        let userContainer = try topContainer.nestedContainer(
-            keyedBy: UserKey.self,
-            forKey: .user)
+        var userContainer: KeyedDecodingContainer<UserInfo.UserKey>
+
+        do {
+             userContainer = try topContainer.nestedContainer(
+                keyedBy: UserKey.self,
+                forKey: .user)
+        } catch {
+            userContainer = try topContainer.nestedContainer(
+                keyedBy: UserKey.self,
+                forKey: .saved)
+        }
 
         self.token = try topContainer.decode(String.self, forKey: .token)
         self.id = try userContainer.decode(Int.self, forKey: .id)
