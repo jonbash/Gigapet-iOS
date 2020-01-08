@@ -43,6 +43,7 @@ class HomeViewController: UIViewController {
             let feedVC = segue.destination as? FeedViewController {
 
             feedVC.foodEntryController = foodEntryController
+            feedVC.previousViewController = self
         } else if segue.identifier == .pastEntriesSegue,
             let entriesVC = segue.destination as? EntriesViewController {
 
