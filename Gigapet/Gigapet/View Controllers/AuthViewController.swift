@@ -71,6 +71,8 @@ class AuthViewController: UIViewController {
             let password = passwordField.text, !password.isEmpty
             else { return }
 
+        authenticateButton.isEnabled = false
+
         if authType == .register {
             guard let petName = petNameField.text, !petName.isEmpty
                 else { return }
@@ -94,13 +96,15 @@ class AuthViewController: UIViewController {
             delegate?.authenticationDidComplete(withUserInfo: userInfo)
         } catch {
             NSLog("Authentication failed: \(error)")
-            DispatchQueue.main.async {
-                self.showFailureAlert(for: error)
+            DispatchQueue.main.async { [weak self] in
+                self?.showFailureAlert(for: error)
             }
         }
     }
 
     private func showFailureAlert(for error: Error) {
-        present(UIAlertController(error: error), animated: true, completion: nil)
+        present(UIAlertController(error: error), animated: true) { [weak self] in
+            self?.authenticateButton.isEnabled = true
+        }
     }
 }
