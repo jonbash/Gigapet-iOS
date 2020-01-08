@@ -23,27 +23,9 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
     weak var entryController: FoodEntryController?
     weak var delegate: EntriesTableViewDelegate?
 
-    private lazy var fetchedResultsController: NSFetchedResultsController<FoodEntry> = {
-        let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "dateFed", ascending: false)]
-        let frc = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: CoreDataStack.shared.mainContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil)
-        frc.delegate = self
-
-        do {
-            try frc.performFetch()
-        } catch {
-            fatalError("Error initializing fetched results controller: \(error)")
-        }
-
-        return frc
-        // TODO: sections by day
-        // TODO: use cache
-    }()
+    private var fetchedResultsController: NSFetchedResultsController<FoodEntry>? {
+        return entryController?.fetchedResultsController
+    }
 
     // MARK: - Data Source Methods
 
@@ -53,7 +35,7 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
     ) -> Int {
         switch currentDisplayType {
         case .all:
-            return fetchedResultsController.fetchedObjects?.count ?? 0
+            return fetchedResultsController?.fetchedObjects?.count ?? 0
         // TODO: implement other display types
         default: return 0
         }
@@ -69,7 +51,7 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
                 for: indexPath)
                 as? EntryTableViewCell
                 else { return UITableViewCell() }
-            cell.entry = fetchedResultsController.object(at: indexPath)
+            cell.entry = fetchedResultsController?.object(at: indexPath)
 
             return cell
         } else {
@@ -87,10 +69,10 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath
     ) {
-        if currentDisplayType == .all && editingStyle == .delete {
-            let entry = fetchedResultsController.object(at: indexPath)
+        if currentDisplayType == .all && editingStyle == .delete,
+            let entry = fetchedResultsController?.object(at: indexPath) {
 
-            entryController?.deleteFoodEntry(entry) { [weak self] (result) in
+            entryController?.deleteFoodEntry(entry) { [weak self] result in
                 DispatchQueue.main.async {
                     if case .failure(let error) = result {
                         self?.delegate?.entryDeletionDidFail(withError: error)

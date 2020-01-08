@@ -18,6 +18,27 @@ class FoodEntryController {
     private(set) var user: UserInfo
     private(set) var foodEntries: [FoodEntry] = []
 
+    lazy var fetchedResultsController: NSFetchedResultsController<FoodEntry> = {
+        let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: "dateFed", ascending: false)]
+        let frc = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: CoreDataStack.shared.mainContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+
+        do {
+            try frc.performFetch()
+        } catch {
+            fatalError("Error initializing fetched results controller: \(error)")
+        }
+
+        return frc
+        // TODO: sections by day
+        // TODO: use cache
+    }()
+
     private var networkHandler: NetworkHandler = {
         let handler = NetworkHandler()
         handler.strict200CodeResponse = false
@@ -68,6 +89,10 @@ class FoodEntryController {
         completion: @escaping ResultHandler
     ) {
         let request = APIRequestType.fetchAll(user: user).request
+
+        if let localEntries = fetchedResultsController.fetchedObjects {
+            self.foodEntries = localEntries
+        }
 
         handleFetchedEntries(request: request, completion: completion)
     }
@@ -122,7 +147,7 @@ class FoodEntryController {
         _ entry: FoodEntry,
         completion: @escaping ResultHandler
     ) {
-        let context = CoreDataStack.shared.container.newBackgroundContext()
+        let context = CoreDataStack.shared.mainContext
 
         context.performAndWait {
             context.delete(entry)
@@ -160,8 +185,8 @@ class FoodEntryController {
         request: URLRequest,
         completion: @escaping (Result<[FoodEntry], NetworkError>) -> Void
     ) {
-        networkHandler.transferMahCodableDatas(with: request) {
-            (result: Result<[FoodEntryRepresentation], NetworkError>) in
+        networkHandler.transferMahCodableDatas(with: request
+        ) { (result: Result<[FoodEntryRepresentation], NetworkError>) in
 
             var serverEntries = [FoodEntry]()
             var serverEntryReps = [FoodEntryRepresentation]()
@@ -198,8 +223,8 @@ class FoodEntryController {
                             return entry
                         } else { return nil }
                     }
-                    entriesToDelete.append(contentsOf: duplicateEntries)
                     localEntries.removeAll(where: matchingID)
+                    entriesToDelete.append(contentsOf: duplicateEntries)
                 } else {
                     // otherwise make new local entry from server
                     let newEntry = FoodEntry(from: entryRep, context: context)
@@ -221,11 +246,7 @@ class FoodEntryController {
             }
 
             // delete any entries to delete
-            context.performAndWait {
-                for entry in entriesToDelete {
-                    context.delete(entry)
-                }
-            }
+            self.deleteLocalEntries(entriesToDelete)
 
             do {
                 try CoreDataStack.shared.save(in: context)
@@ -236,6 +257,17 @@ class FoodEntryController {
 
             self.foodEntries = serverEntries
             completion(.success(serverEntries))
+        }
+    }
+
+    private func deleteLocalEntries(_ entriesToDelete: [FoodEntry]) {
+        DispatchQueue.main.async {
+            let mainContext = CoreDataStack.shared.mainContext
+            mainContext.perform {
+                for entry in entriesToDelete {
+                    mainContext.delete(entry)
+                }
+            }
         }
     }
 }
