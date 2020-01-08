@@ -13,12 +13,9 @@ class EntriesViewController: UIViewController {
     // MARK: - Properties
 
     var foodEntryController: FoodEntryController?
+    lazy var tableViewDataSource = EntriesTableViewDataSource()
 
-    private var currentDisplayType: EntryDisplayType = .all {
-        didSet {
-            changeDisplayType(to: currentDisplayType)
-        }
-    }
+    private var currentDisplayType: EntryDisplayType = .all
 
     @IBOutlet private weak var entriesTableView: UITableView!
 
@@ -27,20 +24,29 @@ class EntriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        tableViewDataSource.currentDisplayType = currentDisplayType
+        tableViewDataSource.tableView = entriesTableView
+        tableViewDataSource.entryController = foodEntryController
+
+        entriesTableView.dataSource = tableViewDataSource
+        entriesTableView.delegate = self
     }
 
     // MARK: - Actions
 
     @IBAction private func periodControlChanged(_ sender: UISegmentedControl) {
         // I want it to crash if there's an unexpected value given
-        currentDisplayType = EntryDisplayType(rawValue: sender.selectedSegmentIndex)!
+        changeDisplayType(to: EntryDisplayType(rawValue:
+            sender.selectedSegmentIndex)!)
     }
 
     // MARK: - Methods
 
     private func changeDisplayType(to displayType: EntryDisplayType) {
+        currentDisplayType = displayType
+        tableViewDataSource.currentDisplayType = displayType
 
+        entriesTableView.reloadData()
     }
 
     // MARK: - Navigation
@@ -50,4 +56,8 @@ class EntriesViewController: UIViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
+}
+
+extension EntriesViewController: UITableViewDelegate {
+
 }

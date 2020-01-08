@@ -15,6 +15,7 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
 
     var currentDisplayType: EntryDisplayType = .all
     weak var tableView: UITableView?
+    weak var entryController: FoodEntryController?
 
     private lazy var fetchedResultsController: NSFetchedResultsController<FoodEntry> = {
         let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
@@ -40,7 +41,10 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
 
     // MARK: - Data Source Methods
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         switch currentDisplayType {
         case .all:
             return fetchedResultsController.fetchedObjects?.count ?? 0
@@ -49,7 +53,10 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         if currentDisplayType == .all {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: "EntryCell",
@@ -66,6 +73,22 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
                 as? EntryTableViewCell
                 else { return UITableViewCell() }
             return cell
+        }
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        if currentDisplayType == .all && editingStyle == .delete {
+            let entry = fetchedResultsController.object(at: indexPath)
+            CoreDataStack.shared.mainContext.delete(entry)
+            do {
+                try CoreDataStack.shared.save()
+            } catch {
+                NSLog("Error saving changes after deleting object: \(error)")
+            }
         }
     }
 }
@@ -93,6 +116,7 @@ extension EntriesTableViewDataSource: NSFetchedResultsControllerDelegate {
         newIndexPath: IndexPath?
     ) {
         guard currentDisplayType == .all else { return }
+
         switch type {
         case .insert:
             guard
