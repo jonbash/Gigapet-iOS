@@ -155,6 +155,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="34"/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
                                         <state key="normal" title="–"/>
+                                        <connections>
+                                            <action selector="decrementQuantityTapped:" destination="DgB-6d-C4b" eventType="touchUpInside" id="gdB-iP-qVG"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1V8-7Z-ulb">
                                         <rect key="frame" x="34" y="0.0" width="75" height="34"/>
@@ -168,6 +171,9 @@
                                         <rect key="frame" x="113" y="0.0" width="30" height="34"/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
                                         <state key="normal" title="+"/>
+                                        <connections>
+                                            <action selector="incrementQuantityTapped:" destination="DgB-6d-C4b" eventType="touchUpInside" id="Xza-BJ-jpP"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -175,6 +181,9 @@
                                 <rect key="frame" x="145" y="675" width="124" height="39"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="Feed My Pet!"/>
+                                <connections>
+                                    <action selector="feedButtonTapped:" destination="DgB-6d-C4b" eventType="touchUpInside" id="OsG-Lj-XEr"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quantity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tts-Ev-TcF">
                                 <rect key="frame" x="174.5" y="591.5" width="65" height="20.5"/>
@@ -198,6 +207,12 @@
                         <viewLayoutGuide key="safeArea" id="42a-dw-msa"/>
                     </view>
                     <navigationItem key="navigationItem" id="lfg-zD-PiG"/>
+                    <connections>
+                        <outlet property="feedTimePicker" destination="ecT-FI-YU8" id="xoe-nk-Joo"/>
+                        <outlet property="foodAmountField" destination="1V8-7Z-ulb" id="dJn-CR-DzR"/>
+                        <outlet property="foodCategoryPicker" destination="EuG-vy-3SP" id="W8t-bf-Yex"/>
+                        <outlet property="foodNameField" destination="ZdL-T5-r7y" id="WTA-wh-kjS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dte-Oq-k9R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

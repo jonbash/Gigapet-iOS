@@ -10,22 +10,32 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
+    // MARK: - Properties
+
     var foodEntryController: FoodEntryController?
+
+    @IBOutlet private weak var feedTimePicker: UIDatePicker!
+    @IBOutlet private weak var foodCategoryPicker: UIPickerView!
+    @IBOutlet private weak var foodNameField: UITextField!
+    @IBOutlet private weak var foodAmountField: UITextField!
+
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        feedTimePicker.minimumDate = Date()
     }
 
-    /*
-    // MARK: - Navigation
+    // MARK: - Actions
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction private func decrementQuantityTapped(_ sender: UIButton) {
     }
-    */
+
+    @IBAction private func incrementQuantityTapped(_ sender: UIButton) {
+    }
+
+    @IBAction private func feedButtonTapped(_ sender: UIButton) {
+    }
 
 }
