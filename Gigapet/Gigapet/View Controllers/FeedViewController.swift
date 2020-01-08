@@ -14,7 +14,7 @@ class FeedViewController: UIViewController {
     // MARK: - Properties
 
     var foodEntryController: FoodEntryController?
-    var editingEntry: FoodEntry?
+    weak var editingEntry: FoodEntry?
 
     weak var previousViewController: UIViewController?
 
@@ -30,14 +30,32 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        foodNameField.delegate = self
+
         foodCategoryPicker.dataSource = self
         foodCategoryPicker.delegate = self
+
+        feedTimePicker.timeZone = .autoupdatingCurrent
+        feedTimePicker.calendar = .autoupdatingCurrent
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if editingEntry != nil {
+        updateViews()
+    }
+
+    func updateViews() {
+        if let entry = editingEntry,
+            let categoryString = entry.foodCategory,
+            let category = FoodCategory(rawValue: categoryString),
+            let categoryIndex = FoodCategory.allCases.firstIndex(of: category) {
+
+            foodNameField.text = entry.foodName
+            feedTimePicker.date = entry.dateFed ?? Date()
+            foodAmountField.text = String(entry.foodAmount)
+            foodCategoryPicker.selectRow(categoryIndex, inComponent: 0, animated: false)
+
             feedButton.setTitle("Update Entry", for: .normal)
         } else {
             feedButton.setTitle("Feed My Pet!", for: .normal)
@@ -105,20 +123,30 @@ class FeedViewController: UIViewController {
         }
     }
 
-    private func handleResponse(_ error: NetworkError?) {
+    private func handleResponse(_ result: Result<[FoodEntry], NetworkError>) {
         DispatchQueue.main.async { [weak self] in
-            if let error = error {
+            switch result {
+            case .success:
+                if let previous = self?.previousViewController {
+                    self?.navigationController?
+                        .popToViewController(previous, animated: true)
+                } else {
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }
+            case .failure(let error):
                 let alert = UIAlertController(error: error)
                 self?.present(alert, animated: true, completion: nil)
-                return
-            }
-            if let previous = self?.previousViewController {
-                self?.navigationController?
-                    .popToViewController(previous, animated: true)
-            } else {
-                self?.navigationController?.popToRootViewController(animated: true)
             }
         }
+    }
+}
+
+// MARK: - Text Field Delegate
+
+extension FeedViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 
