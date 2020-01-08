@@ -70,7 +70,7 @@ struct FoodEntryRepresentation: Codable {
     }
 }
 
-// MARK: - Computed / Init
+// MARK: - Computed / Init / Update
 
 extension FoodEntry {
 
@@ -97,6 +97,13 @@ extension FoodEntry {
         context: NSManagedObjectContext = CoreDataStack.shared.mainContext
     ) {
         self.init(context: context)
+        self.update(from: representation, context: context)
+    }
+
+    func update(
+        from representation: FoodEntryRepresentation,
+        context: NSManagedObjectContext = CoreDataStack.shared.mainContext
+    ) {
         self.foodCategory = representation.foodCategory.rawValue
         self.foodName = representation.foodName
         self.foodAmount = Int64(representation.foodAmount)
