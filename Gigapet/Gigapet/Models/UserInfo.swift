@@ -11,33 +11,53 @@ import Foundation
 struct UserInfo {
     var id: Int
     var token: String
+    var petname: String
 
-    init(id: Int, token: String) {
+    init(id: Int, token: String, petname: String) {
         self.id = id
         self.token = token
+        self.petname = petname
     }
 }
 
+// MARK: Decodable
+
 extension UserInfo: Decodable {
-
-    // MARK: Decodable
-
     enum TopLevelKey: CodingKey {
         case token
-        case saved
+        case user
     }
 
     enum UserKey: CodingKey {
         case id
+        case username
+        case password
+        case petname
     }
 
     init(from decoder: Decoder) throws {
         let topContainer = try decoder.container(keyedBy: TopLevelKey.self)
         let userContainer = try topContainer.nestedContainer(
             keyedBy: UserKey.self,
-            forKey: .saved)
+            forKey: .user)
 
         self.token = try topContainer.decode(String.self, forKey: .token)
         self.id = try userContainer.decode(Int.self, forKey: .id)
+        self.petname = try userContainer.decode(String.self, forKey: .petname)
+    }
+}
+
+// MARK: Encodable
+
+extension UserInfo: Encodable {
+    func encode(to encoder: Encoder) throws {
+        var topContainer = encoder.container(keyedBy: TopLevelKey.self)
+        var userContainer = topContainer.nestedContainer(
+            keyedBy: UserKey.self,
+            forKey: .user)
+
+        try topContainer.encode(token, forKey: .token)
+        try userContainer.encode(id, forKey: .id)
+        try userContainer.encode(petname, forKey: .petname)
     }
 }
