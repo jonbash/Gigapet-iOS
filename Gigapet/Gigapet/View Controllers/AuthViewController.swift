@@ -34,22 +34,12 @@ class AuthViewController: UIViewController {
     // MARK: - Outlets
 
     @IBOutlet private weak var petNameStack: UIStackView!
-    @IBOutlet private weak var emailStack: UIStackView!
 
     @IBOutlet private weak var usernameField: UITextField!
     @IBOutlet private weak var petNameField: UITextField!
-    @IBOutlet private weak var emailField: UITextField!
     @IBOutlet private weak var passwordField: UITextField!
 
     @IBOutlet private weak var authenticateButton: UIButton!
-
-    // MARK: - View Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        emailStack.isHidden = true
-    }
 
     // MARK: - Actions
     
