@@ -10,15 +10,22 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    // MARK: - Properties
+
     var foodEntryController: FoodEntryController?
     var authController = AuthController()
+
+    @IBOutlet private weak var petNameLabel: UILabel!
+
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let userInfo = authController.fetchCurrentUserInfo() {
+        if let userInfo = try? authController.fetchCurrentUserInfo() {
             refreshViews(forUser: userInfo)
         } else {
+            refreshViews(forUser: nil)
             performSegue(withIdentifier: .showAuthScreenSegue, sender: self)
         }
     }
@@ -35,9 +42,15 @@ class HomeViewController: UIViewController {
         }
     }
 
+    // MARK: - Private
+
     private func refreshViews(forUser userInfo: UserInfo?) {
         if let userInfo = userInfo {
             foodEntryController = FoodEntryController(user: userInfo)
+            petNameLabel.text = userInfo.petname
+        } else {
+            foodEntryController = nil
+            petNameLabel.text = "My Pet Name"
         }
     }
 }
@@ -46,6 +59,6 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: AuthenticationDelegate {
     func authenticationDidComplete(withUserInfo userInfo: UserInfo) {
-
+        refreshViews(forUser: userInfo)
     }
 }

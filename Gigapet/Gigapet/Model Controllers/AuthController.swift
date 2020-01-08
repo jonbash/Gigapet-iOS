@@ -22,20 +22,19 @@ class AuthController {
 
     // MARK: - Keychain Access
 
-    func fetchCurrentUserInfo() -> UserInfo? {
+    func fetchCurrentUserInfo() throws -> UserInfo? {
         guard
             let userIDString = keychain[.currentUserIDKey],
             let userID = Int(userIDString),
-            let token = keychain[.tokenKey(forUserID: userIDString)]
+            let userData = try keychain.getData(.userInfoKey(for: userID))
             else { return nil }
 
-        return UserInfo(id: userID, token: token)
+        return try JSONDecoder().decode(UserInfo.self, from: userData)
     }
 
-    func putUserInfoInKeychain(_ userInfo: UserInfo, for userID: String) {
-        let userIDString = String(userInfo.id)
-        keychain[.currentUserIDKey] = userIDString
-        keychain[.tokenKey(forUserID: userIDString)] = userInfo.token
+    func putUserInfoInKeychain(_ userInfo: UserInfo) throws {
+        let userData = try JSONEncoder().encode(userInfo)
+        keychain[data: .userInfoKey(for: userInfo.id)] = userData
     }
 
     // MARK: - Authentication

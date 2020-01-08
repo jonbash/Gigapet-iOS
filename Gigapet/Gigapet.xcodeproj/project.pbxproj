@@ -173,6 +173,7 @@
 			children = (
 				99DB9B5023C531580074634C /* Views */,
 				99DB9B2323C3AAD20074634C /* View Controllers */,
+				99DB9B5923C545AB0074634C /* UI Delegates & DataSources */,
 				99DB9B1123C271E20074634C /* Storyboards */,
 				99DB9B1323C2AF020074634C /* Model Controllers */,
 				99DB9B1A23C39CB10074634C /* Models */,
@@ -226,7 +227,6 @@
 			children = (
 				99DB9B2F23C3D3560074634C /* AuthController.swift */,
 				99DB9B1D23C39E5B0074634C /* FoodEntryController.swift */,
-				99DB9B5123C53C1C0074634C /* EntriesTableViewDataSource.swift */,
 				99DB9B1723C2B5300074634C /* CoreDataStack.swift */,
 			);
 			path = "Model Controllers";
@@ -275,6 +275,14 @@
 				99DB9B5523C53F2F0074634C /* TimePeriodTableViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		99DB9B5923C545AB0074634C /* UI Delegates & DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				99DB9B5123C53C1C0074634C /* EntriesTableViewDataSource.swift */,
+			);
+			path = "UI Delegates & DataSources";
 			sourceTree = "<group>";
 		};
 		A7D504ADAD6568315F896DFF /* Frameworks */ = {

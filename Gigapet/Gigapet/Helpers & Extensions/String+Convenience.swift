@@ -15,14 +15,19 @@ extension String {
     static let keychainKey = "com.jonbash.gigapet"
     static let currentUserIDKey = "currentUserID"
 
-    static func tokenKey(forUserID userID: String) -> String {
-        return "user_\(userID)_token"
+//    static func tokenKey(forUserID userID: String) -> String {
+//        return "user_\(userID)_token"
+//    }
+
+    static func userInfoKey(for userID: Int) -> String {
+        return "user_\(userID)_info"
     }
 
     // MARK: - Segues
 
     static let showAuthScreenSegue = "ShowAuthScreenSegue"
     static let pastEntriesSegue = "PastEntriesSegue"
+    static let editEntrySegue = "EditEntrySegue"
 
     // MARK: - TableView Cells
 
@@ -32,4 +37,7 @@ extension String {
     // MARK: - Assets
 
     static let mainPurple = "MainPurple"
+
+    static let funFont = "Rancho-Regular"
+    static let regularFont = "HindMadurai"
 }

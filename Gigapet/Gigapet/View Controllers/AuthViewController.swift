@@ -88,10 +88,8 @@ class AuthViewController: UIViewController {
             authController?.register(
                 withUsername: username,
                 petName: petName,
-                password: password
-            ) { result in
-
-            }
+                password: password,
+                completion: handleAuthResult(_:))
         } else if authType == .login {
             authController?.logIn(
                 withUsername: username,
