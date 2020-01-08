@@ -27,9 +27,17 @@ class EntriesViewController: UIViewController {
         tableViewDataSource.currentDisplayType = currentDisplayType
         tableViewDataSource.tableView = entriesTableView
         tableViewDataSource.entryController = foodEntryController
+        tableViewDataSource.delegate = self
 
         entriesTableView.dataSource = tableViewDataSource
         entriesTableView.delegate = self
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let selectedCellIndex = entriesTableView.indexPathForSelectedRow {
+            entriesTableView.deselectRow(at: selectedCellIndex, animated: true)
+        }
     }
 
     // MARK: - Actions
@@ -49,15 +57,37 @@ class EntriesViewController: UIViewController {
         entriesTableView.reloadData()
     }
 
+    func refreshFromServer() {
+
+    }
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == .editEntrySegue,
+            let feedVC = segue.destination as? FeedViewController,
+            let entryIndex = entriesTableView.indexPathForSelectedRow,
+            let entryCell = entriesTableView.cellForRow(at: entryIndex)
+                as? EntryTableViewCell,
+            let entry = entryCell.entry {
+
+            feedVC.editingEntry = entry
+            feedVC.foodEntryController = self.foodEntryController
+            feedVC.previousViewController = self
+        }
     }
 }
 
-extension EntriesViewController: UITableViewDelegate {
+// MARK: - Delegate
 
+extension EntriesViewController: UITableViewDelegate {}
+
+extension EntriesViewController: EntriesTableViewDelegate {
+    func entryDeletionDidFail(withError error: Error) {
+        let alert = UIAlertController(error: error)
+        self.present(alert, animated: true) {
+            self.refreshFromServer()
+        }
+    }
 }
