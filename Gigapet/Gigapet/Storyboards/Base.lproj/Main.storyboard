@@ -72,7 +72,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Welcome to Lambdi Pet" largeTitleDisplayMode="never" id="TtB-g0-GvA">
                         <barButtonItem key="leftBarButtonItem" title="Log Out" id="mRH-ak-gCr">
-                            <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="BY0-NT-Dra" kind="presentation" identifier="ShowAuthScreenSegue" modalPresentationStyle="fullScreen" id="5Vf-uu-azt"/>
                             </connections>
@@ -84,7 +83,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MWF-bY-dPS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1581" y="92"/>
+            <point key="canvasLocation" x="1533" y="92"/>
         </scene>
         <!--Feed View Controller-->
         <scene sceneID="gOX-9F-Oe4">
@@ -241,7 +240,7 @@
                                             <constraint firstAttribute="width" secondItem="GJh-oc-Tvv" secondAttribute="height" multiplier="1:1" id="7Le-RQ-fiS"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oa-Nd-d21">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oa-Nd-d21" customClass="GigaPetButton" customModule="Gigapet" customModuleProvider="target">
                                         <rect key="frame" x="154" y="450" width="66" height="30"/>
                                         <state key="normal" title="Add Food"/>
                                     </button>
@@ -251,7 +250,7 @@
                                 <rect key="frame" x="20" y="598" width="374" height="264"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EntryCell" textLabel="tm0-WW-xGJ" detailTextLabel="zpw-wY-fzx" style="IBUITableViewCellStyleSubtitle" id="RVD-Hs-Q9R">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EntryCell" textLabel="tm0-WW-xGJ" detailTextLabel="zpw-wY-fzx" style="IBUITableViewCellStyleSubtitle" id="RVD-Hs-Q9R" customClass="EntryTableViewCell" customModule="Gigapet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="374" height="55.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RVD-Hs-Q9R" id="TzN-bT-txu">
@@ -274,6 +273,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="DgB-6d-C4b" kind="show" identifier="EditEntrySegue" id="Xo5-T1-2gx"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -428,7 +430,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j42-jM-XQE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2319" y="-374"/>
+            <point key="canvasLocation" x="2319" y="-243"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Mbj-G0-1lR">
@@ -551,7 +553,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="cri-Pl-49L">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="e3K-nH-IcO">
-                            <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="DgB-6d-C4b" kind="show" identifier="FeedPetSegue" id="Jq4-x7-EcF"/>
                             </connections>
@@ -572,6 +573,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="inp-KV-oJN"/>
+        <segue reference="Xo5-T1-2gx"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

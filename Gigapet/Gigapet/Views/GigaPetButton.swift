@@ -24,8 +24,7 @@ class GigaPetButton: UIButton {
         layer.backgroundColor = UIColor(named: .mainPurple)?.cgColor
         layer.cornerRadius = 5
         layer.borderWidth = 1
-        layer.borderColor = UIColor.clear.cgColor
-        setTitleColor(tintColor, for: .normal)
+        layer.borderColor = UIColor(named: .mainPurple)?.cgColor
         contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
 }
