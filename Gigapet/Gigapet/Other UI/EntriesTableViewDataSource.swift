@@ -76,6 +76,8 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
                 DispatchQueue.main.async {
                     if let error = result {
                         self?.delegate?.entryDeletionDidFail(withError: error)
+                    } else {
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
                     }
                 }
             }

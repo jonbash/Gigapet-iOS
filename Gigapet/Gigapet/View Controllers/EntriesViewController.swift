@@ -38,6 +38,7 @@ class EntriesViewController: UIViewController {
         if let selectedCellIndex = entriesTableView.indexPathForSelectedRow {
             entriesTableView.deselectRow(at: selectedCellIndex, animated: true)
         }
+        entriesTableView.reloadData()
     }
 
     // MARK: - Actions

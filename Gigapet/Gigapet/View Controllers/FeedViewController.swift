@@ -96,6 +96,8 @@ class FeedViewController: UIViewController {
     }
 
     private func feedPet() {
+        feedButton.isEnabled = false
+
         let categoryIndex = foodCategoryPicker.selectedRow(inComponent: 0)
         let category = FoodCategory.allCases[categoryIndex]
         let dateFed = feedTimePicker.date
@@ -123,19 +125,20 @@ class FeedViewController: UIViewController {
         }
     }
 
-    private func handleResponse(_ result: Result<[FoodEntry], NetworkError>) {
+    private func handleResponse(_ result: NetworkError?) {
         DispatchQueue.main.async { [weak self] in
-            switch result {
-            case .success:
+            if let error = result {
+                self?.present(
+                    UIAlertController(error: error),
+                    animated: true,
+                    completion: { self?.feedButton.isEnabled = true })
+            } else {
                 if let previous = self?.previousViewController {
                     self?.navigationController?
                         .popToViewController(previous, animated: true)
                 } else {
                     self?.navigationController?.popToRootViewController(animated: true)
                 }
-            case .failure(let error):
-                let alert = UIAlertController(error: error)
-                self?.present(alert, animated: true, completion: nil)
             }
         }
     }
