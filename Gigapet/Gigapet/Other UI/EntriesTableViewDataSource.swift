@@ -74,10 +74,8 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
 
             entryController?.deleteFoodEntry(entry) { [weak self] result in
                 DispatchQueue.main.async {
-                    if case .failure(let error) = result {
+                    if let error = result {
                         self?.delegate?.entryDeletionDidFail(withError: error)
-                    } else {
-                        tableView.reloadData()
                     }
                 }
             }
