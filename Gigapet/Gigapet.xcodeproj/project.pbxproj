@@ -152,6 +152,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		9974232423C77CA800898B4C /* Delegates & DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				99DB9B5123C53C1C0074634C /* EntriesTableViewDataSource.swift */,
+			);
+			path = "Delegates & DataSources";
+			sourceTree = "<group>";
+		};
 		99DB9AD423C271B40074634C = {
 			isa = PBXGroup;
 			children = (
@@ -177,8 +185,9 @@
 		99DB9ADF23C271B40074634C /* Gigapet */ = {
 			isa = PBXGroup;
 			children = (
-				99DB9B2323C3AAD20074634C /* View Controllers */,
 				99DB9B5023C531580074634C /* Views */,
+				99DB9B2323C3AAD20074634C /* View Controllers */,
+				9974232423C77CA800898B4C /* Delegates & DataSources */,
 				99DB9B1323C2AF020074634C /* Model Controllers */,
 				99DB9B1A23C39CB10074634C /* Models */,
 				99DB9B4123C4FF2E0074634C /* Helpers & Extensions */,
@@ -229,7 +238,6 @@
 		99DB9B1323C2AF020074634C /* Model Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				99DB9B5123C53C1C0074634C /* EntriesTableViewDataSource.swift */,
 				99DB9B1D23C39E5B0074634C /* FoodEntryController.swift */,
 				99DB9B2F23C3D3560074634C /* AuthController.swift */,
 				99DB9B1723C2B5300074634C /* CoreDataStack.swift */,
@@ -256,8 +264,8 @@
 		99DB9B2323C3AAD20074634C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				99DB9B3E23C4FCE70074634C /* HomeViewController.swift */,
 				99DB9B2423C3AB880074634C /* AuthViewController.swift */,
+				99DB9B3E23C4FCE70074634C /* HomeViewController.swift */,
 				99DB9B4823C530BF0074634C /* FeedViewController.swift */,
 				99DB9B4A23C530E90074634C /* EntriesViewController.swift */,
 				99DB9B4C23C530F40074634C /* ChartViewController.swift */,
