@@ -15,7 +15,7 @@ class FoodEntryController {
 
     typealias ResultHandler = (NetworkError?) -> Void
 
-    private(set) var entries = [FoodEntry]()
+    private(set) var entries: [FoodEntry]
 
     private(set) var user: UserInfo
 
@@ -220,7 +220,7 @@ class FoodEntryController {
 
         try deleteLocalEntries(notIn: idsToFetch)
 
-        let context = CoreDataStack.shared.mainContext
+        let context = CoreDataStack.shared.container.newBackgroundContext()
 
         let existingEntries = try context.fetch(fetchRequest)
         for entry in existingEntries {
