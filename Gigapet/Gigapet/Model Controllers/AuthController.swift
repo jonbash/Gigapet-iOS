@@ -21,6 +21,7 @@ class AuthController {
         handler.strict200CodeResponse = false
         return handler
     }()
+    var loader: NetworkLoader = URLSession.shared
 
     private let keychain = Keychain(service: .keychainKey)
 
@@ -89,7 +90,7 @@ class AuthController {
         _ request: URLRequest,
         completion: @escaping CompletionHandler
     ) {
-        networkHandler.transferMahCodableDatas(with: request
+        networkHandler.transferMahCodableDatas(with: request, session: loader
         ) { (result: Result<UserInfo, NetworkError>) in
             do {
                 let userInfo = try result.get()

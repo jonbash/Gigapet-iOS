@@ -19,16 +19,16 @@ class FoodEntryController {
 
     private(set) var user: UserInfo
 
-    private var networkHandler: NetworkHandler = {
-        let handler = NetworkHandler()
-        handler.strict200CodeResponse = false
-        return handler
-    }()
+    private var networkHandler: NetworkHandler
+    var loader: NetworkLoader
 
     // MARK: - Init
 
-    init(user: UserInfo) {
+    init(user: UserInfo, loader: NetworkLoader = URLSession.shared) {
         self.user = user
+        self.networkHandler = NetworkHandler()
+        networkHandler.strict200CodeResponse = false
+        self.loader = loader
 
         let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
         do {
@@ -181,7 +181,7 @@ class FoodEntryController {
         _ request: URLRequest,
         completion: @escaping ResultHandler
     ) {
-        networkHandler.transferMahCodableDatas(with: request
+        networkHandler.transferMahCodableDatas(with: request, session: loader
         ) { (result: Result<[FoodEntryRepresentation], NetworkError>) in
 
             var serverEntryReps = [FoodEntryRepresentation]()
