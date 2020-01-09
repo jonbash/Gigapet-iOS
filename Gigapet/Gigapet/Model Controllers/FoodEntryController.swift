@@ -109,8 +109,8 @@ class FoodEntryController {
         }
 
         guard let entryRep = entry.representation else {
-            completion(.dataCodingError(specifically: GigapetError
-                .other("Entry rep does not exist for entry")))
+            completion(.dataCodingError(specifically: GigapetError(
+                text: "Entry rep does not exist for entry")))
             return
         }
 

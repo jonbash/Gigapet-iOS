@@ -10,9 +10,4 @@ import Foundation
 
 struct GigapetError: Error {
     var text: String
-
-    // temporarily for compatibility
-    func other(_ text: String) -> GigapetError {
-        return GigapetError(text: text)
-    }
 }

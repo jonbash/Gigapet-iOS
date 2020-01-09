@@ -47,8 +47,8 @@ struct FoodEntryRepresentation: Codable {
         let categoryString = try container.decode(String.self, forKey: .foodCategory)
         let dateAsString = try container.decode(String.self, forKey: .dateFed)
         guard let dateAsDouble = Double(dateAsString) else {
-            throw NetworkError.dataCodingError(specifically: GigapetError
-                .other("Failed to initialize number from encoded date"))
+            throw NetworkError.dataCodingError(specifically: GigapetError(
+                text: "Failed to initialize number from encoded date"))
         }
 
         self.foodCategory = FoodCategory(rawValue: categoryString) ?? .treats
