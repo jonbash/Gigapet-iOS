@@ -17,7 +17,11 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
 
     // MARK: - Properties
 
-    var currentDisplayType: EntryDisplayType = .all
+    var currentDisplayType: EntryDisplayType = .all {
+        didSet {
+            switchDisplayType()
+        }
+    }
 
     weak var tableView: UITableView?
     weak var entryController: FoodEntryController?
@@ -25,6 +29,33 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
 
     private var fetchedResultsController: NSFetchedResultsController<FoodEntry>? {
         return entryController?.fetchedResultsController
+    }
+
+    var entryPeriods = [EntryDisplayPeriod]()
+
+    func switchDisplayType() {
+        guard
+            let entries = fetchedResultsController?.fetchedObjects,
+            currentDisplayType != .all
+            else {
+                return
+        }
+        entryPeriods = []
+
+        for entry in entries {
+            if let periodIndex = entryPeriods.firstIndex(where: {
+                $0.startDateComponents == entry.dateFed?.components(for: currentDisplayType)
+            }) {
+                entryPeriods[periodIndex].entries.append(entry)
+            } else {
+                entryPeriods.append((EntryDisplayPeriod(
+                    type: currentDisplayType,
+                    entries: [entry],
+                    startDate: entry.dateFed ?? Date())))
+            }
+        }
+
+        tableView?.reloadData()
     }
 
     // MARK: - Data Source Methods
@@ -36,8 +67,7 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
         switch currentDisplayType {
         case .all:
             return fetchedResultsController?.fetchedObjects?.count ?? 0
-        // TODO: implement other display types
-        default: return 0
+        default: return entryPeriods.count
         }
     }
 
@@ -76,6 +106,8 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
                 DispatchQueue.main.async {
                     if let error = result {
                         self?.delegate?.entryDeletionDidFail(withError: error)
+                    } else {
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
                     }
                 }
             }
