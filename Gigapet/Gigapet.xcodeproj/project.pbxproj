@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9974231F23C6DB5F00898B4C /* GigapetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974231E23C6DB5F00898B4C /* GigapetError.swift */; };
+		9974232123C6E58300898B4C /* EntryDisplayPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */; };
 		9974232323C6E95600898B4C /* Date+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974232223C6E95600898B4C /* Date+Components.swift */; };
 		99DB9AE123C271B40074634C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9AE023C271B40074634C /* AppDelegate.swift */; };
 		99DB9AE323C271B40074634C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9AE223C271B40074634C /* SceneDelegate.swift */; };
@@ -65,6 +66,7 @@
 		3E535FFCB4D01501E6B09A5A /* Pods-Gigapet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gigapet.release.xcconfig"; path = "Target Support Files/Pods-Gigapet/Pods-Gigapet.release.xcconfig"; sourceTree = "<group>"; };
 		6FF02C2B5C4EECF9D32D6648 /* Pods_Gigapet_GigapetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gigapet_GigapetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9974231E23C6DB5F00898B4C /* GigapetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GigapetError.swift; sourceTree = "<group>"; };
+		9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDisplayPeriod.swift; sourceTree = "<group>"; };
 		9974232223C6E95600898B4C /* Date+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Components.swift"; sourceTree = "<group>"; };
 		99A6C86226D52198F518E7D0 /* Pods-GigapetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GigapetTests.debug.xcconfig"; path = "Target Support Files/Pods-GigapetTests/Pods-GigapetTests.debug.xcconfig"; sourceTree = "<group>"; };
 		99DB9ADD23C271B40074634C /* Gigapet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gigapet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,8 +230,8 @@
 			isa = PBXGroup;
 			children = (
 				99DB9B5123C53C1C0074634C /* EntriesTableViewDataSource.swift */,
-				99DB9B2F23C3D3560074634C /* AuthController.swift */,
 				99DB9B1D23C39E5B0074634C /* FoodEntryController.swift */,
+				99DB9B2F23C3D3560074634C /* AuthController.swift */,
 				99DB9B1723C2B5300074634C /* CoreDataStack.swift */,
 			);
 			path = "Model Controllers";
@@ -243,6 +245,7 @@
 				99DB9B2D23C3CB230074634C /* FoodEntry+Representation.swift */,
 				99DB9B1B23C39D020074634C /* FoodCategory.swift */,
 				99DB9B5723C53F5C0074634C /* EntryDisplayType.swift */,
+				9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */,
 				99DB9B1F23C3A4BD0074634C /* UserInfo.swift */,
 				99DB9B6023C63F180074634C /* UserAuth.swift */,
 				99DB9B2923C3B59B0074634C /* APIRequestType.swift */,
@@ -570,6 +573,7 @@
 				99DB9B1C23C39D020074634C /* FoodCategory.swift in Sources */,
 				99DB9B2023C3A4BE0074634C /* UserInfo.swift in Sources */,
 				99DB9B2A23C3B59B0074634C /* APIRequestType.swift in Sources */,
+				9974232123C6E58300898B4C /* EntryDisplayPeriod.swift in Sources */,
 				99DB9B4323C4FF440074634C /* String+Convenience.swift in Sources */,
 				99DB9B6123C63F180074634C /* UserAuth.swift in Sources */,
 				99DB9B5623C53F2F0074634C /* TimePeriodTableViewCell.swift in Sources */,

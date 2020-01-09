@@ -159,6 +159,8 @@ class FoodEntryController {
             completion(.otherError(error: GigapetError.other("Error deleting entry: entry context is nil")))
             return
         }
+        let entryID = Int(entry.identifier)
+
         context.automaticallyMergesChangesFromParent = true
 
         context.performAndWait {
@@ -172,7 +174,7 @@ class FoodEntryController {
         }
 
         let request = APIRequestType
-            .delete(user: user, feedingID: Int(entry.identifier))
+            .delete(user: user, feedingID: entryID)
             .request
 
         handleRequestWithFetchedEntries(request, completion: completion)
@@ -233,7 +235,7 @@ class FoodEntryController {
             do {
                 try self.updateLocalEntries(from: serverEntryReps)
                 try CoreDataStack.shared.save()
-                try self.fetchedResultsController.performFetch()
+//                try self.fetchedResultsController.performFetch()
             } catch {
                 completion(.otherError(error: error))
             }
@@ -307,8 +309,8 @@ class FoodEntryController {
         var caughtError: Error?
         var localEntries = [FoodEntry]()
         context.performAndWait {
-            do { localEntries = try context.fetch(FoodEntry.fetchRequest()) }
-            catch { caughtError = error }
+            do { localEntries = try context.fetch(FoodEntry.fetchRequest())
+            } catch { caughtError = error }
         }
         if let error = caughtError { throw error }
 
