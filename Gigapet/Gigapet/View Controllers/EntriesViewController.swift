@@ -66,16 +66,18 @@ class EntriesViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == .editEntrySegue,
-            let feedVC = segue.destination as? FeedViewController,
-            let entryIndex = entriesTableView.indexPathForSelectedRow,
-            let entryCell = entriesTableView.cellForRow(at: entryIndex)
-                as? EntryTableViewCell,
-            let entry = entryCell.entry {
-
-            feedVC.editingEntry = entry
+        if let feedVC = segue.destination as? FeedViewController {
             feedVC.foodEntryController = self.foodEntryController
             feedVC.previousViewController = self
+
+            if segue.identifier == .editEntrySegue,
+                let entryIndex = entriesTableView.indexPathForSelectedRow,
+                let entryCell = entriesTableView.cellForRow(at: entryIndex)
+                    as? EntryTableViewCell,
+                let entry = entryCell.entry {
+
+                feedVC.editingEntry = entry
+            }
         }
     }
 }
