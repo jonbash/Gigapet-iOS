@@ -233,6 +233,7 @@ class FoodEntryController {
             do {
                 try self.updateLocalEntries(from: serverEntryReps)
                 try CoreDataStack.shared.save()
+                try self.fetchedResultsController.performFetch()
             } catch {
                 completion(.otherError(error: error))
             }
@@ -259,6 +260,7 @@ class FoodEntryController {
 
         var caughtError: Error?
         let context = CoreDataStack.shared.container.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
         context.performAndWait {
             do {
                 let existingEntries = try context.fetch(fetchRequest)
@@ -287,6 +289,7 @@ class FoodEntryController {
         var caughtError: Error?
 
         let context = CoreDataStack.shared.container.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
         context.performAndWait {
             do {
                 let entriesToDelete = try context.fetch(fetchRequest)
@@ -299,6 +302,7 @@ class FoodEntryController {
 
     private func deleteDuplicateLocalEntries() throws {
         let context = CoreDataStack.shared.container.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
 
         var caughtError: Error?
         var localEntries = [FoodEntry]()
