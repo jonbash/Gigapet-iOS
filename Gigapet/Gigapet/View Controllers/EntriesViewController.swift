@@ -48,6 +48,7 @@ class EntriesViewController: UIViewController {
         entriesTableView.delegate = self
 
         setDisplayType(currentDisplayType)
+        updateChart()
     }
 
     override func viewDidAppear(_ animated: Bool) {

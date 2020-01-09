@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PieCharts
 
 protocol EntriesViewDataDelegate: AnyObject {
     func entryDeletionDidFail(withError error: Error)
@@ -22,6 +23,12 @@ class EntriesViewDataSource: NSObject {
     private(set) var currentDisplayType: EntryDisplayType
     private(set) var entryPeriodsByDisplayType = [EntryDisplayType: [EntryDisplayPeriod]]()
     private(set) var currentReferenceDate = Date()
+
+    private lazy var percentFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }()
 
     // MARK: Computed
 
@@ -92,7 +99,55 @@ class EntriesViewDataSource: NSObject {
     func changeDate(incrementing: Bool) {
         currentReferenceDate = currentReferenceDate
             .incremented(incrementing, by: currentDisplayType)
+    }
 
+    func entryWasAdded() {
+        // TODO: handle more efficiently
+        entryPeriodsByDisplayType = [:]
+        currentEntryPeriods = entryPeriods(for: currentDisplayType)
+    }
+
+    // MARK: - Pie Charts API
+
+    func getPieChartInfo()
+        -> (models: [PieSliceModel], layers: [PiePlainTextLayer])
+    {
+        guard let entries = currentEntryPeriod?.entries else {
+            return (models: [], layers: [])
+        }
+
+        var categoryCounts = [FoodCategory: Int]()
+        for entry in entries {
+            guard
+                let categoryString = entry.foodCategory,
+                let category = FoodCategory(rawValue: categoryString)
+                else { continue }
+
+            let currentCount = categoryCounts[category] ?? 0
+            categoryCounts[category] = currentCount + Int(entry.foodAmount)
+        }
+
+        var models = [PieSliceModel]()
+        var layers = [PiePlainTextLayer]()
+
+        for category in categoryCounts.keys {
+            models.append(PieSliceModel(
+                value: Double(categoryCounts[category] ?? 0),
+                color: category.color))
+
+            let layer = PiePlainTextLayer()
+            let layerSettings = PiePlainTextLayerSettings()
+            layerSettings.label.textGenerator = { slice in
+                return self.percentFormatter
+                    .string(from: slice.data.percentage * 100 as NSNumber)
+                    .map{"\($0)%"} ?? ""
+            }
+            layer.settings = layerSettings
+
+            layers.append(layer)
+        }
+
+        return (models: models, layers: layers)
     }
 
     // MARK: - Private
