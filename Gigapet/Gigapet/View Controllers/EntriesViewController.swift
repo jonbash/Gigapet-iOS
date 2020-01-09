@@ -7,29 +7,32 @@
 //
 
 import UIKit
+import PieCharts
 
 class EntriesViewController: UIViewController {
 
     // MARK: - Properties
 
     var foodEntryController: FoodEntryController?
-    lazy var tableViewDataSource = EntriesTableViewDataSource()
+    var entriesViewDataSource: EntriesViewDataSource?
 
     private var currentDisplayType: EntryDisplayType = .all
 
     @IBOutlet private weak var entriesTableView: UITableView!
+    @IBOutlet private weak var timePeriodLabel: UILabel!
+    @IBOutlet private weak var entriesChart: PieChart!
 
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableViewDataSource.currentDisplayType = currentDisplayType
-        tableViewDataSource.tableView = entriesTableView
-        tableViewDataSource.entryController = foodEntryController
-        tableViewDataSource.delegate = self
+        entriesViewDataSource = EntriesViewDataSource(
+            foodEntryController: foodEntryController,
+            startingDisplayType: currentDisplayType)
+        entriesViewDataSource?.delegate = self
 
-        entriesTableView.dataSource = tableViewDataSource
+        entriesTableView.dataSource = entriesViewDataSource
         entriesTableView.delegate = self
     }
 
@@ -49,22 +52,23 @@ class EntriesViewController: UIViewController {
             sender.selectedSegmentIndex)!)
     }
 
+    @IBAction private func previousPeriodTapped(_ sender: UIButton) {
+        entriesViewDataSource?.changeDate(incrementing: false)
+    }
+
+    @IBAction private func nextPeriodTapped(_ sender: UIButton) {
+        entriesViewDataSource?.changeDate(incrementing: true)
+    }
+    
+
     // MARK: - Methods
 
     private func changeDisplayType(to displayType: EntryDisplayType) {
         currentDisplayType = displayType
-        tableViewDataSource.currentDisplayType = displayType
-
-        entriesTableView.reloadData()
-    }
-
-    func refreshFromServer() {
-
     }
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let feedVC = segue.destination as? FeedViewController {
             feedVC.foodEntryController = self.foodEntryController
@@ -82,15 +86,17 @@ class EntriesViewController: UIViewController {
     }
 }
 
-// MARK: - Delegate
+// MARK: - Delegates
 
 extension EntriesViewController: UITableViewDelegate {}
 
-extension EntriesViewController: EntriesTableViewDelegate {
+extension EntriesViewController: EntriesViewDataDelegate {
+    func dataDisplayDidChange() {
+        entriesTableView.reloadData()
+    }
+
     func entryDeletionDidFail(withError error: Error) {
         let alert = UIAlertController(error: error)
-        self.present(alert, animated: true) {
-            self.refreshFromServer()
-        }
+        self.present(alert, animated: true, completion: nil)
     }
 }

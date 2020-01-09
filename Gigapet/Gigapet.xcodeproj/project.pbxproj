@@ -32,11 +32,9 @@
 		99DB9B4323C4FF440074634C /* String+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B4223C4FF440074634C /* String+Convenience.swift */; };
 		99DB9B4923C530BF0074634C /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B4823C530BF0074634C /* FeedViewController.swift */; };
 		99DB9B4B23C530E90074634C /* EntriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B4A23C530E90074634C /* EntriesViewController.swift */; };
-		99DB9B4D23C530F40074634C /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B4C23C530F40074634C /* ChartViewController.swift */; };
 		99DB9B4F23C531500074634C /* GigaPetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B4E23C531500074634C /* GigaPetButton.swift */; };
-		99DB9B5223C53C1C0074634C /* EntriesTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B5123C53C1C0074634C /* EntriesTableViewDataSource.swift */; };
+		99DB9B5223C53C1C0074634C /* EntriesViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B5123C53C1C0074634C /* EntriesViewDataSource.swift */; };
 		99DB9B5423C53F1E0074634C /* EntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B5323C53F1E0074634C /* EntryTableViewCell.swift */; };
-		99DB9B5623C53F2F0074634C /* TimePeriodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B5523C53F2F0074634C /* TimePeriodTableViewCell.swift */; };
 		99DB9B5823C53F5C0074634C /* EntryDisplayType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B5723C53F5C0074634C /* EntryDisplayType.swift */; };
 		99DB9B6123C63F180074634C /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DB9B6023C63F180074634C /* UserAuth.swift */; };
 		9D5CF39DA6F2A16DE2BA91E6 /* Pods_Gigapet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D956DCBDFA14B91403A28D8A /* Pods_Gigapet.framework */; };
@@ -97,11 +95,9 @@
 		99DB9B4223C4FF440074634C /* String+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Convenience.swift"; sourceTree = "<group>"; };
 		99DB9B4823C530BF0074634C /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		99DB9B4A23C530E90074634C /* EntriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesViewController.swift; sourceTree = "<group>"; };
-		99DB9B4C23C530F40074634C /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		99DB9B4E23C531500074634C /* GigaPetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GigaPetButton.swift; sourceTree = "<group>"; };
-		99DB9B5123C53C1C0074634C /* EntriesTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesTableViewDataSource.swift; sourceTree = "<group>"; };
+		99DB9B5123C53C1C0074634C /* EntriesViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntriesViewDataSource.swift; sourceTree = "<group>"; };
 		99DB9B5323C53F1E0074634C /* EntryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryTableViewCell.swift; sourceTree = "<group>"; };
-		99DB9B5523C53F2F0074634C /* TimePeriodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePeriodTableViewCell.swift; sourceTree = "<group>"; };
 		99DB9B5723C53F5C0074634C /* EntryDisplayType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDisplayType.swift; sourceTree = "<group>"; };
 		99DB9B6023C63F180074634C /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
 		A50DE60A83667D51DD4F6216 /* Pods-Gigapet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gigapet.debug.xcconfig"; path = "Target Support Files/Pods-Gigapet/Pods-Gigapet.debug.xcconfig"; sourceTree = "<group>"; };
@@ -152,14 +148,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		9974232423C77CA800898B4C /* Delegates & DataSources */ = {
-			isa = PBXGroup;
-			children = (
-				99DB9B5123C53C1C0074634C /* EntriesTableViewDataSource.swift */,
-			);
-			path = "Delegates & DataSources";
-			sourceTree = "<group>";
-		};
 		99DB9AD423C271B40074634C = {
 			isa = PBXGroup;
 			children = (
@@ -187,7 +175,6 @@
 			children = (
 				99DB9B5023C531580074634C /* Views */,
 				99DB9B2323C3AAD20074634C /* View Controllers */,
-				9974232423C77CA800898B4C /* Delegates & DataSources */,
 				99DB9B1323C2AF020074634C /* Model Controllers */,
 				99DB9B1A23C39CB10074634C /* Models */,
 				99DB9B4123C4FF2E0074634C /* Helpers & Extensions */,
@@ -239,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				99DB9B1D23C39E5B0074634C /* FoodEntryController.swift */,
+				99DB9B5123C53C1C0074634C /* EntriesViewDataSource.swift */,
 				99DB9B2F23C3D3560074634C /* AuthController.swift */,
 				99DB9B1723C2B5300074634C /* CoreDataStack.swift */,
 			);
@@ -268,7 +256,6 @@
 				99DB9B3E23C4FCE70074634C /* HomeViewController.swift */,
 				99DB9B4823C530BF0074634C /* FeedViewController.swift */,
 				99DB9B4A23C530E90074634C /* EntriesViewController.swift */,
-				99DB9B4C23C530F40074634C /* ChartViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -288,7 +275,6 @@
 			isa = PBXGroup;
 			children = (
 				99DB9B5323C53F1E0074634C /* EntryTableViewCell.swift */,
-				99DB9B5523C53F2F0074634C /* TimePeriodTableViewCell.swift */,
 				99DB9B4E23C531500074634C /* GigaPetButton.swift */,
 			);
 			path = Views;
@@ -562,7 +548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99DB9AE123C271B40074634C /* AppDelegate.swift in Sources */,
-				99DB9B5223C53C1C0074634C /* EntriesTableViewDataSource.swift in Sources */,
+				99DB9B5223C53C1C0074634C /* EntriesViewDataSource.swift in Sources */,
 				9974232323C6E95600898B4C /* Date+Components.swift in Sources */,
 				99DB9B3023C3D3560074634C /* AuthController.swift in Sources */,
 				99DB9B5423C53F1E0074634C /* EntryTableViewCell.swift in Sources */,
@@ -570,7 +556,6 @@
 				99DB9B2C23C3B81A0074634C /* FoodEntry+Convenience.swift in Sources */,
 				9974231F23C6DB5F00898B4C /* GigapetError.swift in Sources */,
 				99DB9B1623C2B5230074634C /* Gigapet.xcdatamodeld in Sources */,
-				99DB9B4D23C530F40074634C /* ChartViewController.swift in Sources */,
 				99DB9B4B23C530E90074634C /* EntriesViewController.swift in Sources */,
 				99DB9B3F23C4FCE70074634C /* HomeViewController.swift in Sources */,
 				99DB9B4923C530BF0074634C /* FeedViewController.swift in Sources */,
@@ -584,7 +569,6 @@
 				9974232123C6E58300898B4C /* EntryDisplayPeriod.swift in Sources */,
 				99DB9B4323C4FF440074634C /* String+Convenience.swift in Sources */,
 				99DB9B6123C63F180074634C /* UserAuth.swift in Sources */,
-				99DB9B5623C53F2F0074634C /* TimePeriodTableViewCell.swift in Sources */,
 				99DB9B4F23C531500074634C /* GigaPetButton.swift in Sources */,
 				99DB9B5823C53F5C0074634C /* EntryDisplayType.swift in Sources */,
 				99DB9B1823C2B5300074634C /* CoreDataStack.swift in Sources */,
