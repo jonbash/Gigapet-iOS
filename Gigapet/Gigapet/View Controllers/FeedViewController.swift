@@ -13,7 +13,9 @@ class FeedViewController: UIViewController {
 
     // MARK: - Properties
 
-    var foodEntryController: FoodEntryController?
+    var foodEntryController: FoodEntryController? {
+        willSet { if newValue == nil { print("Value is nil!! Why?!") } }
+    }
     weak var editingEntry: FoodEntry?
 
     weak var previousViewController: UIViewController?
@@ -22,6 +24,8 @@ class FeedViewController: UIViewController {
     @IBOutlet private weak var foodCategoryPicker: UIPickerView!
     @IBOutlet private weak var foodNameField: UITextField!
     @IBOutlet private weak var foodAmountField: UITextField!
+    @IBOutlet private weak var decrementButton: UIButton!
+    @IBOutlet private weak var incrementButton: UIButton!
 
     @IBOutlet private weak var feedButton: GigaPetButton!
 
@@ -96,8 +100,6 @@ class FeedViewController: UIViewController {
     }
 
     private func feedPet() {
-        feedButton.isEnabled = false
-
         let categoryIndex = foodCategoryPicker.selectedRow(inComponent: 0)
         let category = FoodCategory.allCases[categoryIndex]
         let dateFed = feedTimePicker.date
@@ -105,11 +107,14 @@ class FeedViewController: UIViewController {
         guard
             let foodName = foodNameField.text, !foodName.isEmpty,
             let foodAmountString = foodAmountField.text,
-            let foodAmount = Int(foodAmountString)
+            let foodAmount = Int(foodAmountString),
+            let entryController = foodEntryController
             else { return }
 
+        setControlsEnabled(false)
+
         if let entry = editingEntry {
-            foodEntryController?.updateFoodEntry(
+            entryController.updateFoodEntry(
                 entry,
                 withCategory: category,
                 foodName: foodName,
@@ -117,30 +122,40 @@ class FeedViewController: UIViewController {
                 timestamp: dateFed,
                 completion: handleResponse(_:))
         } else {
-            foodEntryController?.addEntry(
+            entryController.addEntry(
                 category: category,
                 foodName: foodName,
                 foodAmount: foodAmount,
+                timestamp: dateFed,
                 completion: handleResponse(_:))
         }
     }
 
     private func handleResponse(_ result: NetworkError?) {
-        DispatchQueue.main.async { [weak self] in
+        DispatchQueue.main.async {
             if let error = result {
-                self?.present(
+                self.present(
                     UIAlertController(error: error),
                     animated: true,
-                    completion: { self?.feedButton.isEnabled = true })
+                    completion: { self.setControlsEnabled(true) })
             } else {
-                if let previous = self?.previousViewController {
-                    self?.navigationController?
+                if let previous = self.previousViewController {
+                    self.navigationController?
                         .popToViewController(previous, animated: true)
                 } else {
-                    self?.navigationController?.popToRootViewController(animated: true)
+                    self.navigationController?.popToRootViewController(animated: true)
                 }
             }
         }
+    }
+
+    private func setControlsEnabled(_ controlsEnabled: Bool) {
+        foodNameField.isEnabled = controlsEnabled
+        feedTimePicker.isEnabled = controlsEnabled
+        foodCategoryPicker.isUserInteractionEnabled = controlsEnabled
+        decrementButton.isEnabled = controlsEnabled
+        incrementButton.isEnabled = controlsEnabled
+        feedButton.isEnabled = controlsEnabled
     }
 }
 
