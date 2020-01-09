@@ -73,6 +73,7 @@ enum APIRequestType {
         case .delete:
             request.httpMethod = HTTPMethods.delete.rawValue
         }
+        request.timeoutInterval = 5
 
         return request
     }
