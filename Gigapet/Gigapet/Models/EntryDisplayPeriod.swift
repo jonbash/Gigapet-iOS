@@ -11,9 +11,9 @@ import Foundation
 struct EntryDisplayPeriod {
     let type: EntryDisplayType
     var entries: [FoodEntry]
-    let startDate: Date
+    let referenceDate: Date
 
     var startDateComponents: DateComponents? {
-        return startDate.components(for: type)
+        return referenceDate.components(for: type)
     }
 }
