@@ -46,8 +46,8 @@ class FoodEntryController {
     init(user: UserInfo) {
         self.user = user
 
-        do { try deleteDuplicateLocalEntries() }
-        catch { NSLog("Error deleting duplicate local entries: \(error)") }
+        do { try deleteDuplicateLocalEntries()
+        } catch { NSLog("Error deleting duplicate local entries: \(error)") }
 
         fetchAll { result in
             if let error = result {
@@ -76,7 +76,8 @@ class FoodEntryController {
                 identifier: nil)
         }
         guard let entryRep = newEntryRep else {
-            completion(.dataCodingError(specifically: NSError()))
+            completion(.dataCodingError(specifically: GigapetError
+                .other("EntryRep initialization failed while adding new entry")))
             return
         }
 
@@ -100,8 +101,8 @@ class FoodEntryController {
         completion: @escaping ResultHandler
     ) {
         guard let context = entry.managedObjectContext else {
-            NSLog("Error updating entry: entry context is nil")
-            completion(.otherError(error: NSError()))
+            completion(.otherError(error: GigapetError
+                .other("Error updating entry: entry context is nil")))
             return
         }
 
@@ -114,7 +115,8 @@ class FoodEntryController {
         }
 
         guard let entryRep = entry.representation else {
-            completion(.dataCodingError(specifically: NSError()))
+            completion(.dataCodingError(specifically: GigapetError
+                .other("Entry rep does not exist for entry")))
             return
         }
 
@@ -154,10 +156,10 @@ class FoodEntryController {
         completion: @escaping ResultHandler
     ) {
         guard let context = entry.managedObjectContext else {
-            NSLog("Error deleting entry: entry context is nil")
-            completion(.otherError(error: NSError()))
+            completion(.otherError(error: GigapetError.other("Error deleting entry: entry context is nil")))
             return
         }
+        context.automaticallyMergesChangesFromParent = true
 
         context.performAndWait {
             context.delete(entry)
