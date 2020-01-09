@@ -37,12 +37,21 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="249" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="lYD-JD-Fma" customClass="SVGImageView">
+                            <view contentMode="scaleToFill" verticalHuggingPriority="249" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="lYD-JD-Fma">
                                 <rect key="frame" x="40" y="189" width="334" height="518"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BrownOtter" translatesAutoresizingMaskIntoConstraints="NO" id="9Y7-lm-zFp">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="518"/>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="lYD-JD-Fma" secondAttribute="height" multiplier="67:104" id="KxY-km-odJ"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="RzI-zZ-DPb"/>
+                                    <constraint firstItem="9Y7-lm-zFp" firstAttribute="top" secondItem="lYD-JD-Fma" secondAttribute="top" id="ZqP-P7-SFH"/>
+                                    <constraint firstAttribute="trailing" secondItem="9Y7-lm-zFp" secondAttribute="trailing" id="dWX-BA-6QS"/>
+                                    <constraint firstAttribute="bottom" secondItem="9Y7-lm-zFp" secondAttribute="bottom" id="ipV-7f-uwg"/>
+                                    <constraint firstItem="9Y7-lm-zFp" firstAttribute="leading" secondItem="lYD-JD-Fma" secondAttribute="leading" id="lff-w2-dG5"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="svgName" value="BrownOtter"/>
@@ -83,7 +92,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MWF-bY-dPS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1533" y="92"/>
+            <point key="canvasLocation" x="1531.8840579710145" y="91.741071428571431"/>
         </scene>
         <!--Feed View Controller-->
         <scene sceneID="gOX-9F-Oe4">
@@ -574,12 +583,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="BrownOtter" width="658" height="1024"/>
         <namedColor name="MainPurple">
             <color red="0.42399999499320984" green="0.27500000596046448" blue="0.63499999046325684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="3CS-ne-0Bh"/>
+        <segue reference="inp-KV-oJN"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -2,14 +2,12 @@ PODS:
   - KeychainAccess (4.1.0)
   - NetworkHandler (0.9.3)
   - PieCharts (0.0.7)
-  - PocketSVG (2.5.0)
   - SwiftLint (0.37.0)
 
 DEPENDENCIES:
   - KeychainAccess
   - NetworkHandler
   - PieCharts
-  - PocketSVG
   - SwiftLint
 
 SPEC REPOS:
@@ -17,16 +15,14 @@ SPEC REPOS:
     - KeychainAccess
     - NetworkHandler
     - PieCharts
-    - PocketSVG
     - SwiftLint
 
 SPEC CHECKSUMS:
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   NetworkHandler: 6e823369befb1975571c9e42b498f22732d1e225
   PieCharts: 30e50dfa7dc19e5b84e9878d32089673ef5d0453
-  PocketSVG: 9d9c4bc8e7d8dbbc208bd21e5c92814fd3c6c34d
   SwiftLint: c078a14d7d7ade75e5507795d185e3da41d844d2
 
-PODFILE CHECKSUM: 27b294e109fc59842bed5eff3efbb1ffb533c0eb
+PODFILE CHECKSUM: 9ff56ced7244eef0570cd79e19e3d6cc49ff1857
 
 COCOAPODS: 1.8.4
