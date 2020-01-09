@@ -18,9 +18,21 @@ class EntriesViewController: UIViewController {
 
     private var currentDisplayType: EntryDisplayType = .all
 
+    private lazy var dayFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = .autoupdatingCurrent
+        formatter.timeZone = .autoupdatingCurrent
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        return formatter
+    }()
+
     @IBOutlet private weak var entriesTableView: UITableView!
     @IBOutlet private weak var timePeriodLabel: UILabel!
     @IBOutlet private weak var entriesChart: PieChart!
+
+    @IBOutlet private weak var decrementPeriodButton: UIButton!
+    @IBOutlet private weak var incrementPeriodButton: UIButton!
 
     // MARK: - View Lifecycle
 
@@ -34,6 +46,8 @@ class EntriesViewController: UIViewController {
 
         entriesTableView.dataSource = entriesViewDataSource
         entriesTableView.delegate = self
+
+        setDisplayType(currentDisplayType)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -46,25 +60,87 @@ class EntriesViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction private func periodControlChanged(_ sender: UISegmentedControl) {
+    @IBAction private func displayTypeChanged(_ sender: UISegmentedControl) {
         // I want it to crash if there's an unexpected value given
-        changeDisplayType(to: EntryDisplayType(rawValue:
-            sender.selectedSegmentIndex)!)
+        setDisplayType(EntryDisplayType(rawValue: sender.selectedSegmentIndex)!)
     }
 
     @IBAction private func previousPeriodTapped(_ sender: UIButton) {
-        entriesViewDataSource?.changeDate(incrementing: false)
+        changePeriod(incrementing: false)
     }
 
     @IBAction private func nextPeriodTapped(_ sender: UIButton) {
-        entriesViewDataSource?.changeDate(incrementing: true)
+        changePeriod(incrementing: true)
     }
-    
 
-    // MARK: - Methods
+    // MARK: - Helper Methods
 
-    private func changeDisplayType(to displayType: EntryDisplayType) {
+    private func setDisplayType(_ displayType: EntryDisplayType) {
         currentDisplayType = displayType
+        entriesViewDataSource?.change(displayType: displayType)
+
+        let styleIsNotAll = (displayType != .all)
+        incrementPeriodButton.isEnabled = styleIsNotAll
+        decrementPeriodButton.isEnabled = styleIsNotAll
+
+        setPeriodLabelText()
+        entriesTableView.reloadData()
+        updateChart()
+    }
+
+    private func changePeriod(incrementing: Bool) {
+        entriesViewDataSource?.changeDate(incrementing: incrementing)
+
+        setPeriodLabelText()
+        entriesTableView.reloadData()
+        updateChart()
+    }
+
+    private func setPeriodLabelText() {
+        if currentDisplayType == .all {
+            timePeriodLabel.text = "All Entries"
+            return
+        }
+
+        guard let currentReferenceDate = entriesViewDataSource?
+            .currentReferenceDate
+            else { return }
+
+        switch currentDisplayType {
+        case .day:
+            timePeriodLabel.text = dayFormatter.string(from: currentReferenceDate)
+        case .week:
+            timePeriodLabel.text = weekString(from: currentReferenceDate)
+        case .month:
+            timePeriodLabel.text = monthString(from: currentReferenceDate)
+        default: break
+        }
+    }
+
+    private func weekString(from date: Date) -> String {
+        guard
+            let components = date.components(for: .week),
+            let year = components.yearForWeekOfYear,
+            let week = components.weekOfYear
+            else { return "?" }
+        return "\(year) week \(week)"
+    }
+
+    private func monthString(from date: Date) -> String {
+        guard
+            let components = date.components(for: .month),
+            let year = components.year,
+            let month = components.month
+            else { return "?" }
+        return "\(year)-\(month)"
+    }
+
+    private func updateChart() {
+        guard let chartInfo = entriesViewDataSource?.getPieChartInfo()
+            else { return }
+
+        entriesChart.models = chartInfo.models
+        entriesChart.layers = chartInfo.layers
     }
 
     // MARK: - Navigation

@@ -29,10 +29,10 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="LbM-ec-OmW">
-                                <rect key="frame" x="120" y="742" width="174" height="100"/>
+                                <rect key="frame" x="140" y="742" width="134" height="100"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jy0-uD-Ib3" customClass="GigaPetButton" customModule="Gigapet" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="174" height="42"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="134" height="42"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="Feed My Pet"/>
                                         <connections>
@@ -40,9 +40,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gz1-wy-dUk" customClass="GigaPetButton" customModule="Gigapet" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="58" width="174" height="42"/>
+                                        <rect key="frame" x="0.0" y="58" width="134" height="42"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <state key="normal" title="See Past Entries"/>
+                                        <state key="normal" title="See Entries"/>
                                         <connections>
                                             <segue destination="08X-En-Q5y" kind="show" identifier="PastEntriesSegue" id="kSe-zR-smV"/>
                                         </connections>
@@ -65,7 +65,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5gk-Kw-njk"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Welcome to Lambdi Pet" largeTitleDisplayMode="never" id="TtB-g0-GvA">
+                    <navigationItem key="navigationItem" title="Home" largeTitleDisplayMode="never" id="TtB-g0-GvA">
                         <barButtonItem key="leftBarButtonItem" title="Log Out" id="mRH-ak-gCr">
                             <connections>
                                 <segue destination="BY0-NT-Dra" kind="presentation" identifier="ShowAuthScreenSegue" modalPresentationStyle="fullScreen" id="5Vf-uu-azt"/>
@@ -380,7 +380,7 @@
                                     <segment title="Month"/>
                                 </segments>
                                 <connections>
-                                    <action selector="periodControlChanged:" destination="08X-En-Q5y" eventType="valueChanged" id="pks-Rc-2vz"/>
+                                    <action selector="displayTypeChanged:" destination="08X-En-Q5y" eventType="valueChanged" id="pks-Rc-2vz"/>
                                 </connections>
                             </segmentedControl>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wyt-CD-MGl">
@@ -486,8 +486,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="decrementPeriodButton" destination="lOL-db-hJq" id="QsY-tm-7ld"/>
                         <outlet property="entriesChart" destination="GJh-oc-Tvv" id="dk6-EP-CXy"/>
                         <outlet property="entriesTableView" destination="gds-MI-nDZ" id="n3v-1O-NY8"/>
+                        <outlet property="incrementPeriodButton" destination="IPn-G4-t3O" id="vXr-tY-CO4"/>
                         <outlet property="timePeriodLabel" destination="EdN-oA-MYF" id="FSN-Wu-cXb"/>
                     </connections>
                 </viewController>
@@ -503,7 +505,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Jq4-x7-EcF"/>
+        <segue reference="inp-KV-oJN"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

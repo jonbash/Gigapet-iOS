@@ -7,12 +7,8 @@
 //
 
 import UIKit
-import CoreData
-
-// MARK: - Delegate
 
 protocol EntriesViewDataDelegate: AnyObject {
-    func dataDisplayDidChange()
     func entryDeletionDidFail(withError error: Error)
 }
 
@@ -25,21 +21,44 @@ class EntriesViewDataSource: NSObject {
 
     private(set) var currentDisplayType: EntryDisplayType
     private(set) var entryPeriodsByDisplayType = [EntryDisplayType: [EntryDisplayPeriod]]()
-    private var currentReferenceDate = Date()
+    private(set) var currentReferenceDate = Date()
 
     // MARK: Computed
 
-    var currentEntryPeriods: [EntryDisplayPeriod] {
-        if let currentPeriods = entryPeriodsByDisplayType[currentDisplayType] {
-            return currentPeriods
-        } else {
-            let currentPeriods = entryPeriods(for: currentDisplayType)
-            entryPeriodsByDisplayType[currentDisplayType] = currentPeriods
-            return currentPeriods
+    private(set) var currentEntryPeriods: [EntryDisplayPeriod] {
+        get {
+            if let currentPeriods = entryPeriodsByDisplayType[currentDisplayType] {
+                return currentPeriods
+            } else {
+                let currentPeriods = entryPeriods(for: currentDisplayType)
+                entryPeriodsByDisplayType[currentDisplayType] = currentPeriods
+                return currentPeriods
+            }
+        } set {
+            entryPeriodsByDisplayType[currentDisplayType] = newValue
         }
     }
-    var currentEntryPeriod: EntryDisplayPeriod? {
-        return currentEntryPeriods.first {
+    private(set) var currentEntryPeriod: EntryDisplayPeriod? {
+        get {
+            if let index = currentEntryPeriodIndex {
+                return currentEntryPeriods[index]
+            } else { return nil }
+        } set {
+            if let index = currentEntryPeriodIndex {
+                guard let newPeriod = newValue else {
+                    currentEntryPeriods.remove(at: index)
+                    return
+                }
+                currentEntryPeriods[index] = newPeriod
+            } else {
+                guard let newPeriod = newValue else { return }
+                currentEntryPeriods.append(newPeriod)
+                currentReferenceDate = newPeriod.referenceDate
+            }
+        }
+    }
+    private var currentEntryPeriodIndex: Int? {
+        return currentEntryPeriods.firstIndex {
             $0.startDateComponents == currentDateComponents
         }
     }
@@ -68,15 +87,12 @@ class EntriesViewDataSource: NSObject {
 
     func change(displayType: EntryDisplayType) {
         self.currentDisplayType = displayType
-
-        delegate?.dataDisplayDidChange()
     }
 
     func changeDate(incrementing: Bool) {
         currentReferenceDate = currentReferenceDate
             .incremented(incrementing, by: currentDisplayType)
 
-        delegate?.dataDisplayDidChange()
     }
 
     // MARK: - Private
@@ -155,7 +171,7 @@ extension EntriesViewDataSource: UITableViewDataSource {
     ) {
         if editingStyle == .delete,
             let entry = foodEntryController?.entries[indexPath.row] {
-
+            currentEntryPeriod?.entries.removeAll(where: { $0 == entry })
             foodEntryController?.deleteFoodEntry(entry) { [weak self] result in
                 DispatchQueue.main.async {
                     if let error = result {

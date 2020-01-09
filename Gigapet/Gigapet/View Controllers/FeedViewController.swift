@@ -143,6 +143,9 @@ class FeedViewController: UIViewController {
                 } else {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
+                if let entriesVC = self.previousViewController as? EntriesViewController {
+                    entriesVC.entriesViewDataSource?.entryWasAdded()
+                }
             }
         }
     }
