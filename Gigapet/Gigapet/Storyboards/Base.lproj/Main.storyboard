@@ -221,11 +221,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="lfg-zD-PiG"/>
                     <connections>
+                        <outlet property="decrementButton" destination="okF-TT-rxa" id="PXF-0R-yK1"/>
                         <outlet property="feedButton" destination="uFb-ct-TDZ" id="f4x-Qi-x0l"/>
                         <outlet property="feedTimePicker" destination="ecT-FI-YU8" id="xoe-nk-Joo"/>
                         <outlet property="foodAmountField" destination="1V8-7Z-ulb" id="dJn-CR-DzR"/>
                         <outlet property="foodCategoryPicker" destination="EuG-vy-3SP" id="W8t-bf-Yex"/>
                         <outlet property="foodNameField" destination="ZdL-T5-r7y" id="WTA-wh-kjS"/>
+                        <outlet property="incrementButton" destination="KNg-qT-SXj" id="OB9-pY-ZW2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dte-Oq-k9R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -240,11 +242,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="KMR-Uv-Z0q">
-                                <rect key="frame" x="20" y="110" width="374" height="480"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="KMR-Uv-Z0q">
+                                <rect key="frame" x="43.5" y="110" width="327" height="447"/>
                                 <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ILK-bV-QAY">
+                                        <rect key="frame" x="0.0" y="0.0" width="327" height="32"/>
+                                        <segments>
+                                            <segment title="All Entries"/>
+                                            <segment title="Day"/>
+                                            <segment title="Week"/>
+                                            <segment title="Month"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="periodControlChanged:" destination="08X-En-Q5y" eventType="valueChanged" id="ruG-hq-UlF"/>
+                                        </connections>
+                                    </segmentedControl>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wyt-CD-MGl">
-                                        <rect key="frame" x="103.5" y="0.0" width="167.5" height="30"/>
+                                        <rect key="frame" x="80" y="43" width="167.5" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOL-db-hJq">
                                                 <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -267,20 +281,21 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GJh-oc-Tvv" customClass="PieChart" customModule="PieCharts">
-                                        <rect key="frame" x="0.0" y="53" width="374" height="374"/>
+                                        <rect key="frame" x="3.5" y="85" width="320" height="320"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="GJh-oc-Tvv" secondAttribute="height" multiplier="1:1" id="7Le-RQ-fiS"/>
+                                            <constraint firstAttribute="width" constant="320" id="Tan-Lm-d9J"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oa-Nd-d21" customClass="GigaPetButton" customModule="Gigapet" customModuleProvider="target">
-                                        <rect key="frame" x="154" y="450" width="66" height="30"/>
+                                        <rect key="frame" x="130.5" y="417" width="66" height="30"/>
                                         <state key="normal" title="Add Food"/>
                                     </button>
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Jiy-q0-ie6">
-                                <rect key="frame" x="20" y="598" width="374" height="264"/>
+                                <rect key="frame" x="20" y="565" width="374" height="297"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EntryCell" textLabel="tm0-WW-xGJ" detailTextLabel="zpw-wY-fzx" style="IBUITableViewCellStyleSubtitle" id="RVD-Hs-Q9R" customClass="EntryTableViewCell" customModule="Gigapet" customModuleProvider="target">
@@ -589,7 +604,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="inp-KV-oJN"/>
+        <segue reference="Jq4-x7-EcF"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

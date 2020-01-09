@@ -59,7 +59,7 @@ class HomeViewController: UIViewController {
             petNameLabel.text = userInfo.petname
         } else {
             foodEntryController = nil
-            petNameLabel.text = "My Pet Name"
+            petNameLabel.text = ""
         }
     }
 }
