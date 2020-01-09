@@ -27,19 +27,12 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
     weak var entryController: FoodEntryController?
     weak var delegate: EntriesTableViewDelegate?
 
-    private var fetchedResultsController: NSFetchedResultsController<FoodEntry>? {
-        return entryController?.fetchedResultsController
-    }
-
     var entryPeriods = [EntryDisplayPeriod]()
 
     func switchDisplayType() {
-        guard
-            let entries = fetchedResultsController?.fetchedObjects,
-            currentDisplayType != .all
-            else {
-                return
-        }
+        guard currentDisplayType != .all,
+            let entries = entryController?.entries
+            else { return }
         entryPeriods = []
 
         for entry in entries {
@@ -66,7 +59,7 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
     ) -> Int {
         switch currentDisplayType {
         case .all:
-            return fetchedResultsController?.fetchedObjects?.count ?? 0
+            return entryController?.entries.count ?? 0
         default: return entryPeriods.count
         }
     }
@@ -81,7 +74,7 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
                 for: indexPath)
                 as? EntryTableViewCell
                 else { return UITableViewCell() }
-            cell.entry = fetchedResultsController?.object(at: indexPath)
+            cell.entry = entryController?.entries[indexPath.row]
 
             return cell
         } else {
@@ -100,7 +93,7 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
         forRowAt indexPath: IndexPath
     ) {
         if currentDisplayType == .all && editingStyle == .delete,
-            let entry = fetchedResultsController?.object(at: indexPath) {
+            let entry = entryController?.entries[indexPath.row] {
 
             entryController?.deleteFoodEntry(entry) { [weak self] result in
                 DispatchQueue.main.async {
@@ -111,57 +104,6 @@ class EntriesTableViewDataSource: NSObject, UITableViewDataSource {
                     }
                 }
             }
-        }
-    }
-}
-
-// MARK: - FetchedResultsController Delegate
-
-extension EntriesTableViewDataSource: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(
-        _ controller: NSFetchedResultsController<NSFetchRequestResult>
-    ) {
-        tableView?.beginUpdates()
-    }
-
-    func controllerDidChangeContent(
-        _ controller: NSFetchedResultsController<NSFetchRequestResult>
-    ) {
-        (currentDisplayType == .all) ? tableView?.endUpdates() : tableView?.reloadData()
-    }
-
-    func controller(
-        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
-        didChange anObject: Any,
-        at indexPath: IndexPath?,
-        for type: NSFetchedResultsChangeType,
-        newIndexPath: IndexPath?
-    ) {
-        guard currentDisplayType == .all else { return }
-
-        switch type {
-        case .insert:
-            guard
-                let newIndexPath = newIndexPath
-                else { return }
-            tableView?.insertRows(at: [newIndexPath], with: .automatic)
-        case .update:
-            guard
-                let indexPath = indexPath
-                else { return }
-            tableView?.reloadRows(at: [indexPath], with: .automatic)
-        case .move:
-            guard
-                let oldIndexPath = indexPath,
-                let newIndexPath = newIndexPath
-                else { return }
-            tableView?.deleteRows(at: [oldIndexPath], with: .automatic)
-            tableView?.insertRows(at: [newIndexPath], with: .automatic)
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            tableView?.deleteRows(at: [indexPath], with: .automatic)
-        @unknown default:
-            fatalError("Unknown Core Data fetched results change type")
         }
     }
 }

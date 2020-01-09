@@ -15,25 +15,9 @@ class FoodEntryController {
 
     typealias ResultHandler = (NetworkError?) -> Void
 
+    private(set) var entries = [FoodEntry]()
+
     private(set) var user: UserInfo
-
-    lazy var fetchedResultsController: NSFetchedResultsController<FoodEntry> = {
-        let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: "dateFed", ascending: false)]
-        let frc = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: CoreDataStack.shared.mainContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil)
-        do {
-            try frc.performFetch()
-        } catch {
-            fatalError("Error initializing fetched results controller: \(error)")
-        }
-
-        return frc
-    }()
 
     private var networkHandler: NetworkHandler = {
         let handler = NetworkHandler()
@@ -235,7 +219,6 @@ class FoodEntryController {
             do {
                 try self.updateLocalEntries(from: serverEntryReps)
                 try CoreDataStack.shared.save()
-//                try self.fetchedResultsController.performFetch()
             } catch {
                 completion(.otherError(error: error))
             }
