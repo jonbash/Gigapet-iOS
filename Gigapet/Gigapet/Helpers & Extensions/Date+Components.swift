@@ -16,7 +16,7 @@ extension Date {
 
         switch displayType {
         case .day: components = [.day, .month, .year]
-        case .week: components = [.weekOfYear, .year]
+        case .week: components = [.weekOfYear, .yearForWeekOfYear]
         case .month: components = [.month, .year]
         default: return nil
         }
