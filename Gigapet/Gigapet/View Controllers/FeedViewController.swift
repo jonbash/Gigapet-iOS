@@ -13,9 +13,7 @@ class FeedViewController: UIViewController {
 
     // MARK: - Properties
 
-    var foodEntryController: FoodEntryController? {
-        willSet { if newValue == nil { print("Value is nil!! Why?!") } }
-    }
+    var foodEntryController: FoodEntryController?
     weak var editingEntry: FoodEntry?
 
     weak var previousViewController: UIViewController?
