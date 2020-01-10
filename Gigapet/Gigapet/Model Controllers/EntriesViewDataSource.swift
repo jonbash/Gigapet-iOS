@@ -186,23 +186,14 @@ extension EntriesViewDataSource: UITableViewDataSource {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        if currentDisplayType == .all {
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: "EntryCell",
-                for: indexPath)
-                as? EntryTableViewCell
-                else { return UITableViewCell() }
-            cell.entry = currentEntryPeriod?.entries[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "EntryCell",
+            for: indexPath)
+            as? EntryTableViewCell
+            else { return UITableViewCell() }
+        cell.entry = currentEntryPeriod?.entries[indexPath.row]
 
-            return cell
-        } else {
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: "EntryCell",
-                for: indexPath)
-                as? EntryTableViewCell
-                else { return UITableViewCell() }
-            return cell
-        }
+        return cell
     }
 
     func tableView(
