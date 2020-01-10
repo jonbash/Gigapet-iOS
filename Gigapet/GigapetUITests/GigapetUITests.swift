@@ -213,6 +213,40 @@ class GigapetUITests: XCTestCase {
         XCTAssert(amOnHomeScreen)
     }
 
+    func testEntriesScreen() {
+        entriesButton.tap()
+
+        XCTAssert(allEntriesButton.exists)
+        XCTAssert(dayButton.exists)
+        XCTAssert(weekButton.exists)
+        XCTAssert(monthButton.exists)
+        XCTAssert(allEntriesLabel.exists)
+        XCTAssert(incrementDayButton.exists)
+        XCTAssert(decrementDayButton.exists)
+
+        XCTAssertFalse(incrementDayButton.isEnabled)
+        XCTAssertFalse(decrementDayButton.isEnabled)
+
+        // 5 entries in table
+        XCTAssertEqual(entryCells.count, 5)
+
+        dayButton.tap()
+
+        XCTAssertFalse(allEntriesLabel.exists)
+
+        // 5 entries in table
+        XCTAssertEqual(entryCells.count, 4)
+
+        monthButton.tap()
+        decrementDayButton.tap()
+
+        XCTAssertEqual(entryCells.count, 1)
+
+        decrementDayButton.tap()
+
+        XCTAssertEqual(entryCells.count, 0)
+    }
+
     // MARK: - Helper Methods
 
     func signInIfNeeded() {
