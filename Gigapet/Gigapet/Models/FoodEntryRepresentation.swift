@@ -73,6 +73,9 @@ struct FoodEntryRepresentation: Codable {
         try container.encode(foodName, forKey: .foodName)
         try container.encode(foodAmount, forKey: .foodAmount)
         try container.encode(dateAsDouble, forKey: .dateFed)
+        if isUITesting {
+            try container.encode(identifier, forKey: .identifier)
+        }
     }
 }
 
