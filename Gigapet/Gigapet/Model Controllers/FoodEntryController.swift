@@ -249,6 +249,19 @@ class FoodEntryController {
 
     // MARK: - Local Helpers
 
+    private func refreshLocalEntries() throws {
+        var caughtError: Error?
+        let context = CoreDataStack.shared.mainContext
+        context.performAndWait {
+            do {
+                self.entries = try context.fetch(FoodEntry.fetchRequest())
+            } catch {
+                caughtError = error
+            }
+        }
+        if let error = caughtError { throw error }
+    }
+
     private func updateLocalEntries(
         from serverReps: [FoodEntryRepresentation]
     ) throws {
