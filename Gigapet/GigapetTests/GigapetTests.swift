@@ -22,6 +22,38 @@ class GigapetTests: XCTestCase {
     var context = CoreDataStack.shared.container.newBackgroundContext()
     lazy var returnData: Data? = try? JSONEncoder().encode([entryRep])
 
+    // MARK: - Objects
+
+    func testEncodingEntryRepDoesNotThrow() {
+        XCTAssertNoThrow(_ = try encodeEntryRep())
+    }
+
+    func testDecodingEntryRep() {
+        XCTAssertNotNil(entryRepData)
+        XCTAssertNoThrow(try getEntryRepFromData())
+        let decodedRep = try? getEntryRepFromData()
+        XCTAssertNotNil(decodedRep)
+        XCTAssertEqual(entryRep, decodedRep)
+    }
+
+    func testEntryRep() {
+        let entry = newEntry()
+        if let computedRep = entry.representation {
+            let newEntry = FoodEntry(from: computedRep, context: context)
+            XCTAssertEqual(newEntry.representation, computedRep)
+        } else { XCTAssert(false) }
+    }
+
+    func testFoodCategoryColor() {
+        let category = FoodCategory.vegetable
+        XCTAssertEqual(category.color, .green)
+    }
+
+    func testPeriodDates() {
+        let date = Date()
+        let period = EntryDisplayPeriod(type: .day, entries: [], referenceDate: date)
+        XCTAssertEqual(date.components(for: .day), period.startDateComponents)
+    }
 
     // MARK: - Helpers
 
