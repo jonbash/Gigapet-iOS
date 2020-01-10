@@ -22,15 +22,20 @@ class FoodEntryController {
     private var networkHandler: NetworkHandler
 
     private let _explicitLoader: NetworkLoader?
-    private lazy var mockUILoader: NetworkLoader = NetworkMockingSession(
-        mockData: mockData(),
-        mockError: nil)
+    private lazy var mockUILoader: NetworkLoader = {
+        do {
+            let data = try mockData()
+            return NetworkMockingSession(
+                mockData: data,
+                mockError: nil)
+        } catch { fatalError("Mock data is bad") }
+    }()
 
     private var loader: NetworkLoader {
-        if let explicitLoader = _explicitLoader {
-            return explicitLoader
-        } else if isUITesting {
+        if isUITesting {
             return mockUILoader
+        } else if let explicitLoader = _explicitLoader {
+            return explicitLoader
         } else {
             return URLSession.shared
         }
@@ -219,21 +224,23 @@ class FoodEntryController {
             with: request,
             session: loader
         ) { (result: Result<[FoodEntryRepresentation], NetworkError>) in
-
             var serverEntryReps = [FoodEntryRepresentation]()
 
             do {
                 serverEntryReps = try result.get()
-            } catch {
-                completion(.dataCodingError(specifically: error))
+            } catch let error as NetworkError {
+                completion(error)
                 return
+            } catch {
+                completion(.otherError(error: error))
             }
 
             do {
                 try self.updateLocalEntries(from: serverEntryReps)
-                try CoreDataStack.shared.save()
+                try self.refreshLocalEntries()
             } catch {
                 completion(.otherError(error: error))
+                return
             }
 
             completion(nil)
