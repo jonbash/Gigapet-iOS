@@ -19,13 +19,25 @@ enum FoodCategory: String, CaseIterable {
 
     var color: UIColor {
         switch self {
-        case .fruit: return .blue
+        case .fruit: return .cyan
         case .vegetable: return .green
         case .wholeGrains: return .brown
         case .meat: return .red
         case .dairy: return .yellow
         case .fatsAndOils: return .orange
-        case .treats: return .systemPink
+        case .treats: return .magenta
+        }
+    }
+
+    var shortText: String {
+        switch self {
+        case .fruit: return "fruit"
+        case .vegetable: return "veg"
+        case .wholeGrains: return "grain"
+        case .meat: return "meat"
+        case .dairy: return "dairy"
+        case .fatsAndOils: return "fat"
+        case .treats: return "treat"
         }
     }
 }
