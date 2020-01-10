@@ -17,7 +17,7 @@ extension FoodEntry {
         foodAmount: Int,
         dateFed: Date = Date(),
         identifier: Int? = nil,
-        context: NSManagedObjectContext = CoreDataStack.shared.mainContext
+        context: NSManagedObjectContext
     ) {
         self.init(context: context)
         self.foodCategory = category.rawValue

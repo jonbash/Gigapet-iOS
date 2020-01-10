@@ -9,11 +9,6 @@
 import CoreData
 
 class CoreDataStack {
-    // MARK: - Singleton
-
-    static let shared = CoreDataStack()
-
-    private init() {}
 
     // MARK: - Properties
 
@@ -33,13 +28,15 @@ class CoreDataStack {
     // MARK: - Methods
 
     func save(
-        in context: NSManagedObjectContext = CoreDataStack.shared.mainContext
+        in context: NSManagedObjectContext? = nil
     ) throws {
-        guard context.hasChanges else { return }
+        let moc = context ?? mainContext
+        guard moc.hasChanges else { return }
+        
         var possibleError: Error?
-        context.performAndWait {
+        moc.performAndWait {
             do {
-                try context.save()
+                try moc.save()
             } catch {
                 possibleError = error
             }

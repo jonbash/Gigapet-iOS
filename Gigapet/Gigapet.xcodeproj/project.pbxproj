@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		996E202723C8142000630061 /* IsUITesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202623C8142000630061 /* IsUITesting.swift */; };
 		996E202923C8149E00630061 /* NetworkMockingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202823C8149E00630061 /* NetworkMockingSession.swift */; };
+		996E202C23C9332500630061 /* LocalStoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202B23C9332500630061 /* LocalStoreController.swift */; };
 		9974231F23C6DB5F00898B4C /* GigapetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974231E23C6DB5F00898B4C /* GigapetError.swift */; };
 		9974232123C6E58300898B4C /* EntryDisplayPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */; };
 		9974232323C6E95600898B4C /* Date+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974232223C6E95600898B4C /* Date+Components.swift */; };
@@ -69,6 +70,7 @@
 		6FF02C2B5C4EECF9D32D6648 /* Pods_Gigapet_GigapetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gigapet_GigapetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		996E202623C8142000630061 /* IsUITesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsUITesting.swift; sourceTree = "<group>"; };
 		996E202823C8149E00630061 /* NetworkMockingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMockingSession.swift; sourceTree = "<group>"; };
+		996E202B23C9332500630061 /* LocalStoreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreController.swift; sourceTree = "<group>"; };
 		9974231E23C6DB5F00898B4C /* GigapetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GigapetError.swift; sourceTree = "<group>"; };
 		9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDisplayPeriod.swift; sourceTree = "<group>"; };
 		9974232223C6E95600898B4C /* Date+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Components.swift"; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				99DB9B1D23C39E5B0074634C /* FoodEntryController.swift */,
 				99DB9B5123C53C1C0074634C /* EntriesViewDataSource.swift */,
 				99DB9B2F23C3D3560074634C /* AuthController.swift */,
+				996E202B23C9332500630061 /* LocalStoreController.swift */,
 				99DB9B1723C2B5300074634C /* CoreDataStack.swift */,
 			);
 			path = "Model Controllers";
@@ -593,6 +596,7 @@
 				99DB9B6123C63F180074634C /* UserAuth.swift in Sources */,
 				99DB9B4F23C531500074634C /* GigaPetButton.swift in Sources */,
 				99DB9B5823C53F5C0074634C /* EntryDisplayType.swift in Sources */,
+				996E202C23C9332500630061 /* LocalStoreController.swift in Sources */,
 				99DB9B1823C2B5300074634C /* CoreDataStack.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -770,14 +774,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 22X3GA956P;
 				INFOPLIST_FILE = Gigapet/Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonbash.Gigapet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -791,14 +795,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 22X3GA956P;
 				INFOPLIST_FILE = Gigapet/Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonbash.Gigapet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

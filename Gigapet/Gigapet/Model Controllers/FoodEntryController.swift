@@ -6,7 +6,7 @@
 //  Copyright © 2020 Jon Bash. All rights reserved.
 //
 
-import CoreData
+import Foundation
 import NetworkHandler
 
 class FoodEntryController {
@@ -15,10 +15,16 @@ class FoodEntryController {
 
     typealias ResultHandler = (NetworkError?) -> Void
 
-    private(set) var entries: [FoodEntry]
-
+    private(set) var entries: [FoodEntry] {
+        get {
+            localStoreController.entries
+        } set {
+            localStoreController.entries = newValue
+        }
+    }
     private(set) var user: UserInfo
 
+    private(set) var localStoreController = LocalStoreController()
     private var networkHandler: NetworkHandler
 
     private let _explicitLoader: NetworkLoader?
@@ -50,21 +56,6 @@ class FoodEntryController {
         self.networkHandler = NetworkHandler()
         networkHandler.strict200CodeResponse = false
 
-        if isUITesting {
-            self.entries = []
-            deleteAllLocalEntries()
-        }
-
-        let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
-        do {
-            self.entries = try CoreDataStack.shared.mainContext.fetch(fetchRequest)
-        } catch {
-            fatalError("Fetch request failed: \(error)")
-        }
-
-        do { try deleteDuplicateLocalEntries()
-        } catch { NSLog("Error deleting duplicate local entries: \(error)") }
-
         fetchAll { result in
             if let error = result {
                 NSLog("Error fetching food entries in FoodEntryController initialization: \(error)")
@@ -81,8 +72,6 @@ class FoodEntryController {
         timestamp: Date = Date(),
         completion: @escaping ResultHandler
     ) {
-        let context = CoreDataStack.shared.mainContext
-
         uploadNewEntry(
             FoodEntryRepresentation(
                 foodCategory: category,
@@ -90,7 +79,6 @@ class FoodEntryController {
                 foodAmount: foodAmount,
                 dateFed: timestamp,
                 identifier: nil),
-            context: context,
             completion: completion)
     }
 
@@ -110,24 +98,13 @@ class FoodEntryController {
         timestamp: Date,
         completion: @escaping ResultHandler
     ) {
-        guard let context = entry.managedObjectContext else {
-            addEntry(category: category,
-                     foodName: foodName,
-                     foodAmount: foodAmount,
-                     timestamp: timestamp,
-                     completion: completion)
-            return
-        }
-
-        // update local entry
-        context.performAndWait {
-            entry.foodCategory = category.rawValue
-            entry.foodName = foodName
-            entry.foodAmount = Int64(foodAmount)
-            entry.dateFed = timestamp
-        }
-
-        do { try CoreDataStack.shared.save(in: context)
+        do {
+            try localStoreController.updateLocalEntry(
+                entry,
+                withCategory: category,
+                name: foodName,
+                dateFed: timestamp,
+                foodAmount: foodAmount)
         } catch {
             completion(.otherError(error: error))
             return
@@ -141,7 +118,7 @@ class FoodEntryController {
 
         // if nil ID, then we haven't gotten the ID from the server
         if entry.identifier == FoodEntry.nilID {
-            uploadNewEntry(entryRep, context: context, completion: completion)
+            uploadNewEntry(entryRep, completion: completion)
             return
         }
 
@@ -169,7 +146,7 @@ class FoodEntryController {
         // need to grab this before deleting the entry locally
         let entryID = Int(entry.identifier)
 
-        do { try deleteLocalEntry(entry) } catch {
+        do { try localStoreController.deleteLocalEntry(entry) } catch {
             completion(.otherError(error: error))
             return
         }
@@ -182,29 +159,13 @@ class FoodEntryController {
     }
 
     func deleteAllLocalEntries() {
-        for entry in entries {
-            guard let context = entry.managedObjectContext else { continue }
-            var caughtError: Error?
-
-            context.perform {
-                context.delete(entry)
-                do {
-                    try CoreDataStack.shared.save(in: context)
-                } catch {
-                    caughtError = error
-                }
-            }
-            if let error = caughtError {
-                NSLog("Error deleting entry \(entry.identifier): \(error)")
-            }
-        }
+        localStoreController.deleteAllLocalEntries()
     }
 
     // MARK: - Sync Helpers
 
     private func uploadNewEntry(
         _ entryRep: FoodEntryRepresentation,
-        context: NSManagedObjectContext,
         completion: @escaping ResultHandler
     ) {
         var entryData: Data?
@@ -241,8 +202,8 @@ class FoodEntryController {
             }
 
             do {
-                try self.updateLocalEntries(from: serverEntryReps)
-                try self.refreshLocalEntries()
+                try self.localStoreController.updateLocalEntries(from: serverEntryReps)
+                try self.localStoreController.refreshLocalEntries()
             } catch {
                 completion(.otherError(error: error))
                 return
@@ -250,111 +211,5 @@ class FoodEntryController {
 
             completion(nil)
         }
-    }
-
-    // MARK: - Local Helpers
-
-    private func refreshLocalEntries() throws {
-        self.entries = sortedEntries(
-            try getAllLocalEntries(using: CoreDataStack.shared.mainContext))
-
-    }
-
-    private func getAllLocalEntries(
-        using context: NSManagedObjectContext
-    ) throws -> [FoodEntry] {
-        var fetchedEntries = [FoodEntry]()
-        var caughtError: Error?
-
-        context.performAndWait {
-            do {
-                fetchedEntries = try context.fetch(FoodEntry.fetchRequest())
-            } catch {
-                caughtError = error
-            }
-        }
-        if let error = caughtError { throw error }
-
-
-        return sortedEntries(fetchedEntries)
-    }
-
-    private func updateLocalEntries(
-        from serverReps: [FoodEntryRepresentation]
-    ) throws {
-        let context = CoreDataStack.shared.container.newBackgroundContext()
-
-        let localEntries: [FoodEntry] = try context.fetch(FoodEntry.fetchRequest())
-
-        var entriesByID = [Int: FoodEntry]()
-        for entry in localEntries { entriesByID[Int(entry.identifier)] = entry }
-
-        for rep in serverReps {
-            guard let id = rep.identifier else { continue }
-
-            if let localEntry = entriesByID[id] {
-                localEntry.update(from: rep, context: context)
-            } else {
-                _ = FoodEntry(from: rep, context: context)
-            }
-        }
-        try CoreDataStack.shared.save(in: context)
-
-        self.entries = sortedEntries(self.entries)
-    }
-
-    private func deleteLocalEntries(notIn ids: [Int]) throws {
-        let idsNotToFetch = ids.compactMap { Int64($0) }
-        let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "NOT (identifier IN %@)", idsNotToFetch)
-
-        let context = CoreDataStack.shared.container.newBackgroundContext()
-
-        let entriesToDelete = try context.fetch(fetchRequest)
-        for entry in entriesToDelete {
-            try deleteLocalEntry(entry)
-        }
-    }
-
-    private func deleteDuplicateLocalEntries() throws {
-        let context = CoreDataStack.shared.container.newBackgroundContext()
-
-        var localEntries = try getAllLocalEntries(using: context)
-
-        var entriesToDelete = [FoodEntry]()
-        var i = 0
-        while i < localEntries.count {
-            let entry = localEntries[i]
-            var j = i + 1
-            while j < localEntries.count {
-                if entry.identifier == localEntries[j].identifier {
-                    entriesToDelete.append(localEntries.remove(at: j))
-                } else { j += 1 }
-            }
-            i += 1
-        }
-
-        for entry in entriesToDelete { try deleteLocalEntry(entry) }
-
-        try CoreDataStack.shared.save(in: context)
-    }
-
-    private func sortedEntries(_ entries: [FoodEntry]) -> [FoodEntry] {
-        return entries.sorted {
-            guard let date0 = $0.dateFed, let date1 = $1.dateFed else {
-                return false
-            }
-            return date0 > date1
-        }
-    }
-
-    private func deleteLocalEntry(_ entry: FoodEntry) throws {
-        entries.removeAll { $0 == entry }
-
-        guard let context = entry.managedObjectContext else { return }
-        context.performAndWait {
-            context.delete(entry)
-        }
-        try CoreDataStack.shared.save(in: context)
     }
 }

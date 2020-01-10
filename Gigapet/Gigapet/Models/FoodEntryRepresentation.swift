@@ -102,7 +102,7 @@ extension FoodEntry {
 
     convenience init(
         from representation: FoodEntryRepresentation,
-        context: NSManagedObjectContext = CoreDataStack.shared.mainContext
+        context: NSManagedObjectContext
     ) {
         self.init(context: context)
         self.update(from: representation, context: context)
@@ -110,7 +110,7 @@ extension FoodEntry {
 
     func update(
         from representation: FoodEntryRepresentation,
-        context: NSManagedObjectContext = CoreDataStack.shared.mainContext
+        context: NSManagedObjectContext
     ) {
         self.foodCategory = representation.foodCategory.rawValue
         self.foodName = representation.foodName
