@@ -84,7 +84,7 @@ class EntriesViewDataSource: NSObject {
         ]
     }
 
-    // MARK: - Entry Periods API
+    // MARK: - Entry Periods Internal
 
     func change(displayType: EntryDisplayType) {
         self.currentDisplayType = displayType
@@ -101,7 +101,7 @@ class EntriesViewDataSource: NSObject {
         currentEntryPeriods = entryPeriods(for: currentDisplayType)
     }
 
-    // MARK: - Pie Charts API
+    // MARK: - Pie Charts Internal
 
     func getPieChartData() -> PieChartData? {
         guard let entries = currentEntryPeriod?.entries else { return nil }
@@ -126,11 +126,14 @@ class EntriesViewDataSource: NSObject {
                 label: category.shortText))
             colors.append(category.color)
         }
-        let dataSet = PieChartDataSet(entries: dataEntries, label: "Qty")
+        let dataSet = PieChartDataSet(entries: dataEntries, label: "quantity")
         dataSet.colors = colors
         dataSet.valueTextColor = .black
 
-        return PieChartData(dataSet: dataSet)
+        let data = PieChartData(dataSet: dataSet)
+        data.setValueFormatter(DefaultValueFormatter(decimals: 0))
+
+        return data
     }
 
     // MARK: - Private

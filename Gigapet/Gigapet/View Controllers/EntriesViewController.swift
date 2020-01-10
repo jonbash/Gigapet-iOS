@@ -27,8 +27,6 @@ class EntriesViewController: UIViewController {
         return formatter
     }()
 
-    private lazy var percentFormatter = NumberFormatter()
-
     @IBOutlet private weak var entriesTableView: UITableView!
     @IBOutlet private weak var timePeriodLabel: UILabel!
     @IBOutlet private weak var entriesChart: PieChartView!
