@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		996E202723C8142000630061 /* IsUITesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202623C8142000630061 /* IsUITesting.swift */; };
+		996E202923C8149E00630061 /* NetworkMockingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202823C8149E00630061 /* NetworkMockingSession.swift */; };
 		9974231F23C6DB5F00898B4C /* GigapetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974231E23C6DB5F00898B4C /* GigapetError.swift */; };
 		9974232123C6E58300898B4C /* EntryDisplayPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */; };
 		9974232323C6E95600898B4C /* Date+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974232223C6E95600898B4C /* Date+Components.swift */; };
@@ -65,6 +67,8 @@
 		0CC470D860589D32538F0BED /* Pods-Gigapet-GigapetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gigapet-GigapetUITests.debug.xcconfig"; path = "Target Support Files/Pods-Gigapet-GigapetUITests/Pods-Gigapet-GigapetUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3E535FFCB4D01501E6B09A5A /* Pods-Gigapet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gigapet.release.xcconfig"; path = "Target Support Files/Pods-Gigapet/Pods-Gigapet.release.xcconfig"; sourceTree = "<group>"; };
 		6FF02C2B5C4EECF9D32D6648 /* Pods_Gigapet_GigapetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gigapet_GigapetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		996E202623C8142000630061 /* IsUITesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsUITesting.swift; sourceTree = "<group>"; };
+		996E202823C8149E00630061 /* NetworkMockingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMockingSession.swift; sourceTree = "<group>"; };
 		9974231E23C6DB5F00898B4C /* GigapetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GigapetError.swift; sourceTree = "<group>"; };
 		9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDisplayPeriod.swift; sourceTree = "<group>"; };
 		9974232223C6E95600898B4C /* Date+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Components.swift"; sourceTree = "<group>"; };
@@ -150,6 +154,15 @@
 				B885F7701F7053E0215276B7 /* Pods-GigapetTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		996E202A23C814A200630061 /* Testing */ = {
+			isa = PBXGroup;
+			children = (
+				996E202823C8149E00630061 /* NetworkMockingSession.swift */,
+				996E202623C8142000630061 /* IsUITesting.swift */,
+			);
+			path = Testing;
 			sourceTree = "<group>";
 		};
 		99DB9AD423C271B40074634C = {
@@ -273,6 +286,7 @@
 				99DB9B4223C4FF440074634C /* String+Convenience.swift */,
 				9974232223C6E95600898B4C /* Date+Components.swift */,
 				9974231E23C6DB5F00898B4C /* GigapetError.swift */,
+				996E202A23C814A200630061 /* Testing */,
 			);
 			path = "Helpers & Extensions";
 			sourceTree = "<group>";
@@ -557,12 +571,14 @@
 				99DB9B5223C53C1C0074634C /* EntriesViewDataSource.swift in Sources */,
 				9974232323C6E95600898B4C /* Date+Components.swift in Sources */,
 				99DB9B3023C3D3560074634C /* AuthController.swift in Sources */,
+				996E202923C8149E00630061 /* NetworkMockingSession.swift in Sources */,
 				99DB9B5423C53F1E0074634C /* EntryTableViewCell.swift in Sources */,
 				99DB9AE323C271B40074634C /* SceneDelegate.swift in Sources */,
 				99DB9B2C23C3B81A0074634C /* FoodEntry+Convenience.swift in Sources */,
 				9974231F23C6DB5F00898B4C /* GigapetError.swift in Sources */,
 				99DB9B1623C2B5230074634C /* Gigapet.xcdatamodeld in Sources */,
 				99DB9B4B23C530E90074634C /* EntriesViewController.swift in Sources */,
+				996E202723C8142000630061 /* IsUITesting.swift in Sources */,
 				99DB9B3F23C4FCE70074634C /* HomeViewController.swift in Sources */,
 				99DB9B4923C530BF0074634C /* FeedViewController.swift in Sources */,
 				99DB9B3423C3D4280074634C /* URL+Convenience.swift in Sources */,

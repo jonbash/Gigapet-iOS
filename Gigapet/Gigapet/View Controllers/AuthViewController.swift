@@ -41,6 +41,11 @@ class AuthViewController: UIViewController {
 
     @IBOutlet private weak var authenticateButton: UIButton!
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if isUITesting { passwordField.isSecureTextEntry = false }
+    }
+
     // MARK: - Actions
     
     @IBAction func authTypeChanged(_ sender: UISegmentedControl) {

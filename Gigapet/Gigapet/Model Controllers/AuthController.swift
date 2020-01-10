@@ -21,9 +21,18 @@ class AuthController {
         handler.strict200CodeResponse = false
         return handler
     }()
-    var loader: NetworkLoader = URLSession.shared
 
     private let keychain = Keychain(service: .keychainKey)
+
+    private var loader: NetworkLoader {
+        return isUITesting ? mockLoader : URLSession.shared
+    }
+
+    private lazy var mockLoader: NetworkLoader = {
+        let info = UserInfo(id: 1, token: "testToken", petname: "Kilmonger")
+        let data = try? JSONEncoder().encode(info)
+        return NetworkMockingSession(mockData: data, mockError: nil)
+    }()
 
     // MARK: - Keychain Access
 
@@ -90,7 +99,9 @@ class AuthController {
         _ request: URLRequest,
         completion: @escaping CompletionHandler
     ) {
-        networkHandler.transferMahCodableDatas(with: request, session: loader
+        networkHandler.transferMahCodableDatas(
+            with: request,
+            session: loader
         ) { (result: Result<UserInfo, NetworkError>) in
             do {
                 let userInfo = try result.get()

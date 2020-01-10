@@ -20,15 +20,30 @@ class FoodEntryController {
     private(set) var user: UserInfo
 
     private var networkHandler: NetworkHandler
-    var loader: NetworkLoader
+
+    private let _explicitLoader: NetworkLoader?
+    private lazy var mockUILoader: NetworkLoader = NetworkMockingSession(
+        mockData: mockData(),
+        mockError: nil)
+
+    private var loader: NetworkLoader {
+        if let explicitLoader = _explicitLoader {
+            return explicitLoader
+        } else if isUITesting {
+            return mockUILoader
+        } else {
+            return URLSession.shared
+        }
+    }
 
     // MARK: - Init
 
-    init(user: UserInfo, loader: NetworkLoader = URLSession.shared) {
+    init(user: UserInfo, loader: NetworkLoader? = nil) {
         self.user = user
+        self._explicitLoader = loader
+
         self.networkHandler = NetworkHandler()
         networkHandler.strict200CodeResponse = false
-        self.loader = loader
 
         let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
         do {
@@ -181,7 +196,9 @@ class FoodEntryController {
         _ request: URLRequest,
         completion: @escaping ResultHandler
     ) {
-        networkHandler.transferMahCodableDatas(with: request, session: loader
+        networkHandler.transferMahCodableDatas(
+            with: request,
+            session: loader
         ) { (result: Result<[FoodEntryRepresentation], NetworkError>) in
 
             var serverEntryReps = [FoodEntryRepresentation]()

@@ -267,7 +267,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IfU-4u-gvM">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IfU-4u-gvM">
                                                 <rect key="frame" x="0.0" y="19.5" width="374" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" textContentType="name"/>
@@ -283,7 +283,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g23-ST-yUM">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pet Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g23-ST-yUM">
                                                 <rect key="frame" x="0.0" y="19.5" width="374" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" textContentType="name"/>
@@ -299,8 +299,9 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KsR-wX-AQW">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KsR-wX-AQW">
                                                 <rect key="frame" x="0.0" y="19.5" width="374" height="34"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="Password"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password"/>
                                             </textField>
@@ -505,7 +506,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="inp-KV-oJN"/>
+        <segue reference="Jq4-x7-EcF"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
