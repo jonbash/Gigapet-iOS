@@ -55,6 +55,63 @@ class GigapetTests: XCTestCase {
         XCTAssertEqual(date.components(for: .day), period.startDateComponents)
     }
 
+    // MARK: - Entry Controller
+
+    func testAddingEntry() {
+        setUpEntryController(withError: false)
+        let expectation = requestExpectation()
+
+        entryController.addEntry(
+            category: entryRep.foodCategory,
+            foodName: entryRep.foodName,
+            foodAmount: entryRep.foodAmount
+        ) { error in
+            XCTAssertNil(error)
+            if let decodedRep = try? self.getEntryRepFromData() {
+                XCTAssertEqual(decodedRep, self.entryRep)
+            } else { XCTAssert(false) }
+
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 5)
+    }
+
+    func testUpdateEntry() {
+        setUpEntryController(withError: false)
+        let entry = newEntry()
+        let oldEntryRep = entry.representation
+        let expectation = requestExpectation()
+
+        entryController.updateFoodEntry(
+            entry,
+            withCategory: entryRep.foodCategory,
+            foodName: entryRep.foodName,
+            foodAmount: entryRep.foodAmount,
+            timestamp: entryRep.dateFed
+        ) { error in
+            XCTAssertNil(error)
+            if let decodedRep = try? self.getEntryRepFromData() {
+                XCTAssertEqual(decodedRep, self.entryRep)
+                XCTAssertNotEqual(oldEntryRep, decodedRep)
+            } else { XCTAssert(false) }
+
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 5)
+    }
+
+    func testDeleteEntry() {
+        setUpEntryController(withError: false)
+        let entry = newEntry()
+        let expectation = requestExpectation()
+
+        entryController.deleteFoodEntry(entry) { error in
+            XCTAssertNil(error)
+            XCTAssertNil(entry.managedObjectContext)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 5)
+    }
     // MARK: - Helpers
 
     func setUpEntryController(withError: Bool) {
