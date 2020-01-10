@@ -12,7 +12,7 @@ import XCTest
 
 class GigapetUITests: XCTestCase {
 
-    // MARK: - Setup
+    // MARK: - Properties
 
     var app: XCUIApplication!
 
@@ -62,8 +62,8 @@ class GigapetUITests: XCTestCase {
     lazy var categoryPicker = app.pickers["FeedCategoryPicker"]
     lazy var categoryPickerWheel = categoryPicker.pickerWheels.element
     lazy var quantityField = app.textFields["FeedQuantityField"]
-    lazy var incrementButton = app.buttons["+"]
-    lazy var decrementButton = app.buttons["–"]
+    lazy var incQuantityButton = app.buttons["+"]
+    lazy var decQuantityButton = app.buttons["–"]
     lazy var finalizeFeedButton = app.buttons["Feed My Pet!"]
 
     var quantityFieldValue: String { quantityField.value as! String }
@@ -74,6 +74,24 @@ class GigapetUITests: XCTestCase {
     lazy var quantityLabel = app.staticTexts["Quantity"]
 
     // entries screen
+    lazy var allEntriesButton = app.buttons["All Entries"]
+    lazy var dayButton = app.buttons["Day"]
+    lazy var weekButton = app.buttons["Week"]
+    lazy var monthButton = app.buttons["Month"]
+    lazy var allEntriesLabel = app.staticTexts["All Entries"]
+    lazy var incrementDayButton = app.buttons["IncrementButton"]
+    lazy var decrementDayButton = app.buttons["DecrementButton"]
+
+    lazy var fruitLabel = app.staticTexts["fruit"]
+    lazy var treatLabel = app.staticTexts["treat"]
+    lazy var grainLabel = app.staticTexts["grain"]
+    lazy var meatLabel = app.staticTexts["meat"]
+    lazy var vegLabel = app.staticTexts["veg"]
+
+    lazy var entryTable = app.tables.element
+    var entryCells: [XCUIElement] { entryTable.cells.allElementsBoundByIndex }
+
+    // MARK: - Setup
 
     override func setUp() {
         super.setUp()
@@ -163,8 +181,8 @@ class GigapetUITests: XCTestCase {
         XCTAssert(datePicker.exists)
         XCTAssert(categoryPicker.exists)
         XCTAssert(quantityField.exists)
-        XCTAssert(incrementButton.exists)
-        XCTAssert(decrementButton.exists)
+        XCTAssert(incQuantityButton.exists)
+        XCTAssert(decQuantityButton.exists)
         XCTAssert(finalizeFeedButton.exists)
         XCTAssert(foodNameLabel.exists)
         XCTAssert(datePickerLabel.exists)
@@ -183,11 +201,11 @@ class GigapetUITests: XCTestCase {
         categoryPickerWheel.adjust(toPickerWheelValue: "Whole Grains")
 
         // assert that 1 is minimum, increment works
-        decrementButton.tap()
+        decQuantityButton.tap()
         XCTAssertEqual(quantityFieldValue, "1")
-        incrementButton.tap()
-        incrementButton.tap()
-        incrementButton.tap()
+        incQuantityButton.tap()
+        incQuantityButton.tap()
+        incQuantityButton.tap()
         XCTAssertEqual(quantityFieldValue, "4")
 
         finalizeFeedButton.tap()
