@@ -41,14 +41,22 @@ extension Date {
                 self.timeIntervalSinceReferenceDate
                     + (TimeInterval.week * Double(change)))
         case .month:
+            let calendar = Calendar.autoupdatingCurrent
+            var components = calendar.dateComponents(
+                [.year, .month, .day],
+                from: self)
             guard
-                let components = self.components(for: .month),
                 let month = components.month,
                 let year = components.year
                 else { return self }
-            let newYear = (month == 0 || month == 12) ? (year + change) : year
-            let newMonth = month + change
-            return DateComponents(year: newYear, month: newMonth).date ?? self
+            components.year = (month == 1 || month == 12) ? (year + change) : year
+            components.month = month + change
+            if components.month == 0 {
+                components.month = 12
+            } else if components.month == 12 {
+                components.month = 1
+            }
+            return calendar.date(from: components)!
         default:
             return self
         }
