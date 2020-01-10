@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import PieCharts
+import Charts
 
 class EntriesViewController: UIViewController {
 
@@ -31,7 +31,7 @@ class EntriesViewController: UIViewController {
 
     @IBOutlet private weak var entriesTableView: UITableView!
     @IBOutlet private weak var timePeriodLabel: UILabel!
-    @IBOutlet private weak var entriesChart: PieChart!
+    @IBOutlet private weak var entriesChart: PieChartView!
 
     @IBOutlet private weak var decrementPeriodButton: UIButton!
     @IBOutlet private weak var incrementPeriodButton: UIButton!
@@ -49,9 +49,7 @@ class EntriesViewController: UIViewController {
         entriesTableView.dataSource = entriesViewDataSource
         entriesTableView.delegate = self
 
-        setDisplayType(currentDisplayType)
-        setLayersForChart()
-        updateChart()
+        setDisplay(currentDisplayType)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -66,7 +64,7 @@ class EntriesViewController: UIViewController {
 
     @IBAction private func displayTypeChanged(_ sender: UISegmentedControl) {
         // I want it to crash if there's an unexpected value given
-        setDisplayType(EntryDisplayType(rawValue: sender.selectedSegmentIndex)!)
+        setDisplay(EntryDisplayType(rawValue: sender.selectedSegmentIndex)!)
     }
 
     @IBAction private func previousPeriodTapped(_ sender: UIButton) {
@@ -79,7 +77,7 @@ class EntriesViewController: UIViewController {
 
     // MARK: - Display Helpers
 
-    private func setDisplayType(_ displayType: EntryDisplayType) {
+    private func setDisplay(_ displayType: EntryDisplayType) {
         currentDisplayType = displayType
         entriesViewDataSource?.change(displayType: displayType)
 
@@ -87,17 +85,19 @@ class EntriesViewController: UIViewController {
         incrementPeriodButton.isEnabled = styleIsNotAll
         decrementPeriodButton.isEnabled = styleIsNotAll
 
-        setPeriodLabelText()
-        entriesTableView.reloadData()
-        updateChart()
+        updateViews()
     }
 
     private func changePeriod(incrementing: Bool) {
         entriesViewDataSource?.changeDate(incrementing: incrementing)
 
+        updateViews()
+    }
+
+    private func updateViews() {
         setPeriodLabelText()
         entriesTableView.reloadData()
-        updateChart()
+        entriesChart.data = entriesViewDataSource?.getPieChartData()
     }
 
     // MARK: - String Helpers
@@ -139,30 +139,6 @@ class EntriesViewController: UIViewController {
             let month = components.month
             else { return "?" }
         return "\(year)-\(month)"
-    }
-
-    // MARK: - Chart Helpers
-
-    private func updateChart() {
-        if let models = entriesViewDataSource?.getPieChartInfo() {
-            entriesChart.models = models
-        }
-    }
-
-    private func setLayersForChart() {
-        let layer = PiePlainTextLayer()
-        let layerSettings = PiePlainTextLayerSettings()
-        layerSettings.label.font = .systemFont(ofSize: 10)
-        layerSettings.label.textGenerator = { slice in
-            let percentage = self.percentFormatter
-                .string(from: slice.data.percentage * 100 as NSNumber)
-                .map { "\($0)%" } ?? "??%"
-            let category = slice.data.model.obj as? FoodCategory ?? FoodCategory.wholeGrains
-            return "\(category.shortText) \(percentage)"
-        }
-        layer.settings = layerSettings
-
-        entriesChart.layers = [layer]
     }
 
     // MARK: - Navigation
