@@ -86,22 +86,31 @@ class GigapetUITests: XCTestCase {
         signInIfNeeded()
     }
 
-    func testAuthScreen() {
-        let homeNavBar = app.navigationBars["Home"]
-        let logOutButton = homeNavBar.buttons["Log Out"]
+    // MARK: - Tests
 
-        if homeNavBar.exists && logOutButton.exists {
-            logOutButton.tap()
-        }
+    func testLogin() {
+        // home screen; log out
+        logOutButton.tap()
 
-        let welcomeHeader = app.staticTexts["Welcome to Lambdi Pet"]
-        let userNameLabel = app.staticTexts["User Name"]
-        let petNameLabel = app.staticTexts["Pet Name"]
-        let passwordLabel = app.staticTexts["Password"]
+        // change from register to login mode
+        loginSegment.tap()
 
-        let userNameField = app.textFields["User Name"]
-        let petNameField = app.textFields["Pet Name"]
-        let passwordField = app.textFields["Password"]
+        XCTAssertFalse(petNameLabel.exists && petNameLabel.isHittable)
+        XCTAssertFalse(petNameField.exists && petNameField.isHittable)
+
+        // log in
+        userNameField.tap()
+        userNameField.typeText("test")
+        passwordField.tap()
+        passwordField.typeText("password")
+
+        app.buttons.containing(.staticText, identifier: "Log In").element.tap()
+
+        waitForLogin()
+
+        // home screen?
+        XCTAssert(amOnHomeScreen)
+    }
 
         let authTypeControl = app.segmentedControls.element
         let loginSegment = authTypeControl.buttons["Log In"]
