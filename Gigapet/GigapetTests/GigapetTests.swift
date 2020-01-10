@@ -10,6 +10,9 @@ import XCTest
 @testable import Gigapet
 
 class GigapetTests: XCTestCase {
+
+    // MARK: - Setup
+
     lazy var entryController = FoodEntryController(user: user)
     var user = UserInfo(id: 1, token: "testToken", petname: "Kilmonger")
     var entryRep = FoodEntryRepresentation(
@@ -22,7 +25,7 @@ class GigapetTests: XCTestCase {
     var context = CoreDataStack.shared.container.newBackgroundContext()
     lazy var returnData: Data? = try? JSONEncoder().encode([entryRep])
 
-    // MARK: - Objects
+    // MARK: - Object Tests
 
     func testEncodingEntryRepDoesNotThrow() {
         XCTAssertNoThrow(_ = try encodeEntryRep())
@@ -55,7 +58,7 @@ class GigapetTests: XCTestCase {
         XCTAssertEqual(date.components(for: .day), period.startDateComponents)
     }
 
-    // MARK: - Entry Controller
+    // MARK: - Entry Controller Tests
 
     func testAddingEntry() {
         setUpEntryController(withError: false)
@@ -113,7 +116,7 @@ class GigapetTests: XCTestCase {
         wait(for: [expectation], timeout: 5)
     }
 
-    // MARK: - Misc
+    // MARK: - Misc Tests
 
     func testKeychain() {
         let authController = AuthController()
@@ -137,7 +140,7 @@ class GigapetTests: XCTestCase {
         XCTAssertNoThrow(try CoreDataStack.shared.save(in: context))
     }
 
-    // MARK: - Helpers
+    // MARK: - Helper Methods
 
     func setUpEntryController(withError: Bool) {
         entryController = FoodEntryController(
