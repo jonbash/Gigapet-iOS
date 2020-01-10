@@ -156,8 +156,44 @@ class GigapetUITests: XCTestCase {
         XCTAssert(amOnHomeScreen)
     }
 
-    func testExample() {
+    func testFeed() {
+        feedButton.tap()
 
+        XCTAssert(foodNameField.exists)
+        XCTAssert(datePicker.exists)
+        XCTAssert(categoryPicker.exists)
+        XCTAssert(quantityField.exists)
+        XCTAssert(incrementButton.exists)
+        XCTAssert(decrementButton.exists)
+        XCTAssert(finalizeFeedButton.exists)
+        XCTAssert(foodNameLabel.exists)
+        XCTAssert(datePickerLabel.exists)
+        XCTAssert(categoryLabel.exists)
+        XCTAssert(quantityLabel.exists)
+
+        XCTAssertEqual(quantityFieldValue, "1")
+
+        foodNameField.tap()
+        foodNameField.typeText("Entire loaf of bread")
+        continueKeyboardKey.tap()
+        datePickerDay.adjust(toPickerWheelValue: "Jan 9")
+        datepickerHour.adjust(toPickerWheelValue: "3")
+        datePickerMinute.adjust(toPickerWheelValue: "14")
+        datePickerAMPM.adjust(toPickerWheelValue: "AM")
+        categoryPickerWheel.adjust(toPickerWheelValue: "Whole Grains")
+
+        // assert that 1 is minimum, increment works
+        decrementButton.tap()
+        XCTAssertEqual(quantityFieldValue, "1")
+        incrementButton.tap()
+        incrementButton.tap()
+        incrementButton.tap()
+        XCTAssertEqual(quantityFieldValue, "4")
+
+        finalizeFeedButton.tap()
+
+        XCTAssert(amOnHomeScreen)
+    }
 
     // MARK: - Helper Methods
 
