@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
             let feedVC = segue.destination as? FeedViewController {
 
             feedVC.foodEntryController = foodEntryController
-            feedVC.previousViewController = self
+            feedVC.delegate = self
         } else if segue.identifier == .pastEntriesSegue,
             let entriesVC = segue.destination as? EntriesViewController {
 
@@ -65,13 +65,21 @@ class HomeViewController: UIViewController {
     }
 }
 
-// MARK: - Authentication Delegate
+// MARK: - Delegates
 
 extension HomeViewController: AuthenticationDelegate {
     func authenticationDidComplete(withUserInfo userInfo: UserInfo) {
         DispatchQueue.main.async {
             self.refreshViews(forUser: userInfo)
             self.dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+extension HomeViewController: FeedViewControllerDelegate {
+    func entryWasAdded() {
+        DispatchQueue.main.async {
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
 }
