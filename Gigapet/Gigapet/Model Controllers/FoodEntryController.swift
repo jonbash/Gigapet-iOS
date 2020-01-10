@@ -50,6 +50,11 @@ class FoodEntryController {
         self.networkHandler = NetworkHandler()
         networkHandler.strict200CodeResponse = false
 
+        if isUITesting {
+            self.entries = []
+            deleteAllLocalEntries()
+        }
+
         let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
         do {
             self.entries = try CoreDataStack.shared.mainContext.fetch(fetchRequest)
