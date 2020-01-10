@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import PieCharts
+import Charts
 
 protocol EntriesViewDataDelegate: AnyObject {
     func entryDeletionDidFail(withError error: Error)
@@ -103,8 +103,8 @@ class EntriesViewDataSource: NSObject {
 
     // MARK: - Pie Charts API
 
-    func getPieChartInfo() -> [PieSliceModel] {
-        guard let entries = currentEntryPeriod?.entries else { return [] }
+    func getPieChartData() -> PieChartData? {
+        guard let entries = currentEntryPeriod?.entries else { return nil }
 
         var categoryCounts = [FoodCategory: Int]()
         for entry in entries {
@@ -117,16 +117,20 @@ class EntriesViewDataSource: NSObject {
             categoryCounts[category] = currentCount + Int(entry.foodAmount)
         }
 
-        var models = [PieSliceModel]()
+        var dataEntries = [PieChartDataEntry]()
+        var colors = [UIColor]()
 
-        for category in categoryCounts.keys {
-            models.append(PieSliceModel(
-                value: Double(categoryCounts[category] ?? 0),
-                color: category.color,
-                obj: category))
+        for (category, count) in categoryCounts {
+            dataEntries.append(PieChartDataEntry(
+                value: Double(count),
+                label: category.shortText))
+            colors.append(category.color)
         }
+        let dataSet = PieChartDataSet(entries: dataEntries, label: "Qty")
+        dataSet.colors = colors
+        dataSet.valueTextColor = .black
 
-        return models
+        return PieChartData(dataSet: dataSet)
     }
 
     // MARK: - Private
