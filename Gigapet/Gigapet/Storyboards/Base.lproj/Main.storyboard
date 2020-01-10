@@ -24,6 +24,7 @@
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="BrownOtter" translatesAutoresizingMaskIntoConstraints="NO" id="9Y7-lm-zFp">
                                 <rect key="frame" x="25" y="156" width="364" height="566"/>
+                                <accessibility key="accessibilityConfiguration" identifier="PetImageView"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="9Y7-lm-zFp" secondAttribute="height" multiplier="3.29:5.12" id="JpT-bP-CA1"/>
                                 </constraints>
@@ -135,6 +136,7 @@
                                             </label>
                                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EuG-vy-3SP">
                                                 <rect key="frame" x="0.0" y="24.5" width="374" height="170"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="FeedCategoryPicker"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="170" id="cnu-hC-f1U"/>
                                                 </constraints>
@@ -158,6 +160,7 @@
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1V8-7Z-ulb">
                                         <rect key="frame" x="34" y="0.0" width="75" height="34"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="FeedQuantityField"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="lno-pG-y6X"/>
                                         </constraints>
@@ -506,7 +509,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Jq4-x7-EcF"/>
+        <segue reference="inp-KV-oJN"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
