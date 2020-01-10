@@ -1,5 +1,5 @@
 //
-//  FoodEntry+Representation.swift
+//  FoodEntryRepresentation.swift
 //  Gigapet
 //
 //  Created by Jon Bash on 2020-01-06.
@@ -9,7 +9,7 @@
 import CoreData
 import NetworkHandler
 
-// MARK: - Representation Struct
+// MARK: - Representation
 
 struct FoodEntryRepresentation: Codable {
     var foodCategory: FoodCategory
@@ -45,8 +45,13 @@ struct FoodEntryRepresentation: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         let categoryString = try container.decode(String.self, forKey: .foodCategory)
-        let dateAsString = try container.decode(String.self, forKey: .dateFed)
-        guard let dateAsDouble = Double(dateAsString) else {
+        guard let dateAsDouble: Double = {
+            if let dateAsString = try? container.decode(String.self, forKey: .dateFed) {
+                return Double(dateAsString)
+            } else {
+                return try? container.decode(Double.self, forKey: .dateFed)
+            }
+        }() else {
             throw NetworkError.dataCodingError(specifically: GigapetError(
                 text: "Failed to initialize number from encoded date"))
         }
@@ -74,7 +79,6 @@ struct FoodEntryRepresentation: Codable {
 // MARK: - Computed / Init / Update
 
 extension FoodEntry {
-
     var representation: FoodEntryRepresentation? {
         guard let categoryString = self.foodCategory,
             let category = FoodCategory(rawValue: categoryString),

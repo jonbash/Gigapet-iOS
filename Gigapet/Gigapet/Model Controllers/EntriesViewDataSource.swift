@@ -109,9 +109,7 @@ class EntriesViewDataSource: NSObject {
 
     // MARK: - Pie Charts API
 
-    func getPieChartInfo()
-        -> (models: [PieSliceModel], layers: [PiePlainTextLayer])
-    {
+    func getPieChartInfo() -> (models: [PieSliceModel], layers: [PiePlainTextLayer]) {
         guard let entries = currentEntryPeriod?.entries else {
             return (models: [], layers: [])
         }
@@ -138,9 +136,9 @@ class EntriesViewDataSource: NSObject {
             let layer = PiePlainTextLayer()
             let layerSettings = PiePlainTextLayerSettings()
             layerSettings.label.textGenerator = { slice in
-                return self.percentFormatter
+                self.percentFormatter
                     .string(from: slice.data.percentage * 100 as NSNumber)
-                    .map{"\($0)%"} ?? ""
+                    .map { "\($0)%" } ?? ""
             }
             layer.settings = layerSettings
 
