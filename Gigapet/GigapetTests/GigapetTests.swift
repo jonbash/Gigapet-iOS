@@ -112,6 +112,31 @@ class GigapetTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 5)
     }
+
+    // MARK: - Misc
+
+    func testKeychain() {
+        let authController = AuthController()
+        let putInfoInKeychain = {
+            try authController.putUserInfoInKeychain(self.user)
+        }
+        let getInfoFromKeychain = {
+            try authController.fetchCurrentUserInfo()
+        }
+        XCTAssertNoThrow(putInfoInKeychain)
+        try? putInfoInKeychain()
+        XCTAssertNoThrow(getInfoFromKeychain)
+        if let fetchedInfo = try? getInfoFromKeychain() {
+            XCTAssertEqual(fetchedInfo, user)
+        } else {
+            XCTAssert(false)
+        }
+    }
+
+    func testCoreDataStackEmptySave() {
+        XCTAssertNoThrow(try CoreDataStack.shared.save(in: context))
+    }
+
     // MARK: - Helpers
 
     func setUpEntryController(withError: Bool) {
