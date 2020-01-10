@@ -49,12 +49,21 @@ extension Date {
                 let month = components.month,
                 let year = components.year
                 else { return self }
-            components.year = (month == 1 || month == 12) ? (year + change) : year
-            components.month = month + change
-            if components.month == 0 {
+
+            let newMonth = month + change
+            let newMonthIs0 = (newMonth == 0)
+            let newMonthis13 = (newMonth == 13)
+            
+            if newMonthIs0 || newMonthis13 {
+                components.year = year + change
+            }
+
+            if newMonthIs0 {
                 components.month = 12
-            } else if components.month == 12 {
+            } else if newMonthis13 {
                 components.month = 1
+            } else {
+                components.month = newMonth
             }
             return calendar.date(from: components)!
         default:
