@@ -41,7 +41,7 @@ struct NetworkMockingSession: NetworkLoader {
 // MARK: - Food Entry Controller
 
 extension FoodEntryController {
-    func mockData() -> Data? {
+    func mockData() throws -> Data {
         let mockEntryReps = [
             FoodEntryRepresentation(
                 foodCategory: .vegetable,
@@ -74,6 +74,6 @@ extension FoodEntryController {
                 dateFed: Date(),
                 identifier: 5)
         ]
-        return try? JSONEncoder().encode(mockEntryReps)
+        return try JSONEncoder().encode(mockEntryReps)
     }
 }
