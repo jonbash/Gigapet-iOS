@@ -151,6 +151,9 @@ class GigapetUITests: XCTestCase {
         XCTAssert(entriesButton.exists)
         XCTAssert(feedButton.exists)
     }
+
+    func testStartOnHomeScreen() {
+        XCTAssert(amOnHomeScreen)
     }
 
     func testExample() {
