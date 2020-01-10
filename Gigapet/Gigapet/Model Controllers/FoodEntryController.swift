@@ -250,16 +250,25 @@ class FoodEntryController {
     // MARK: - Local Helpers
 
     private func refreshLocalEntries() throws {
+        self.entries = try getAllLocalEntries(using: CoreDataStack.shared.mainContext)
+    }
+
+    private func getAllLocalEntries(
+        using context: NSManagedObjectContext
+    ) throws -> [FoodEntry] {
+        var fetchedEntries = [FoodEntry]()
         var caughtError: Error?
-        let context = CoreDataStack.shared.mainContext
+
         context.performAndWait {
             do {
-                self.entries = try context.fetch(FoodEntry.fetchRequest())
+                fetchedEntries = try context.fetch(FoodEntry.fetchRequest())
             } catch {
                 caughtError = error
             }
         }
         if let error = caughtError { throw error }
+
+        return fetchedEntries
     }
 
     private func updateLocalEntries(
@@ -300,9 +309,9 @@ class FoodEntryController {
     }
 
     private func deleteDuplicateLocalEntries() throws {
-        let context = CoreDataStack.shared.mainContext
+        let context = CoreDataStack.shared.container.newBackgroundContext()
 
-        var localEntries = self.entries
+        var localEntries = try getAllLocalEntries(using: context)
 
         var entriesToDelete = [FoodEntry]()
         var i = 0
