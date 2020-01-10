@@ -112,14 +112,14 @@ class GigapetUITests: XCTestCase {
         XCTAssert(amOnHomeScreen)
     }
 
-        let authTypeControl = app.segmentedControls.element
-        let loginSegment = authTypeControl.buttons["Log In"]
-        let registerSegment = authTypeControl.buttons["Register"]
+    func testRegister() {
+        logOutButton.tap()
 
+        // register mode
         XCTAssert(welcomeHeader.exists)
         XCTAssert(userNameLabel.exists)
         XCTAssert(passwordLabel.exists)
-        XCTAssert(petNameLabel.exists)
+        XCTAssert(petNameFieldLabel.exists)
 
         XCTAssert(authTypeControl.exists)
         XCTAssert(loginSegment.exists)
@@ -129,25 +129,28 @@ class GigapetUITests: XCTestCase {
         XCTAssert(petNameField.exists)
         XCTAssert(passwordField.exists)
 
-        loginSegment.tap()
+        XCTAssert(signupButton.exists)
 
-        XCTAssertFalse(petNameLabel.exists && petNameLabel.isHittable)
-        XCTAssertFalse(petNameField.exists && petNameField.isHittable)
-
+        // register
         userNameField.tap()
-        userNameField.typeText("test")
+        userNameField.typeText("testuser")
+        petNameField.tap()
+        petNameField.typeText("testpet")
         passwordField.tap()
-        passwordField.typeText("password")
+        passwordField.typeText("testpassword")
 
-        app.buttons.containing(.staticText, identifier: "Log In").element.tap()
+        signupButton.tap()
 
-        let loggedIn = expectation(
-            for: NSPredicate(format: "exists == 1"),
-            evaluatedWith: homeNavBar,
-            handler: nil)
-        wait(for: [loggedIn], timeout: 5)
+        waitForLogin()
 
+        // home screen?
         XCTAssert(homeNavBar.exists)
+        XCTAssert(logOutButton.exists)
+        XCTAssert(petNameLabel.exists)
+        XCTAssert(petImageView.exists)
+        XCTAssert(entriesButton.exists)
+        XCTAssert(feedButton.exists)
+    }
     }
 
     func testExample() {
