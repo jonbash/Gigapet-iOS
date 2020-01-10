@@ -255,7 +255,9 @@ class FoodEntryController {
     // MARK: - Local Helpers
 
     private func refreshLocalEntries() throws {
-        self.entries = try getAllLocalEntries(using: CoreDataStack.shared.mainContext)
+        self.entries = sortedEntries(
+            try getAllLocalEntries(using: CoreDataStack.shared.mainContext))
+
     }
 
     private func getAllLocalEntries(
@@ -273,7 +275,8 @@ class FoodEntryController {
         }
         if let error = caughtError { throw error }
 
-        return fetchedEntries
+
+        return sortedEntries(fetchedEntries)
     }
 
     private func updateLocalEntries(
@@ -297,7 +300,7 @@ class FoodEntryController {
         }
         try CoreDataStack.shared.save(in: context)
 
-        sortEntries()
+        self.entries = sortedEntries(self.entries)
     }
 
     private func deleteLocalEntries(notIn ids: [Int]) throws {
@@ -336,8 +339,8 @@ class FoodEntryController {
         try CoreDataStack.shared.save(in: context)
     }
 
-    private func sortEntries() {
-        entries.sort {
+    private func sortedEntries(_ entries: [FoodEntry]) -> [FoodEntry] {
+        return entries.sorted {
             guard let date0 = $0.dateFed, let date1 = $1.dateFed else {
                 return false
             }
