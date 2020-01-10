@@ -1,28 +1,30 @@
 PODS:
+  - Charts (3.4.0):
+    - Charts/Core (= 3.4.0)
+  - Charts/Core (3.4.0)
   - KeychainAccess (4.1.0)
   - NetworkHandler (0.9.3)
-  - PieCharts (0.0.7)
   - SwiftLint (0.37.0)
 
 DEPENDENCIES:
+  - Charts
   - KeychainAccess
   - NetworkHandler
-  - PieCharts
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - Charts
     - KeychainAccess
     - NetworkHandler
-    - PieCharts
     - SwiftLint
 
 SPEC CHECKSUMS:
+  Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   NetworkHandler: 6e823369befb1975571c9e42b498f22732d1e225
-  PieCharts: 30e50dfa7dc19e5b84e9878d32089673ef5d0453
   SwiftLint: c078a14d7d7ade75e5507795d185e3da41d844d2
 
-PODFILE CHECKSUM: 9ff56ced7244eef0570cd79e19e3d6cc49ff1857
+PODFILE CHECKSUM: a1b48526e0e2389efbb18e95cc9a00414e7bdb46
 
 COCOAPODS: 1.8.4

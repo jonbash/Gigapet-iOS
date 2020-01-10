@@ -9,7 +9,7 @@ target 'Gigapet' do
   pod 'SwiftLint'
   pod 'NetworkHandler'
   pod 'KeychainAccess'
-  pod 'PieCharts'
+  pod 'Charts'
 
   target 'GigapetTests' do
     inherit! :search_paths
