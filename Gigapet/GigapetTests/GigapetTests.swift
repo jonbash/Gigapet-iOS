@@ -176,6 +176,6 @@ class GigapetTests: XCTestCase {
     }
 
     func requestExpectation() -> XCTestExpectation {
-        return expectation(description: "Finished mock network request")
+        return expectation(description: "Finished mock network request - \(Date())")
     }
 }
