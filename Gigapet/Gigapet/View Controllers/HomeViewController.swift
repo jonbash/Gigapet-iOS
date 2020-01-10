@@ -37,6 +37,7 @@ class HomeViewController: UIViewController {
             let authVC = segue.destination as? AuthViewController {
 
             refreshViews(forUser: nil)
+            foodEntryController?.deleteAllLocalEntries()
             authVC.delegate = self
             authVC.authController = authController
         } else if segue.identifier == .feedPetSegue,

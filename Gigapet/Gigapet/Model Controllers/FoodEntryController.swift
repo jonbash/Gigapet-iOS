@@ -171,6 +171,25 @@ class FoodEntryController {
         handleRequestWithFetchedEntries(request, completion: completion)
     }
 
+    func deleteAllLocalEntries() {
+        for entry in entries {
+            guard let context = entry.managedObjectContext else { continue }
+            var caughtError: Error?
+
+            context.perform {
+                context.delete(entry)
+                do {
+                    try CoreDataStack.shared.save(in: context)
+                } catch {
+                    caughtError = error
+                }
+            }
+            if let error = caughtError {
+                NSLog("Error deleting entry \(entry.identifier): \(error)")
+            }
+        }
+    }
+
     // MARK: - Sync Helpers
 
     private func uploadNewEntry(
