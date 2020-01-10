@@ -252,31 +252,20 @@ class FoodEntryController {
     private func updateLocalEntries(
         from serverReps: [FoodEntryRepresentation]
     ) throws {
-        let idsToFetch = serverReps.compactMap { $0.identifier }
-        let repsByID = Dictionary(
-            uniqueKeysWithValues: zip(idsToFetch, serverReps)
-        )
-        var entriesToCreate = repsByID
-
-        let fetchRequest: NSFetchRequest<FoodEntry> = FoodEntry.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "identifier IN %@", idsToFetch)
-
-        try deleteLocalEntries(notIn: idsToFetch)
-
         let context = CoreDataStack.shared.container.newBackgroundContext()
 
-        let existingEntries = try context.fetch(fetchRequest)
-        for entry in existingEntries {
-            let id = Int(entry.identifier)
-            guard let entryRep = repsByID[id] else { continue }
+        let localEntries: [FoodEntry] = try context.fetch(FoodEntry.fetchRequest())
 
-            entry.update(from: entryRep)
-            entriesToCreate.removeValue(forKey: id)
-        }
+        var entriesByID = [Int: FoodEntry]()
+        for entry in localEntries { entriesByID[Int(entry.identifier)] = entry }
 
-        context.performAndWait {
-            for representation in entriesToCreate.values {
-                entries.append(FoodEntry(from: representation, context: context))
+        for rep in serverReps {
+            guard let id = rep.identifier else { continue }
+
+            if let localEntry = entriesByID[id] {
+                localEntry.update(from: rep, context: context)
+            } else {
+                _ = FoodEntry(from: rep, context: context)
             }
         }
         try CoreDataStack.shared.save(in: context)
