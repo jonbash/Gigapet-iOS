@@ -144,7 +144,7 @@ class EntriesViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let feedVC = segue.destination as? FeedViewController {
             feedVC.foodEntryController = self.foodEntryController
-            feedVC.previousViewController = self
+            feedVC.delegate = self
 
             if segue.identifier == .editEntrySegue,
                 let entryIndex = entriesTableView.indexPathForSelectedRow,
@@ -170,5 +170,16 @@ extension EntriesViewController: EntriesViewDataDelegate {
     func entryDeletionDidFail(withError error: Error) {
         let alert = UIAlertController(error: error)
         self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension EntriesViewController: FeedViewControllerDelegate {
+    func entryWasAdded() {
+        entriesViewDataSource?.entryWasAdded()
+
+        DispatchQueue.main.async {
+            self.updateViews()
+            self.navigationController?.popToViewController(self, animated: true)
+        }
     }
 }
