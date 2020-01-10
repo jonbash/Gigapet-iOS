@@ -25,6 +25,11 @@ class GigapetTests: XCTestCase {
     var context = CoreDataStack.shared.container.newBackgroundContext()
     lazy var returnData: Data? = try? JSONEncoder().encode([entryRep])
 
+    override func tearDown() {
+        super.tearDown()
+        entryController.deleteAllLocalEntries()
+    }
+
     // MARK: - Object Tests
 
     func testEncodingEntryRepDoesNotThrow() {
