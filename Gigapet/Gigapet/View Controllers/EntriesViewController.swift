@@ -27,6 +27,8 @@ class EntriesViewController: UIViewController {
         return formatter
     }()
 
+    private lazy var percentFormatter = NumberFormatter()
+
     @IBOutlet private weak var entriesTableView: UITableView!
     @IBOutlet private weak var timePeriodLabel: UILabel!
     @IBOutlet private weak var entriesChart: PieChart!
@@ -48,6 +50,7 @@ class EntriesViewController: UIViewController {
         entriesTableView.delegate = self
 
         setDisplayType(currentDisplayType)
+        setLayersForChart()
         updateChart()
     }
 
@@ -74,7 +77,7 @@ class EntriesViewController: UIViewController {
         changePeriod(incrementing: true)
     }
 
-    // MARK: - Helper Methods
+    // MARK: - Display Helpers
 
     private func setDisplayType(_ displayType: EntryDisplayType) {
         currentDisplayType = displayType
@@ -96,6 +99,8 @@ class EntriesViewController: UIViewController {
         entriesTableView.reloadData()
         updateChart()
     }
+
+    // MARK: - String Helpers
 
     private func setPeriodLabelText() {
         if currentDisplayType == .all {
@@ -136,12 +141,28 @@ class EntriesViewController: UIViewController {
         return "\(year)-\(month)"
     }
 
-    private func updateChart() {
-        guard let chartInfo = entriesViewDataSource?.getPieChartInfo()
-            else { return }
+    // MARK: - Chart Helpers
 
-        entriesChart.models = chartInfo.models
-        entriesChart.layers = chartInfo.layers
+    private func updateChart() {
+        if let models = entriesViewDataSource?.getPieChartInfo() {
+            entriesChart.models = models
+        }
+    }
+
+    private func setLayersForChart() {
+        let layer = PiePlainTextLayer()
+        let layerSettings = PiePlainTextLayerSettings()
+        layerSettings.label.font = .systemFont(ofSize: 10)
+        layerSettings.label.textGenerator = { slice in
+            let percentage = self.percentFormatter
+                .string(from: slice.data.percentage * 100 as NSNumber)
+                .map { "\($0)%" } ?? "??%"
+            let category = slice.data.model.obj as? FoodCategory ?? FoodCategory.wholeGrains
+            return "\(category.shortText) \(percentage)"
+        }
+        layer.settings = layerSettings
+
+        entriesChart.layers = [layer]
     }
 
     // MARK: - Navigation

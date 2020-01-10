@@ -24,12 +24,6 @@ class EntriesViewDataSource: NSObject {
     private(set) var entryPeriodsByDisplayType = [EntryDisplayType: [EntryDisplayPeriod]]()
     private(set) var currentReferenceDate = Date()
 
-    private lazy var percentFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        return formatter
-    }()
-
     // MARK: Computed
 
     private(set) var currentEntryPeriods: [EntryDisplayPeriod] {
@@ -109,10 +103,8 @@ class EntriesViewDataSource: NSObject {
 
     // MARK: - Pie Charts API
 
-    func getPieChartInfo() -> (models: [PieSliceModel], layers: [PiePlainTextLayer]) {
-        guard let entries = currentEntryPeriod?.entries else {
-            return (models: [], layers: [])
-        }
+    func getPieChartInfo() -> [PieSliceModel] {
+        guard let entries = currentEntryPeriod?.entries else { return [] }
 
         var categoryCounts = [FoodCategory: Int]()
         for entry in entries {
@@ -126,26 +118,15 @@ class EntriesViewDataSource: NSObject {
         }
 
         var models = [PieSliceModel]()
-        var layers = [PiePlainTextLayer]()
 
         for category in categoryCounts.keys {
             models.append(PieSliceModel(
                 value: Double(categoryCounts[category] ?? 0),
-                color: category.color))
-
-            let layer = PiePlainTextLayer()
-            let layerSettings = PiePlainTextLayerSettings()
-            layerSettings.label.textGenerator = { slice in
-                self.percentFormatter
-                    .string(from: slice.data.percentage * 100 as NSNumber)
-                    .map { "\($0)%" } ?? ""
-            }
-            layer.settings = layerSettings
-
-            layers.append(layer)
+                color: category.color,
+                obj: category))
         }
 
-        return (models: models, layers: layers)
+        return models
     }
 
     // MARK: - Private
