@@ -9,6 +9,12 @@
 import UIKit
 import NetworkHandler
 
+// MARK: - Delegate
+
+protocol FeedViewControllerDelegate: AnyObject {
+    func entryWasAdded()
+}
+
 class FeedViewController: UIViewController {
 
     // MARK: - Properties
@@ -16,7 +22,7 @@ class FeedViewController: UIViewController {
     var foodEntryController: FoodEntryController?
     weak var editingEntry: FoodEntry?
 
-    weak var previousViewController: UIViewController?
+    weak var delegate: FeedViewControllerDelegate?
 
     @IBOutlet private weak var feedTimePicker: UIDatePicker!
     @IBOutlet private weak var foodCategoryPicker: UIPickerView!
@@ -130,23 +136,15 @@ class FeedViewController: UIViewController {
     }
 
     private func handleResponse(_ result: NetworkError?) {
-        DispatchQueue.main.async {
-            if let error = result {
+        if let error = result {
+            DispatchQueue.main.async {
                 self.present(
                     UIAlertController(error: error),
                     animated: true,
                     completion: { self.setControlsEnabled(true) })
-            } else {
-                if let previous = self.previousViewController {
-                    self.navigationController?
-                        .popToViewController(previous, animated: true)
-                } else {
-                    self.navigationController?.popToRootViewController(animated: true)
-                }
-                if let entriesVC = self.previousViewController as? EntriesViewController {
-                    entriesVC.entriesViewDataSource?.entryWasAdded()
-                }
             }
+        } else {
+            delegate?.entryWasAdded()
         }
     }
 
