@@ -392,6 +392,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOL-db-hJq">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="34"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="DecrementButton"/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="18"/>
                                         <state key="normal" title="&lt;">
                                             <color key="titleColor" name="MainPurple"/>
@@ -408,6 +409,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IPn-G4-t3O">
                                         <rect key="frame" x="219" y="0.0" width="61" height="34"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="IncrementButton"/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="18"/>
                                         <state key="normal" title="&gt;">
                                             <color key="titleColor" name="MainPurple"/>
