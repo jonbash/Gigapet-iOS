@@ -42,6 +42,7 @@ struct NetworkMockingSession: NetworkLoader {
 
 extension FoodEntryController {
     func mockData() throws -> Data {
+        let previousDate = Date().incremented(false, by: .month)
         let mockEntryReps = [
             FoodEntryRepresentation(
                 foodCategory: .vegetable,
@@ -71,7 +72,7 @@ extension FoodEntryController {
                 foodCategory: .meat,
                 foodName: "Steak",
                 foodAmount: 2,
-                dateFed: Date(),
+                dateFed: previousDate,
                 identifier: 5)
         ]
         return try JSONEncoder().encode(mockEntryReps)
