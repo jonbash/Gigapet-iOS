@@ -10,6 +10,7 @@
 		996E202723C8142000630061 /* IsUITesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202623C8142000630061 /* IsUITesting.swift */; };
 		996E202923C8149E00630061 /* NetworkMockingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202823C8149E00630061 /* NetworkMockingSession.swift */; };
 		996E202C23C9332500630061 /* LocalStoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202B23C9332500630061 /* LocalStoreController.swift */; };
+		996E203023C94B3B00630061 /* NetworkResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202F23C94B3B00630061 /* NetworkResultHandler.swift */; };
 		9974231F23C6DB5F00898B4C /* GigapetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974231E23C6DB5F00898B4C /* GigapetError.swift */; };
 		9974232123C6E58300898B4C /* EntryDisplayPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */; };
 		9974232323C6E95600898B4C /* Date+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974232223C6E95600898B4C /* Date+Components.swift */; };
@@ -71,6 +72,7 @@
 		996E202623C8142000630061 /* IsUITesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsUITesting.swift; sourceTree = "<group>"; };
 		996E202823C8149E00630061 /* NetworkMockingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMockingSession.swift; sourceTree = "<group>"; };
 		996E202B23C9332500630061 /* LocalStoreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreController.swift; sourceTree = "<group>"; };
+		996E202F23C94B3B00630061 /* NetworkResultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResultHandler.swift; sourceTree = "<group>"; };
 		9974231E23C6DB5F00898B4C /* GigapetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GigapetError.swift; sourceTree = "<group>"; };
 		9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDisplayPeriod.swift; sourceTree = "<group>"; };
 		9974232223C6E95600898B4C /* Date+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Components.swift"; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				99DB9B1F23C3A4BD0074634C /* UserInfo.swift */,
 				99DB9B6023C63F180074634C /* UserAuth.swift */,
 				99DB9B2923C3B59B0074634C /* APIRequestType.swift */,
+				996E202F23C94B3B00630061 /* NetworkResultHandler.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -591,6 +594,7 @@
 				99DB9B1C23C39D020074634C /* FoodCategory.swift in Sources */,
 				99DB9B2023C3A4BE0074634C /* UserInfo.swift in Sources */,
 				99DB9B2A23C3B59B0074634C /* APIRequestType.swift in Sources */,
+				996E203023C94B3B00630061 /* NetworkResultHandler.swift in Sources */,
 				9974232123C6E58300898B4C /* EntryDisplayPeriod.swift in Sources */,
 				99DB9B4323C4FF440074634C /* String+Convenience.swift in Sources */,
 				99DB9B6123C63F180074634C /* UserAuth.swift in Sources */,
