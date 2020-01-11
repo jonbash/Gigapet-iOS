@@ -13,8 +13,6 @@ class FoodEntryController {
 
     // MARK: - Properties
 
-    typealias ResultHandler = (NetworkError?) -> Void
-
     private(set) var entries: [FoodEntry] {
         get {
             localStoreController.entries
@@ -22,39 +20,14 @@ class FoodEntryController {
             localStoreController.entries = newValue
         }
     }
-    private(set) var user: UserInfo
 
     private(set) var localStoreController = LocalStoreController()
-    private var networkHandler: NetworkHandler
-
-    private let _explicitLoader: NetworkLoader?
-    private lazy var mockUILoader: NetworkLoader = {
-        do {
-            let data = try mockData()
-            return NetworkMockingSession(
-                mockData: data,
-                mockError: nil)
-        } catch { fatalError("Mock data is bad") }
-    }()
-
-    private var loader: NetworkLoader {
-        if isUITesting {
-            return mockUILoader
-        } else if let explicitLoader = _explicitLoader {
-            return explicitLoader
-        } else {
-            return URLSession.shared
-        }
-    }
+    private(set) var networkController: NetworkController
 
     // MARK: - Init
 
     init(user: UserInfo, loader: NetworkLoader? = nil) {
-        self.user = user
-        self._explicitLoader = loader
-
-        self.networkHandler = NetworkHandler()
-        networkHandler.strict200CodeResponse = false
+        self.networkController = NetworkController(user: user, loader: loader)
 
         fetchAll { result in
             if let error = result {
@@ -70,24 +43,27 @@ class FoodEntryController {
         foodName: String,
         foodAmount: Int,
         timestamp: Date = Date(),
-        completion: @escaping ResultHandler
+        completion: @escaping NetworkCompletion
     ) {
-        uploadNewEntry(
+        networkController.uploadNewEntry(
             FoodEntryRepresentation(
                 foodCategory: category,
                 foodName: foodName,
                 foodAmount: foodAmount,
                 dateFed: timestamp,
                 identifier: nil),
-            completion: completion)
+            resultHandler: NetworkResultHandler(
+                handler: handleFetchedEntryReps(result:completion:),
+                completion: completion))
     }
 
     func fetchAll(
-        completion: @escaping ResultHandler
+        completion: @escaping NetworkCompletion
     ) {
-        let request = APIRequestType.fetchAll(user: user).request
-
-        handleRequestWithFetchedEntries(request, completion: completion)
+        networkController.fetchAll(
+            resultHandler: NetworkResultHandler(
+                handler: handleFetchedEntryReps(result:completion:),
+                completion: completion))
     }
 
     func updateFoodEntry(
@@ -96,7 +72,7 @@ class FoodEntryController {
         foodName: String,
         foodAmount: Int,
         timestamp: Date,
-        completion: @escaping ResultHandler
+        completion: @escaping NetworkCompletion
     ) {
         do {
             try localStoreController.updateLocalEntry(
@@ -111,37 +87,22 @@ class FoodEntryController {
         }
 
         guard let entryRep = entry.representation else {
-            completion(.dataCodingError(specifically: GigapetError(
-                text: "Entry rep does not exist for entry")))
+            completion(.dataCodingError(
+                specifically: GigapetError(
+                    text: "Entry rep does not exist for entry")))
             return
         }
 
-        // if nil ID, then we haven't gotten the ID from the server
-        if entry.identifier == FoodEntry.nilID {
-            uploadNewEntry(entryRep, completion: completion)
-            return
-        }
-
-        // encode data
-        var entryData: Data?
-        do { entryData = try JSONEncoder().encode(entryRep)
-        } catch {
-            completion(.dataCodingError(specifically: error))
-            return
-        }
-
-        // build request
-        var request = APIRequestType
-            .update(user: user, feedingID: Int(entry.identifier))
-            .request
-        request.httpBody = entryData
-
-        handleRequestWithFetchedEntries(request, completion: completion)
+        networkController.updateEntry(
+            from: entryRep,
+            resultHandler: NetworkResultHandler(
+                handler: handleFetchedEntryReps(result:completion:),
+                completion: completion))
     }
 
     func deleteFoodEntry(
         _ entry: FoodEntry,
-        completion: @escaping ResultHandler
+        completion: @escaping NetworkCompletion
     ) {
         // need to grab this before deleting the entry locally
         let entryID = Int(entry.identifier)
@@ -151,65 +112,32 @@ class FoodEntryController {
             return
         }
 
-        let request = APIRequestType
-            .delete(user: user, feedingID: entryID)
-            .request
-
-        handleRequestWithFetchedEntries(request, completion: completion)
+        networkController.deleteEntry(
+            withID: entryID,
+            resultHandler: NetworkResultHandler(
+                handler: handleFetchedEntryReps(result:completion:),
+                completion: completion))
     }
 
     func deleteAllLocalEntries() {
         localStoreController.deleteAllLocalEntries()
     }
 
-    // MARK: - Sync Helpers
+    // MARK: - Private
 
-    private func uploadNewEntry(
-        _ entryRep: FoodEntryRepresentation,
-        completion: @escaping ResultHandler
+    private func handleFetchedEntryReps(
+        result: Result<[FoodEntryRepresentation], NetworkError>,
+        completion: NetworkCompletion
     ) {
-        var entryData: Data?
         do {
-            entryData = try JSONEncoder().encode(entryRep)
+            let serverEntryReps = try result.get()
+            try self.localStoreController.updateLocalEntries(from: serverEntryReps)
+            try self.localStoreController.refreshLocalEntries()
         } catch {
-            completion(.dataCodingError(specifically: error))
+            completion(.otherError(error: error))
             return
         }
 
-        var request = APIRequestType.create(user: user).request
-        request.httpBody = entryData
-
-        handleRequestWithFetchedEntries(request, completion: completion)
-    }
-
-    private func handleRequestWithFetchedEntries(
-        _ request: URLRequest,
-        completion: @escaping ResultHandler
-    ) {
-        networkHandler.transferMahCodableDatas(
-            with: request,
-            session: loader
-        ) { (result: Result<[FoodEntryRepresentation], NetworkError>) in
-            var serverEntryReps = [FoodEntryRepresentation]()
-
-            do {
-                serverEntryReps = try result.get()
-            } catch let error as NetworkError {
-                completion(error)
-                return
-            } catch {
-                completion(.otherError(error: error))
-            }
-
-            do {
-                try self.localStoreController.updateLocalEntries(from: serverEntryReps)
-                try self.localStoreController.refreshLocalEntries()
-            } catch {
-                completion(.otherError(error: error))
-                return
-            }
-
-            completion(nil)
-        }
+        completion(nil)
     }
 }

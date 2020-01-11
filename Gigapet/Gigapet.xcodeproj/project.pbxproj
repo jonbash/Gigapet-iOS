@@ -10,6 +10,7 @@
 		996E202723C8142000630061 /* IsUITesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202623C8142000630061 /* IsUITesting.swift */; };
 		996E202923C8149E00630061 /* NetworkMockingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202823C8149E00630061 /* NetworkMockingSession.swift */; };
 		996E202C23C9332500630061 /* LocalStoreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202B23C9332500630061 /* LocalStoreController.swift */; };
+		996E202E23C9410100630061 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202D23C9410100630061 /* NetworkController.swift */; };
 		996E203023C94B3B00630061 /* NetworkResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E202F23C94B3B00630061 /* NetworkResultHandler.swift */; };
 		9974231F23C6DB5F00898B4C /* GigapetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974231E23C6DB5F00898B4C /* GigapetError.swift */; };
 		9974232123C6E58300898B4C /* EntryDisplayPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */; };
@@ -72,6 +73,7 @@
 		996E202623C8142000630061 /* IsUITesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsUITesting.swift; sourceTree = "<group>"; };
 		996E202823C8149E00630061 /* NetworkMockingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMockingSession.swift; sourceTree = "<group>"; };
 		996E202B23C9332500630061 /* LocalStoreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStoreController.swift; sourceTree = "<group>"; };
+		996E202D23C9410100630061 /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		996E202F23C94B3B00630061 /* NetworkResultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResultHandler.swift; sourceTree = "<group>"; };
 		9974231E23C6DB5F00898B4C /* GigapetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GigapetError.swift; sourceTree = "<group>"; };
 		9974232023C6E58300898B4C /* EntryDisplayPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryDisplayPeriod.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				99DB9B5123C53C1C0074634C /* EntriesViewDataSource.swift */,
 				99DB9B2F23C3D3560074634C /* AuthController.swift */,
 				996E202B23C9332500630061 /* LocalStoreController.swift */,
+				996E202D23C9410100630061 /* NetworkController.swift */,
 				99DB9B1723C2B5300074634C /* CoreDataStack.swift */,
 			);
 			path = "Model Controllers";
@@ -600,6 +603,7 @@
 				99DB9B6123C63F180074634C /* UserAuth.swift in Sources */,
 				99DB9B4F23C531500074634C /* GigaPetButton.swift in Sources */,
 				99DB9B5823C53F5C0074634C /* EntryDisplayType.swift in Sources */,
+				996E202E23C9410100630061 /* NetworkController.swift in Sources */,
 				996E202C23C9332500630061 /* LocalStoreController.swift in Sources */,
 				99DB9B1823C2B5300074634C /* CoreDataStack.swift in Sources */,
 			);

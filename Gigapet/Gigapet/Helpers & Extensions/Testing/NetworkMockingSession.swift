@@ -38,9 +38,9 @@ struct NetworkMockingSession: NetworkLoader {
 	}
 }
 
-// MARK: - Food Entry Controller
+// MARK: - Network Controller
 
-extension FoodEntryController {
+extension NetworkController {
     func mockData() throws -> Data {
         let previousDate = Date().incremented(false, by: .month)
         let mockEntryReps = [
